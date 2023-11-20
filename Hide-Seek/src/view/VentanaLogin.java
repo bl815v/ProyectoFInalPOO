@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -20,13 +21,13 @@ public class VentanaLogin extends JFrame{
 	public VentanaLogin() {
 		setTitle(" ");
 		setSize(400, 650);
+		setMinimumSize(new Dimension(375, 520));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout(10, 10));
-		
-		layeredPane = new JLayeredPane();
-		getContentPane().add(layeredPane, BorderLayout.CENTER);
 		
 		inicializarComponentes();
+		
+		
+		
 		SeleccionarFondo("/imagenes/fondoInterfaz.png");
 		setResizable(true);
 		setLocationRelativeTo(null);
@@ -35,8 +36,6 @@ public class VentanaLogin extends JFrame{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-            	limitarVentana();
-            	adaptarFondo();
             	adaptarPanel();
             }
         });
@@ -44,13 +43,15 @@ public class VentanaLogin extends JFrame{
 	}
 	
 	public void inicializarComponentes() {
+		
+		layeredPane = new JLayeredPane();
+		getContentPane().add(layeredPane, BorderLayout.CENTER);
+		pl = new PanelLogin();
+		layeredPane.add(pl, Integer.valueOf(1));
 		fondoImagen = new JLabel();
 		fondoImagen.setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(fondoImagen, Integer.valueOf(0));
-		
-		pl = new PanelLogin();
-		layeredPane.add(pl, Integer.valueOf(1));
-		
+    	adaptarPanel();
 	}
 	
 	public void SeleccionarFondo(String elemento) {
@@ -64,35 +65,10 @@ public class VentanaLogin extends JFrame{
         	fondoImagen.setIcon(null);
         }
     }
-	
-	private void limitarVentana() {
-		int width = getWidth();
-		int height = getHeight();
-		int maxWidth = 400;
-		int maxHeight = 670;
-		if(width > maxWidth) {
-			width = maxWidth;
-		}
-		if(height > maxHeight) {
-			height = maxHeight;
-		}
-		setSize(width, height);
-	}
-    
-	private void adaptarFondo() {
-        if (fondoImagen.getIcon() != null) {
-        	fondoImagen.setIcon(new ImageIcon(fondoEscalado));
-        }
-        else {
-        	fondoImagen.setIcon(null);
-        }
-    }
     
     private void adaptarPanel() {
         pl.setBounds((getWidth() - pl.getPreferredSize().width)/2, (getHeight() - pl.getPreferredSize().height)/2, pl.getPreferredSize().width, pl.getPreferredSize().height);
     }
-    
-    
 
 	public PanelLogin getPl() {
 		return pl;
@@ -125,5 +101,7 @@ public class VentanaLogin extends JFrame{
 	public void setLayeredPane(JLayeredPane layeredPane) {
 		this.layeredPane = layeredPane;
 	}
+    
+    
 	
 }
