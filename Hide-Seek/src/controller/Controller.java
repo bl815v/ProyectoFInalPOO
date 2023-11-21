@@ -90,6 +90,7 @@ public class Controller implements ActionListener{
 			if(695 > vInicial.getSize().height) {
 				vInicial.setSize(710, 695);
 			}
+			vInicial.setLocationRelativeTo(null);
 		}
 		
 		if(comando.equals("bmenuLOGIN")) {
@@ -196,6 +197,7 @@ public class Controller implements ActionListener{
 		vInicial.getLayeredPane().remove(vInicial.getPr());
 		vInicial.getLayeredPane().add(vInicial.getPl(), Integer.valueOf(1));
 		vInicial.setMinimumSize(new Dimension(280, 470));
+		vInicial.setLocationRelativeTo(null);
 	}
 	
 	public void MensajeError(String texto) {
