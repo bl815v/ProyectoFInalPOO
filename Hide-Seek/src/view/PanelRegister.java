@@ -88,7 +88,7 @@ public class PanelRegister extends JPanel{
 		
 		JPanel panelAuxgenero = new JPanel(new BorderLayout());
 		panelAuxgenero.setAlignmentX(LEFT_ALIGNMENT); 
-		panelAuxgenero.setMaximumSize(new Dimension(300, 30)); 
+		panelAuxgenero.setMaximumSize(new Dimension(250, 30)); 
 		lista_genero = new JComboBox<String>();
 		lista_genero.addItem("Femenino");
 		lista_genero.addItem("Masculino");

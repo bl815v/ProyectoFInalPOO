@@ -2,15 +2,19 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class Estandar {
+public abstract class Estandar {
 	
 	public static JSeparator Espacio() {
         JSeparator espacio = new JSeparator();
@@ -30,7 +34,7 @@ public class Estandar {
         JSeparator separador = new JSeparator();
         separador.setPreferredSize(new Dimension(500, 30));
 		separador.setMaximumSize(new Dimension(500, 30));
-		separador.setForeground(new Color(99, 130, 191));
+		separador.setForeground(new Color(84, 160, 227));
 		return separador;
 	}
 	
@@ -38,9 +42,28 @@ public class Estandar {
         JSeparator separador = new JSeparator();
         separador.setPreferredSize(new Dimension(x, y));
 		separador.setMaximumSize(new Dimension(x, y));
-		separador.setForeground(new Color(99, 130, 191));
+		separador.setForeground(new Color(84, 160, 227));
 		return separador;
 	}
+	
+	public static JLabel fondoImagen = new JLabel();
+	public static void SeleccionarFondo(JFrame v,String elemento) {
+    	Image fondoEscalado;
+		if (!elemento.equals("")) {
+        	ImageIcon Fotografia = new ImageIcon(v.getClass().getResource(elemento));
+            Image img = Fotografia.getImage();
+            fondoEscalado = img.getScaledInstance(v.getWidth(), v.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon fondoFinal = new ImageIcon(fondoEscalado);
+            fondoImagen.setIcon(fondoFinal);
+        } else {
+        	fondoImagen.setIcon(null);
+        }
+    }
+	
+    public static void adaptarPanel(JFrame v, JPanel p) {
+        p.setBounds((v.getWidth() - p.getPreferredSize().width)/2, (v.getHeight() - p.getPreferredSize().height)/2, p.getPreferredSize().width, p.getPreferredSize().height);
+	}
+
 	
 	public static void revisarTextField(JTextField campo, JLabel esub, String texto) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
