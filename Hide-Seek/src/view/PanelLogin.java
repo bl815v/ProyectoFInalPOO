@@ -17,14 +17,17 @@ public class PanelLogin extends JPanel{
 	private JLabel etitulo, esubtitulo, eusuario, esubusuario, eclave, esubclave, enotienes;
 	private JTextField tusuario;
 	private JPasswordField tclave;
-	private JButton bentrar, bregistrate; 
+	private JButton bentrar, bregistrate;
 	
 	public PanelLogin() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(270, 400));
-		
+
 		inicializarComponentes();
 		setVisible(true);
+		
+		Estandar.revisarTextField(tusuario, esubusuario, "Ingrese su nombre de usuario (alias):");
+		Estandar.revisarTextField(tclave, esubclave, "Ingrese su clave:");
 	}
 	
 	public void inicializarComponentes() {
@@ -38,7 +41,7 @@ public class PanelLogin extends JPanel{
 		esubtitulo.setForeground(new Color(92,92,102));
 		add(esubtitulo);
 		
-		add(PanelRegister.Espacio());
+		add(Estandar.Espacio());
 		
 		eusuario = new JLabel("Usuario"); 
 		eusuario.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -55,11 +58,11 @@ public class PanelLogin extends JPanel{
         tusuario.setBackground(null);
 		tusuario.setFont(new Font("Arial", Font.PLAIN, 13));
 		tusuario.setForeground(new Color(92,92,102));
-        tusuario.setPreferredSize(new Dimension(300, 30)); 
+        tusuario.setPreferredSize(new Dimension(300, 30));
         panelAuxTusuario.add(tusuario, BorderLayout.CENTER);
         add(panelAuxTusuario);
         
-        add(PanelRegister.Separador());
+        add(Estandar.Separador());
 		
 		eclave = new JLabel("Clave"); 
 		eclave.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -79,8 +82,8 @@ public class PanelLogin extends JPanel{
         tclave.setPreferredSize(new Dimension(300, 30));
         panelAuxTclave.add(tclave, BorderLayout.CENTER);
         add(panelAuxTclave);
-        
-        add(PanelRegister.Separador());
+       
+        add(Estandar.Separador());
 	
 		bentrar = new JButton("Entrar ->");
 		bentrar.setBackground(new Color(84, 160, 227));
@@ -89,7 +92,7 @@ public class PanelLogin extends JPanel{
 		bentrar.setActionCommand("bLOGIN");
 		add(bentrar);
 		
-		add(PanelRegister.Espacio(1, 90));
+		add(Estandar.Espacio(1, 90));
 		
 		enotienes = new JLabel("No tienes una cuenta?"); 
 		enotienes.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -106,6 +109,22 @@ public class PanelLogin extends JPanel{
 		
 	}
 
+
+	public JLabel getEsubusuario() {
+		return esubusuario;
+	}
+
+	public void setEsubusuario(JLabel esubusuario) {
+		this.esubusuario = esubusuario;
+	}
+
+	public JLabel getEsubclave() {
+		return esubclave;
+	}
+
+	public void setEsubclave(JLabel esubclave) {
+		this.esubclave = esubclave;
+	}
 
 	public JLabel getEtitulo() {
 		return etitulo;

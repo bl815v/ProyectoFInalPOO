@@ -71,7 +71,7 @@ public class VentanaIncial extends JFrame{
     
     public void adaptarPanel(PanelLogin pl) {
 		pl.setBounds((getWidth() - pl.getPreferredSize().width)/2, (getHeight() - pl.getPreferredSize().height)/2, pl.getPreferredSize().width, pl.getPreferredSize().height);	
-	}
+    }
 
     public void adaptarPanel(PanelRegister pr) {
         pr.setBounds((getWidth() - pr.getPreferredSize().width)/2, (getHeight() - pr.getPreferredSize().height)/2, pr.getPreferredSize().width, pr.getPreferredSize().height);
