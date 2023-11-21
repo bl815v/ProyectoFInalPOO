@@ -17,9 +17,9 @@ import javax.swing.JTextField;
 
 public class PanelRegister extends JPanel{
 
-	private JLabel etitulo, esubtitulo, enombre, esubnombre, egenero, esubgenero, ecorreo, esubcorreo;
+	private JLabel etitulo, esubtitulo, enombre, esubnombre, egenero, esubgenero, erol, esubrol, ecorreo, esubcorreo;
 	private JLabel eusuario, esubusuario, eclave, esubclave, erepetir, esubrepetir, eyatienes;
-	private JComboBox<String> lista_genero;
+	private JComboBox<String> lista_rol, lista_genero;
 	private JTextField tnombre, tcorreo, tusuario;
 	private JPasswordField tclave, trepetir;
 	private JButton bregistrar, blogin; 
@@ -30,13 +30,6 @@ public class PanelRegister extends JPanel{
 		
 		inicializarComponentes();
 		setVisible(true);
-		
-		Estandar.revisarTextField(tnombre, esubnombre, "Ingrese sus nombres y apellidos:");
-		Estandar.revisarTextField(tusuario, esubusuario, "Ingrese su nombre de usuario (alias):");
-		Estandar.revisarTextField(tcorreo, esubcorreo, "Ingrese su correo electronico:");
-		
-		Estandar.revisarTextField(tclave, esubclave, "Ingrese su clave:");
-		Estandar.revisarTextField(trepetir, esubrepetir, "Ingrese la anterior clave:");
 	}
 	
 	public void inicializarComponentes() {
@@ -76,7 +69,7 @@ public class PanelRegister extends JPanel{
 		tnombre.setPreferredSize(new Dimension(300, 30)); 
         panelAuxTnombre.add(tnombre, BorderLayout.CENTER);
         Izquierda.add(panelAuxTnombre);
-        Izquierda.add(Estandar.Separador());
+        Izquierda.add(Separador());
 		
 		egenero = new JLabel("Genero"); 
 		egenero.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -88,8 +81,9 @@ public class PanelRegister extends JPanel{
 		
 		JPanel panelAuxgenero = new JPanel(new BorderLayout());
 		panelAuxgenero.setAlignmentX(LEFT_ALIGNMENT); 
-		panelAuxgenero.setMaximumSize(new Dimension(250, 30)); 
+		panelAuxgenero.setMaximumSize(new Dimension(300, 30)); 
 		lista_genero = new JComboBox<String>();
+		lista_genero.addItem(" ");
 		lista_genero.addItem("Femenino");
 		lista_genero.addItem("Masculino");
 		lista_genero.addItem("Otro");
@@ -98,9 +92,9 @@ public class PanelRegister extends JPanel{
 		lista_genero.setActionCommand("LISTAgenero");
 		panelAuxgenero.add(lista_genero, BorderLayout.CENTER);
 		Izquierda.add(panelAuxgenero);
-		Izquierda.add(Estandar.Espacio());
+		Izquierda.add(Espacio());
 		
-		Derecha.add(Estandar.Espacio(1, 95));
+		Derecha.add(Espacio(1, 77));
 		eusuario = new JLabel("Usuario");
 		eusuario.setFont(new Font("Arial", Font.PLAIN, 18));
 		Derecha.add(eusuario);
@@ -119,28 +113,31 @@ public class PanelRegister extends JPanel{
         tusuario.setPreferredSize(new Dimension(300, 30)); 
         panelAuxTusuario.add(tusuario, BorderLayout.CENTER);
         Derecha.add(panelAuxTusuario);
-        Derecha.add(Estandar.Separador());
+        Derecha.add(Separador(500, 15));
         
-        ecorreo = new JLabel("Correo"); 
-		ecorreo.setFont(new Font("Arial", Font.PLAIN, 18));
-		Derecha.add(ecorreo);
-		esubcorreo = new JLabel("Ingrese su correo electronico:");
-		esubcorreo.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubcorreo.setForeground(new Color(92,92,102));
-		Derecha.add(esubcorreo);
+        
+		erol = new JLabel("Rol"); 
+		erol.setFont(new Font("Arial", Font.PLAIN, 18));
+		Derecha.add(erol);
+		esubrol = new JLabel("Ingrese su rol:");
+		esubrol.setFont(new Font("Arial", Font.PLAIN, 16));
+		esubrol.setForeground(new Color(92,92,102));
+		Derecha.add(esubrol);
 		
-		JPanel panelAuxTcorreo = new JPanel(new BorderLayout()); 
-		panelAuxTcorreo.setMaximumSize(new Dimension(600, 30)); 
-		tcorreo = new JTextField();
-		tcorreo.setBorder(null);
-		tcorreo.setBackground(null);
-		tcorreo.setFont(new Font("Arial", Font.PLAIN, 13));
-		tcorreo.setForeground(new Color(92,92,102));
-		tcorreo.setPreferredSize(new Dimension(300, 30)); 
-		panelAuxTcorreo.add(tcorreo, BorderLayout.CENTER);
-		Derecha.add(panelAuxTcorreo);
-		Derecha.add(Estandar.Separador());
-
+		JPanel panelAuxrol = new JPanel(new BorderLayout()); 
+		panelAuxrol.setAlignmentX(LEFT_ALIGNMENT);
+		panelAuxrol.setMaximumSize(new Dimension(300, 25)); 
+		lista_rol = new JComboBox<String>();
+		lista_rol.addItem(" ");
+		lista_rol.addItem("Cliente");
+		lista_rol.addItem("Administrador");
+		lista_rol.setFont(new Font("Arial", Font.PLAIN, 13));
+		lista_rol.setForeground(new Color(92,92,102));
+		lista_rol.setActionCommand("LISTArol");
+		panelAuxrol.add(lista_rol, BorderLayout.CENTER);
+		Derecha.add(panelAuxrol);
+		Derecha.add(Espacio(1, 20));
+		
 		eclave = new JLabel("Clave"); 
 		eclave.setFont(new Font("Arial", Font.PLAIN, 18));
 		Izquierda.add(eclave);
@@ -159,7 +156,7 @@ public class PanelRegister extends JPanel{
         tclave.setPreferredSize(new Dimension(300, 30));
         panelAuxTclave.add(tclave, BorderLayout.CENTER);
         Izquierda.add(panelAuxTclave);
-        Izquierda.add(Estandar.Separador(500, 30));
+        Izquierda.add(Separador(500, 30));
 		
 		erepetir = new JLabel("Repita la clave"); 
 		erepetir.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -179,10 +176,29 @@ public class PanelRegister extends JPanel{
         trepetir.setPreferredSize(new Dimension(300, 30));
         panelAuxTrepetir.add(trepetir, BorderLayout.CENTER);
         Derecha.add(panelAuxTrepetir);
-        Derecha.add(Estandar.Separador());
+        Derecha.add(Separador());
 		
+		ecorreo = new JLabel("Correo"); 
+		ecorreo.setFont(new Font("Arial", Font.PLAIN, 18));
+		Izquierda.add(ecorreo);
+		esubcorreo = new JLabel("Ingrese su correo electronico:");
+		esubcorreo.setFont(new Font("Arial", Font.PLAIN, 16));
+		esubcorreo.setForeground(new Color(92,92,102));
+		Izquierda.add(esubcorreo);
 		
-		Derecha.add(Estandar.Espacio(1, 50));
+		JPanel panelAuxTcorreo = new JPanel(new BorderLayout()); 
+		panelAuxTcorreo.setMaximumSize(new Dimension(600, 30)); 
+		tcorreo = new JTextField();
+		tcorreo.setBorder(null);
+		tcorreo.setBackground(null);
+		tcorreo.setFont(new Font("Arial", Font.PLAIN, 13));
+		tcorreo.setForeground(new Color(92,92,102));
+		tcorreo.setPreferredSize(new Dimension(300, 30)); 
+		panelAuxTcorreo.add(tcorreo, BorderLayout.CENTER);
+		Izquierda.add(panelAuxTcorreo);
+		Izquierda.add(Separador());
+		
+		Derecha.add(Espacio(1, 50));
 		bregistrar = new JButton("Registrar");
 		bregistrar.setBackground(new Color(84, 160, 227));
 		bregistrar.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -191,7 +207,7 @@ public class PanelRegister extends JPanel{
 		Derecha.add(bregistrar);
 		
 
-		Izquierda.add(Estandar.Espacio(1, 60));
+		Izquierda.add(Espacio(1, 60));
 		eyatienes = new JLabel("Ya tienes una cuenta?"); 
 		eyatienes.setFont(new Font("Arial", Font.PLAIN, 14));
 		eyatienes.setForeground(new Color(92,92,102));
@@ -210,6 +226,35 @@ public class PanelRegister extends JPanel{
 		
 	}
 	
+	public static JSeparator Espacio() {
+        JSeparator espacio = new JSeparator();
+		espacio.setPreferredSize(new Dimension(1, 30));
+		espacio.setMaximumSize(new Dimension(1, 30));
+		return espacio;
+	}
+	
+	public static JSeparator Espacio(int x, int y) {
+        JSeparator espacio = new JSeparator();
+		espacio.setPreferredSize(new Dimension(x, y));
+		espacio.setMaximumSize(new Dimension(x, y));
+		return espacio;
+	}
+	
+	public static JSeparator Separador(){
+        JSeparator separador = new JSeparator();
+        separador.setPreferredSize(new Dimension(500, 30));
+		separador.setMaximumSize(new Dimension(500, 30));
+		separador.setForeground(new Color(99, 130, 191));
+		return separador;
+	}
+	
+	public static JSeparator Separador(int x, int y){
+        JSeparator separador = new JSeparator();
+        separador.setPreferredSize(new Dimension(x, y));
+		separador.setMaximumSize(new Dimension(x, y));
+		separador.setForeground(new Color(99, 130, 191));
+		return separador;
+	}
 
 	public JLabel getEtitulo() {
 		return etitulo;
@@ -257,6 +302,22 @@ public class PanelRegister extends JPanel{
 
 	public void setEsubgenero(JLabel esubgenero) {
 		this.esubgenero = esubgenero;
+	}
+
+	public JLabel getErol() {
+		return erol;
+	}
+
+	public void setErol(JLabel erol) {
+		this.erol = erol;
+	}
+
+	public JLabel getEsubrol() {
+		return esubrol;
+	}
+
+	public void setEsubrol(JLabel esubrol) {
+		this.esubrol = esubrol;
 	}
 
 	public JLabel getEcorreo() {
@@ -329,6 +390,14 @@ public class PanelRegister extends JPanel{
 
 	public void setEyatienes(JLabel eyatienes) {
 		this.eyatienes = eyatienes;
+	}
+
+	public JComboBox<String> getLista_rol() {
+		return lista_rol;
+	}
+
+	public void setLista_rol(JComboBox<String> lista_rol) {
+		this.lista_rol = lista_rol;
 	}
 
 	public JComboBox<String> getLista_genero() {
