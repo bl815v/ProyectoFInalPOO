@@ -9,7 +9,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import model.Listado;
+import model.ListadodeUsuarios;
 import model.Usuario;
 import view.Estandar;
 import view.VentanaCliente;
@@ -19,11 +19,11 @@ public class Controller implements ActionListener{
 
 	private VentanaInicial vInicial;
 	private VentanaCliente vCliente;
-	private Listado lista;
+	private ListadodeUsuarios lista;
 	
 	public Controller() {
 		vInicial = new VentanaInicial();
-		lista = new Listado();
+		lista = new ListadodeUsuarios();
 		asignarOyentes();
 	}
 	
@@ -98,16 +98,16 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("bREGISTRAR")) {
-			boolean vnombre, vusuario, vgenero, vcorreo, vclave;
+			boolean vnombre, vusuario, vgenero, vcorreo, vclave,vcorreoR,vusuarioR;
 			if(vInicial.getPr().getTnombre().getText().equals("")) {
-				vInicial.getPr().getEsubnombre().setText("Debe ingresar su nombre y apellido");
+				vInicial.getPr().getEsubnombre().setText("Debe ingresar un nombre");
 				vInicial.getPr().getEsubnombre().setForeground(Color.RED);
 				vnombre = false;
 			}else {
 				vnombre = true;
 			}
 			if(vInicial.getPr().getTusuario().getText().equals("")) {
-				vInicial.getPr().getEsubusuario().setText("El usuario ingresado es inexistente");
+				vInicial.getPr().getEsubusuario().setText("Ingrese un usuario valido");
 				vInicial.getPr().getEsubusuario().setForeground(Color.RED);
 				vusuario = false;
 			}else {
@@ -125,7 +125,21 @@ public class Controller implements ActionListener{
 				vInicial.getPr().getEsubcorreo().setForeground(Color.RED);
 				vcorreo = false;
 			}else {
-				vcorreo = true;
+				vcorreo=true;
+			}
+			if (lista.correoRepetido(vInicial.getPr().getTcorreo().getText())) {
+				vInicial.getPr().getEsubcorreo().setText("El correo ya existe");
+				vInicial.getPr().getEsubcorreo().setForeground(Color.RED);
+				vcorreoR = false;
+			}else {
+				vcorreoR = true;
+			}
+			if(lista.usuarioRepetido(vInicial.getPr().getTusuario().getText())) {
+				vInicial.getPr().getEsubusuario().setText("El usuario ya existe");
+				vInicial.getPr().getEsubusuario().setForeground(Color.RED);
+				vusuarioR=false;
+			}else {
+				vusuarioR = true;
 			}
 			if (vInicial.getPr().getTclave().getPassword().length == 0) {
 				vInicial.getPr().getEsubclave().setText("Debe ingresar una clave");
@@ -134,7 +148,7 @@ public class Controller implements ActionListener{
 			} else {
 				vclave = true;
 			}
-			if(vnombre && vusuario && vgenero && vcorreo && vclave){
+			if(vnombre && vusuario && vgenero && vcorreo && vclave&&vcorreoR&&vusuarioR){
 				char[] clave = vInicial.getPr().getTclave().getPassword();
 				char[] repetir = vInicial.getPr().getTrepetir().getPassword();
 				
