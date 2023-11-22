@@ -32,11 +32,14 @@ public class Controller implements ActionListener{
 		vInicial.getPl().getBregistrate().addActionListener(this);
 		vInicial.getPr().getBregistrar().addActionListener(this);
 		vInicial.getPr().getBlogin().addActionListener(this);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
+		
+		// Menu LOGIN
 		
 		if(comando.equals("bLOGIN")) {
 			String usuario = vInicial.getPl().getTusuario().getText();
@@ -55,6 +58,11 @@ public class Controller implements ActionListener{
 				vInicial.setVisible(false);
 				vCliente = new VentanaCliente();
 				vCliente.getPc().getEnombre().setText("Bienvenido, " + lista.buscarUsuario(usuario).getNombre());
+				vCliente.getPc().geteDinerodisponible().setText("$ " + lista.buscarUsuario(usuario).getCredito() + " pesos");
+				vCliente.getPc().geteDineropendiente().setText("$ " + lista.buscarUsuario(usuario).getDeuda() + " pesos");
+		
+				oyentesVcliente();
+				
 			}
 			}catch(NullPointerException n) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
@@ -95,7 +103,7 @@ public class Controller implements ActionListener{
 			vInicial.setLocationRelativeTo(null);
 		}
 		
-		
+		//Menu REGISTER
 		
 		if(comando.equals("bmenuLOGIN")) {
 			volver();
@@ -166,13 +174,12 @@ public class Controller implements ActionListener{
 					String alias = vInicial.getPr().getTusuario().getText();
 					String correo = vInicial.getPr().getTcorreo().getText();
 					String genero = vInicial.getPr().getLista_genero().getItemAt(0);
-					String rol = "Usuario";
 					String clavefinal = new String(vInicial.getPr().getTclave().getPassword());
 					Random random = new Random();	
 					int randomNumber = random.nextInt(2500001) + 500000;
 					int cupo = randomNumber;
 					
-					Usuario usuario = new Usuario(nombre, alias, rol, clavefinal, correo, genero, cupo);
+					Usuario usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0);
 					boolean respuesta = lista.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
@@ -186,15 +193,43 @@ public class Controller implements ActionListener{
 			
 			
 		}
-		
-		
-		
 		if(comando.equals("LISTAgenero")) {
 			vInicial.getPr().getLista_genero().removeItem(" ");
 			Estandar.revisarJComboBoxString(vInicial.getPr().getLista_genero(), vInicial.getPr().getEsubgenero(), "Ingrese su genero:");
 		}
 		
+		// Menu CLIENTE
 		
+		if(comando.equals("bCOMPRARMENU")){
+			System.out.println("comprando");
+		}
+		
+		if(comando.equals("bABONARMENU")){
+			System.out.println("Abonando");
+		}
+		
+		if(comando.equals("bNUEVAPAREJA")){
+			System.out.println("Agregar nueva pareja");
+		}
+
+		if(comando.equals("bPAREJASACTUALES")){
+			System.out.println("lista de parejas");
+		}
+
+		if(comando.equals("bVERHORARIOS")){
+			System.out.println("horarios");
+		}
+		
+		if(comando.equals("bPEDIRSOBRECUPO")){
+			System.out.println("sobre cupo");
+		}
+		
+		if(comando.equals("bCERRARSESION")){
+			vCliente.setVisible(false);
+			vInicial.setVisible(true);
+			vInicial.getPl().getTclave().setText(null);
+			vInicial.getPl().getTusuario().setText(null);
+		}
 	}
 	
 	private void volver() {
@@ -225,6 +260,16 @@ public class Controller implements ActionListener{
 	public void MensajeError(String texto) {
 		JOptionPane.showMessageDialog(null, texto, "Error", JOptionPane.ERROR_MESSAGE);	
 
+	}
+	
+	private void oyentesVcliente() {
+		vCliente.getPc().getBcomprar().addActionListener(this);
+		vCliente.getPc().getBabonar().addActionListener(this);
+		vCliente.getPc().getBparejasActuales().addActionListener(this);
+		vCliente.getPc().getBnuevaPareja().addActionListener(this);
+		vCliente.getPc().getBverHorarios().addActionListener(this);
+		vCliente.getPc().getBpedirSobrecupo().addActionListener(this);
+		vCliente.getPc().getBcerrar().addActionListener(this);
 	}
 	
 	

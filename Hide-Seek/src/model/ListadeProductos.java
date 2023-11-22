@@ -9,23 +9,38 @@ private ArrayList<Producto>ListadeProductos;
 		
 		ListadeProductos=new ArrayList<Producto>();
 		
-		Producto x = new Producto("Huevo", "/image/huevo.png",450);
-		Producto y = new Producto("Leche", "/image/Leche.png",4500);
-		Producto z = new Producto("Aceite", "/image/Leche.png",8000);
-		Producto a = new Producto("Arroz", "/image/Leche.png",3500);
-		Producto b = new Producto("Frijol", "/image/Leche.png",5500);
-		Producto c = new Producto("Tapabocas", "/image/Leche.png",1000);
-		Producto d = new Producto("Alcohol Desinfectante", "/image/Leche.png",2000);
-		Producto e = new Producto("Papel Higienico", "/image/Leche.png",2500);
-		Producto f = new Producto("Libra de papa", "/image/Leche.png",1000);
-		Producto g = new Producto("Lentejas", "/image/Leche.png",1800);
-
-
+		Producto huevo = new Producto("Huevo", "/image/huevo.png",450);
+		ListadeProductos.add(huevo);
+		Producto leche = new Producto("Leche", "/image/Leche.png",4500);
+		ListadeProductos.add(leche);
+		Producto aceite = new Producto("Aceite", "/image/Leche.png",8000);
+		ListadeProductos.add(aceite);
+		Producto arroz = new Producto("Arroz", "/image/Leche.png",3500);
+		ListadeProductos.add(arroz);
+		Producto frijol = new Producto("Frijol", "/image/Leche.png",5500);
+		ListadeProductos.add(frijol);
+		Producto tapabocas = new Producto("Tapabocas", "/image/Leche.png",1000);
+		ListadeProductos.add(tapabocas);
+		Producto alcohol = new Producto("Alcohol Desinfectante", "/image/Leche.png",2000);
+		ListadeProductos.add(alcohol);
+		Producto papel = new Producto("Papel Higienico", "/image/Leche.png",2500);
+		ListadeProductos.add(papel);
+		Producto papa = new Producto("Libra de papa", "/image/Leche.png",1000);
+		ListadeProductos.add(papa);
+		Producto lentejas = new Producto("Lentejas", "/image/Leche.png",1800);
+		ListadeProductos.add(lentejas);
 		
-		ListadeProductos.add(x);
-		ListadeProductos.add(y);
 
-		
 	}
+
+	public ArrayList<Producto> getListadeProductos() {
+		return ListadeProductos;
+	}
+
+	public void setListadeProductos(ArrayList<Producto> listadeProductos) {
+		ListadeProductos = listadeProductos;
+	}
+	
+	
 	
 }

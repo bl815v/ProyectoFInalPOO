@@ -9,7 +9,7 @@ private ArrayList<Usuario>ListadeUsuarios;
 	
 	public ListadodeUsuarios() {
 		ListadeUsuarios= new ArrayList<Usuario>();
-		Usuario x = new Usuario("David Torres Quiroga", "dvd", "Usuario", "123", "davidfgl@gmail.com", "Masculino", 1000000);
+		Usuario x = new Usuario("David Torres Quiroga", "dvd", "Usuario", "123", "davidfgl@gmail.com", "Masculino", 1000000, 500);
 		ListadeUsuarios.add(x);
 	
 	}

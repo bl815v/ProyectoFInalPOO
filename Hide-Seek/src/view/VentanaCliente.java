@@ -16,7 +16,7 @@ public class VentanaCliente extends JFrame{
 	public VentanaCliente() {
 		JFrame Ventana = this;
 		setTitle("Menu principal - HIDE&SEEK");
-		setSize(710, 695);
+		setSize(730, 700);
 		setMinimumSize(new Dimension(675, 580));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		if(695 > getSize().height) {

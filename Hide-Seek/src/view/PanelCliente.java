@@ -18,7 +18,7 @@ public class PanelCliente extends JPanel{
 	
 	public PanelCliente() {
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(670, 500));
+		setPreferredSize(new Dimension(680, 520));
 
 		inicializarComponentes();
 		setVisible(true);
@@ -100,7 +100,7 @@ public class PanelCliente extends JPanel{
 		centro.add(arriba, BorderLayout.NORTH);
 		
 		JPanel abajo = new JPanel();
-		abajo.setLayout(new GridLayout(2,2, 100, 40));
+		abajo.setLayout(new GridLayout(2,2, 16, 16));
 		
 		bnuevaPareja = new JButton("Nueva Pareja");
 		bnuevaPareja.setBackground(new Color(84, 160, 227));
@@ -108,7 +108,7 @@ public class PanelCliente extends JPanel{
 		bnuevaPareja.setForeground(new Color(255, 255, 255));
 		bnuevaPareja.setActionCommand("bNUEVAPAREJA");
 		abajo.add(bnuevaPareja);
-
+		
 		bparejasActuales = new JButton("Parejas actuales");
 		bparejasActuales.setBackground(new Color(84, 160, 227));
 		bparejasActuales.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -123,7 +123,7 @@ public class PanelCliente extends JPanel{
 		bverHorarios.setActionCommand("bVERHORARIOS");
 		abajo.add(bverHorarios);
 		
-		bpedirSobrecupo = new JButton("Ver Horarios");
+		bpedirSobrecupo = new JButton("Pedir Sobrecupo");
 		bpedirSobrecupo.setBackground(new Color(84, 160, 227));
 		bpedirSobrecupo.setFont(new Font("Arial", Font.PLAIN, 18));
 		bpedirSobrecupo.setForeground(new Color(255, 255, 255));
@@ -145,13 +145,12 @@ public class PanelCliente extends JPanel{
 		bcerrar.setBorder(null);
 		bcerrar.setFont(new Font("Arial", Font.PLAIN, 14));
 		bcerrar.setForeground(new Color(84, 160, 227));
-		bcerrar.setActionCommand("bcerrarSesion");
+		bcerrar.setActionCommand("bCERRARSESION");
 		espaciosur.add(bcerrar);
 		eblanco = new JLabel(" ");
 		espaciosur.add(eblanco);
 		sur.add(espaciosur, BorderLayout.SOUTH);
 		add(sur, BorderLayout.SOUTH);
-		
 	}
 	
 	public JLabel getEblanco() {

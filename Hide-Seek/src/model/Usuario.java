@@ -6,9 +6,10 @@ public class Usuario extends Persona{
 	private String correo;
 	private String genero;
 	private int credito;
+	private int deuda;
 	
 	
-	public Usuario(String nombre, String user, String rol, String contraseña,String correo, String genero, int credito) {
+	public Usuario(String nombre, String user, String rol, String contraseña,String correo, String genero, int credito, int deuda) {
 	super(user,rol,contraseña);
 	this.nombre=nombre;
 	this.correo=correo;
@@ -17,8 +18,8 @@ public class Usuario extends Persona{
 	this.Rol=rol;
 	this.clave=contraseña;
 	this.credito=credito;
+	this.deuda=deuda;
 	}
-
 
 	public String getNombre() {
 		return nombre;
@@ -58,5 +59,13 @@ public class Usuario extends Persona{
 	public void setCredito(int credito) {
 		this.credito = credito;
 	}
+	
+	public int getDeuda() {
+		return deuda;
+	}
 
+
+	public void setDeuda(int deuda) {
+		this.deuda = deuda;
+	}
 }

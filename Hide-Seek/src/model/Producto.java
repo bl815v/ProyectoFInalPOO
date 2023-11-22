@@ -13,4 +13,27 @@ public class Producto {
 		this.Precio=precio;
 	}
 
+	public String getNombre() {
+		return Nombre;
+	}
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
+
+	public double getPrecio() {
+		return Precio;
+	}
+
+	public void setPrecio(double precio) {
+		Precio = precio;
+	}
+
+	public String getImg() {
+		return Img;
+	}
+
+	public void setImg(String img) {
+		Img = img;
+	}
 }
