@@ -16,10 +16,12 @@ public class VentanaCliente extends JFrame{
 	public VentanaCliente() {
 		JFrame Ventana = this;
 		setTitle("Menu principal - HIDE&SEEK");
-		setSize(400, 540);
-		setMinimumSize(new Dimension(280, 500));
+		setSize(710, 695);
+		setMinimumSize(new Dimension(675, 580));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		if(695 > getSize().height) {
+			setSize(710, 695);
+		}
 		inicializarComponentes();
 		
 		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");
@@ -29,7 +31,7 @@ public class VentanaCliente extends JFrame{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-            	Estandar.adaptarPanel(Ventana, pc);
+            	Estandar.adaptarPanelCentro(Ventana, pc);
             }
         });
        
@@ -43,7 +45,7 @@ public class VentanaCliente extends JFrame{
 	
 		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
-		Estandar.adaptarPanel(this, pc);
+		Estandar.adaptarPanelCentro(this, pc);
 	}
 
 	public PanelCliente getPc() {

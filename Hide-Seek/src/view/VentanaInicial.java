@@ -34,8 +34,8 @@ public class VentanaInicial extends JFrame{
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-            	Estandar.adaptarPanel(Ventana, pl);
-            	Estandar.adaptarPanel(Ventana, pr);
+            	Estandar.adaptarPanelCentro(Ventana, pl);
+            	Estandar.adaptarPanelCentro(Ventana, pr);
             }
         });
        
@@ -50,7 +50,7 @@ public class VentanaInicial extends JFrame{
 	
 		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
-		Estandar.adaptarPanel(this, pl);
+		Estandar.adaptarPanelCentro(this, pl);
 	}
 	
         

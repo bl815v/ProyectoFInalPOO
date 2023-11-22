@@ -60,10 +60,11 @@ public abstract class Estandar {
         }
     }
 	
-    public static void adaptarPanel(JFrame v, JPanel p) {
-        p.setBounds((v.getWidth() - p.getPreferredSize().width)/2, (v.getHeight() - p.getPreferredSize().height)/2, p.getPreferredSize().width, p.getPreferredSize().height);
+    public static void adaptarPanelCentro(JFrame v, JPanel p) {
+    	int x = (v.getWidth() - p.getPreferredSize().width)/2;
+    	int y = (v.getHeight() - p.getPreferredSize().height)/2;
+        p.setBounds(x, y, p.getPreferredSize().width, p.getPreferredSize().height);
 	}
-
 	
 	public static void revisarTextField(JTextField campo, JLabel esub, String texto) {
         campo.getDocument().addDocumentListener(new DocumentListener() {

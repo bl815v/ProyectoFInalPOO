@@ -54,13 +54,15 @@ public class Controller implements ActionListener{
 			}else {
 				vInicial.setVisible(false);
 				vCliente = new VentanaCliente();
-				vCliente.getPc().getEnombre().setText("Bienvenido, " + vInicial.getPl().getTusuario().getText());
+				vCliente.getPc().getEnombre().setText("Bienvenido, " + lista.buscarUsuario(usuario).getNombre());
 			}
 			}catch(NullPointerException n) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
 				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
 			}
 		}
+		
+		
 		
 		if (comando.equals("bREGISTRATE")) {
 			vInicial.getPr().getEsubnombre().setText("Ingrese sus nombres y apellidos:");
@@ -85,7 +87,7 @@ public class Controller implements ActionListener{
 			vInicial.setTitle("Registrese");
 			vInicial.getLayeredPane().remove(vInicial.getPl());
 			vInicial.getLayeredPane().add(vInicial.getPr(), Integer.valueOf(1));
-			Estandar.adaptarPanel(vInicial, vInicial.getPr());
+			Estandar.adaptarPanelCentro(vInicial, vInicial.getPr());
 			vInicial.setMinimumSize(new Dimension(675, 580));
 			if(695 > vInicial.getSize().height) {
 				vInicial.setSize(710, 695);
@@ -93,9 +95,13 @@ public class Controller implements ActionListener{
 			vInicial.setLocationRelativeTo(null);
 		}
 		
+		
+		
 		if(comando.equals("bmenuLOGIN")) {
 			volver();
 		}
+		
+		
 		
 		if(comando.equals("bREGISTRAR")) {
 			boolean vnombre, vusuario, vgenero, vcorreo, vclave,vcorreoR,vusuarioR;
@@ -170,7 +176,7 @@ public class Controller implements ActionListener{
 					boolean respuesta = lista.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
-						JOptionPane.showMessageDialog(null, "Se ha registrado exitosamente", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);	
+						JOptionPane.showMessageDialog(null, "Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 					}else {
 						MensajeError("Fallo al registrar");
 					}
@@ -180,6 +186,8 @@ public class Controller implements ActionListener{
 			
 			
 		}
+		
+		
 		
 		if(comando.equals("LISTAgenero")) {
 			vInicial.getPr().getLista_genero().removeItem(" ");

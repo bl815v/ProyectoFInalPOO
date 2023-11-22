@@ -9,7 +9,7 @@ private ArrayList<Usuario>ListadeUsuarios;
 	
 	public ListadodeUsuarios() {
 		ListadeUsuarios= new ArrayList<Usuario>();
-		Usuario x = new Usuario("David DD", "dvd", "Usuario", "123", "davidfgl", "Masculino", 1000000);
+		Usuario x = new Usuario("David Torres Quiroga", "dvd", "Usuario", "123", "davidfgl@gmail.com", "Masculino", 1000000);
 		ListadeUsuarios.add(x);
 	
 	}
@@ -38,7 +38,7 @@ private ArrayList<Usuario>ListadeUsuarios;
 	
 	public boolean correoRepetido(String correo) {
 		for (Usuario usuario:ListadeUsuarios) {
-			if (usuario.getCorreo()==correo) {
+			if (!usuario.getCorreo().equals(correo)) {
 				return false;	
 				
 			}
@@ -48,7 +48,7 @@ private ArrayList<Usuario>ListadeUsuarios;
 	
 	public boolean usuarioRepetido(String user) {
 		for (Usuario usuario:ListadeUsuarios) {
-			if (usuario.getUser()==user) {
+			if (!usuario.getUser().equals(user)) {
 				return false;	
 				
 			}
