@@ -49,12 +49,12 @@ public abstract class Estandar {
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-            	boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambia el cursor cuando el mouse entra al botón
+            	boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-            	boton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Cambia el cursor cuando el mouse sale del botón
+            	boton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); 
             }
         });
         return boton;
@@ -70,12 +70,12 @@ public abstract class Estandar {
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-            	boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambia el cursor cuando el mouse entra al botón
+            	boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-            	boton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Cambia el cursor cuando el mouse sale del botón
+            	boton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); 
             }
         });
         return boton;

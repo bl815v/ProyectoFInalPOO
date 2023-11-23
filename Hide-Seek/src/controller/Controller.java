@@ -67,6 +67,8 @@ public class Controller implements ActionListener{
 		for (Producto producto : listaProductos.getListadeProductos()) {
 		vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
 		}
+		vCompra.getPt().getBcerrar().addActionListener(this);
+		
 	}
 	
 	
@@ -291,6 +293,11 @@ public class Controller implements ActionListener{
 	
 				}	
 			}
+		}
+		
+		if(comando.equals("bREGRESAR")){
+			vCliente.setVisible(true);
+			vCompra.setVisible(false);
 		}
 	}
 	
