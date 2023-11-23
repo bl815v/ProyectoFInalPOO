@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import model.Correo;
 import model.ListadodeUsuarios;
 import model.Usuario;
 import view.Estandar;
@@ -20,11 +21,13 @@ public class Controller implements ActionListener{
 	private VentanaInicial vInicial;
 	private VentanaCliente vCliente;
 	private ListadodeUsuarios lista;
+	private Correo correos;
 	
 	public Controller() {
 		vInicial = new VentanaInicial();
 		lista = new ListadodeUsuarios();
 		asignarOyentes();
+		correos = new Correo();
 	}
 	
 	public void asignarOyentes() {
@@ -188,6 +191,8 @@ public class Controller implements ActionListener{
 						MensajeError("Fallo al registrar");
 					}
 					lista.agregarUsuario(usuario);
+					correos.enviarCorreo(correo,alias,clavefinal);
+					
 				}
 			}
 			
