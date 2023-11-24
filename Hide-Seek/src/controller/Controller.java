@@ -71,6 +71,7 @@ public class Controller implements ActionListener{
 		vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
 		}
 		vCompra.getPt().getBcerrar().addActionListener(this);
+		vCompra.getPt().getLista_sedes().addActionListener(this);
 	}
 	
 	
@@ -245,6 +246,9 @@ public class Controller implements ActionListener{
 			vCliente.setVisible(false);
 			vCompra = new VentanaCompra();
 			Estandar.adaptarPanelCentro(vCompra, vCompra.getPt());
+			vCompra.getPt().getEsedes().setForeground(new Color(92,92,102));
+			vCompra.getPt().getLista_sedes().addItem(" ");
+			vCompra.getPt().getLista_sedes().setSelectedItem(" ");
 			oyentesVcompra();
 		}
 		
@@ -282,6 +286,8 @@ public class Controller implements ActionListener{
 				MensajeInformacion("Ha abonado $" + vCliente.getPa().getTmonto().getText() + " pesos", "Abono exitoso");
 				usuario.setDeuda(usuario.getDeuda()-Integer.parseInt(vCliente.getPa().getTmonto().getText()));
 				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
+				usuario.setCredito(usuario.getCredito()+Integer.parseInt(vCliente.getPa().getTmonto().getText()));
+				vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
 				vCliente.getPa().setVisible(false);
 				vCliente.getPc().setVisible(true);
 				vCliente.getLayeredPane().remove(vCliente.getPa());
@@ -319,9 +325,9 @@ public class Controller implements ActionListener{
 		
 		// Menu CLIENTE
 		
-		if(comando.equals("bVERHORARIOS")){
-			vCliente.setTitle("Horarios");
-			System.out.println("horarios");
+		if(comando.equals("bHISTORIAL")){
+			vCliente.setTitle("Historial de compras");
+			System.out.println("Historial");
 		}
 		
 		// Menu CLIENTE
@@ -385,11 +391,30 @@ public class Controller implements ActionListener{
 		
 		// COMANDOS COMPRAR
 		ListadeProductos listaProductos = new ListadeProductos();
+		if(comando.equals("LISTASEDES")) {
+			vCompra.getPt().getLista_sedes().removeItem(" ");
+			vCompra.getPt().getEsedes().setForeground(new Color(92,92,102));
+			
+		}
+		
 		for (Producto producto : listaProductos.getListadeProductos()) {
 			if(comando.equals("b"+producto.getNombre())) {
-				 int cantidad = (int) vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).getValue();
+				int totalCompra = 0;
+				int cantidad = (int) vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).getValue();
+				boolean vSede = false, vCantidad = false;
+				if(!vCompra.getPt().getLista_sedes().getSelectedItem().equals(" ")) {
+					vSede = true;
+				}else {
+					vCompra.getPt().getEsedes().setForeground(Color.RED);
+					vSede = false;
+				}
 				if( cantidad > 0){
-					int totalCompra =(int) (cantidad*producto.getPrecio());
+					totalCompra =(int) (cantidad*producto.getPrecio());
+					vCantidad = true;
+				}else {
+					vCantidad = false;
+				}
+				if(vSede && vCantidad) {
 					Object[] opciones = {"Sí", "No"}; 
 					int confirmar = JOptionPane.showOptionDialog(null, "Desea comprar "+cantidad+" "+producto.getNombre(), "Confirmar compra", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
@@ -405,11 +430,10 @@ public class Controller implements ActionListener{
 							MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
 						}
 					}
-	
-				}	
-			}
+				}
+			}	
 		}
-		
+	
 		if(comando.equals("bREGRESAR")){
 			vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
 			vCliente.setVisible(true);

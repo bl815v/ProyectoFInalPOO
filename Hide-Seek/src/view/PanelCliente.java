@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class PanelCliente extends JPanel{
 	
 	private JLabel eblanco, etitulo, enombre, ecupoDisponible, esaldoPendiente, eDinerodisponible, eDineropendiente;
-	private JButton bcomprar, babonar, bnuevaPareja, bparejasActuales, bverHorarios, bpedirSobrecupo, bcerrar;
+	private JButton bcomprar, babonar, bnuevaPareja, bparejasActuales, bhistorial, bpedirSobrecupo, bcerrar;
 	
 	public PanelCliente() {
 		setLayout(new BorderLayout());
@@ -94,9 +94,9 @@ public class PanelCliente extends JPanel{
 		bparejasActuales.setActionCommand("bPAREJASACTUALES");
 		abajo.add(bparejasActuales);
 
-		bverHorarios = Estandar.boton("Ver Horarios");
-		bverHorarios.setActionCommand("bVERHORARIOS");
-		abajo.add(bverHorarios);
+		bhistorial = Estandar.boton("Historial de compras");
+		bhistorial.setActionCommand("bHISTORIAL");
+		abajo.add(bhistorial);
 		
 		bpedirSobrecupo = Estandar.boton("Pedir Sobrecupo");
 		bpedirSobrecupo.setActionCommand("bPEDIRSOBRECUPO");
@@ -206,11 +206,11 @@ public class PanelCliente extends JPanel{
 	}
 
 	public JButton getBverHorarios() {
-		return bverHorarios;
+		return bhistorial;
 	}
 
 	public void setBverHorarios(JButton bverHorarios) {
-		this.bverHorarios = bverHorarios;
+		this.bhistorial = bverHorarios;
 	}
 
 	public JButton getBpedirSobrecupo() {

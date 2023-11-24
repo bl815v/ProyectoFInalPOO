@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,7 +23,9 @@ import model.Producto;
 
 public class PanelTienda extends JPanel{
 	
-	private JLabel etitulo, esubtitulo, etotal;
+	private JLabel etitulo, esubtitulo, esedes, etotal;
+
+	private JComboBox<String> lista_sedes;
 	private JButton bcerrar;
 	private ArrayList<JButton> botones;
 	private ArrayList<JSpinner> spinners;
@@ -44,10 +48,29 @@ public class PanelTienda extends JPanel{
 		norte.add(etitulo);
 
 		norte.add(Estandar.Espacio(1,10));
-
+		
+		esedes = Estandar.labelGris("Seleccione la sede desde la que hace la compra:");
+		norte.add(esedes);
+		
+		JPanel panelAuxsedes= new JPanel();
+		panelAuxsedes.setLayout(new BoxLayout(panelAuxsedes, BoxLayout.X_AXIS));
+		panelAuxsedes.setMaximumSize(new Dimension(400, 30)); 
+		lista_sedes = new JComboBox<String>();
+		lista_sedes.addItem("sede null");
+		lista_sedes.setFont(new Font("Arial", Font.PLAIN, 14));
+		lista_sedes.setForeground(new Color(92,92,102));
+		lista_sedes.setActionCommand("LISTASEDES");
+		panelAuxsedes.add(Estandar.Espacio(90, 1));
+		panelAuxsedes.add(lista_sedes);
+		norte.add(panelAuxsedes);
+		
+		norte.add(Estandar.Espacio(1,10));
+		
 		esubtitulo = Estandar.labelGris("Selecciona la cantidad de productos a comprar "); 
 		norte.add(esubtitulo);
-		
+
+		norte.add(Estandar.Espacio(1,10));
+
 		add(norte, BorderLayout.NORTH);
 		
 		//Center
@@ -139,6 +162,7 @@ public class PanelTienda extends JPanel{
 		return encontrada;
 	}
 	
+
 	public JLabel getEtitulo() {
 		return etitulo;
 	}
@@ -162,7 +186,31 @@ public class PanelTienda extends JPanel{
 	public void setEtotal(JLabel etotal) {
 		this.etotal = etotal;
 	}
+	
+	public JLabel getEsedes() {
+		return esedes;
+	}
 
+	public void setEsedes(JLabel esedes) {
+		this.esedes = esedes;
+	}
+
+	public JComboBox<String> getLista_sedes() {
+		return lista_sedes;
+	}
+
+	public void setLista_sedes(JComboBox<String> lista_sedes) {
+		this.lista_sedes = lista_sedes;
+	}
+	
+	public JComboBox<String> getSedes() {
+		return lista_sedes;
+	}
+
+	public void setSedes(JComboBox<String> sedes) {
+		this.lista_sedes = sedes;
+	}
+	
 	public JButton getBcerrar() {
 		return bcerrar;
 	}
