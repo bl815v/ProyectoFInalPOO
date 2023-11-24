@@ -14,6 +14,7 @@ public class VentanaCliente extends JFrame{
 	
 	private PanelCliente pc;
 	private PanelAbono pa;
+	private PanelSobrecupo ps;
 	
 	
 	public VentanaCliente() {
@@ -35,6 +36,7 @@ public class VentanaCliente extends JFrame{
             public void componentResized(ComponentEvent e) {
             	Estandar.adaptarPanelCentro(Ventana, pc);
             	Estandar.adaptarPanelCentro(Ventana, pa);
+            	Estandar.adaptarPanelCentro(Ventana, ps);
             }
         });
        
@@ -45,6 +47,7 @@ public class VentanaCliente extends JFrame{
 		getContentPane().add(layeredPane, BorderLayout.CENTER);
 		pc = new PanelCliente();
 		pa = new PanelAbono();
+		ps = new PanelSobrecupo();
 		
 		layeredPane.add(pc, Integer.valueOf(1));	
 	
@@ -76,6 +79,14 @@ public class VentanaCliente extends JFrame{
 
 	public void setPa(PanelAbono pa) {
 		this.pa = pa;
+	}
+
+	public PanelSobrecupo getPs() {
+		return ps;
+	}
+
+	public void setPs(PanelSobrecupo ps) {
+		this.ps = ps;
 	}
 	
 }

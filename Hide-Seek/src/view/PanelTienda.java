@@ -28,7 +28,7 @@ public class PanelTienda extends JPanel{
 	
 	public PanelTienda() {
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(680, 520));
+		setPreferredSize(new Dimension(730, 520));
 
 		inicializarComponentes();
 		setVisible(true);

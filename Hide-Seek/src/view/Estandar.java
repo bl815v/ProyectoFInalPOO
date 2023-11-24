@@ -48,7 +48,7 @@ public abstract class Estandar {
 		    @Override
 		    public void windowClosing(WindowEvent e) {
 		        Object[] opciones = {"Sí", "No"}; 
-				int confirmar = JOptionPane.showOptionDialog(null, "Esta seguro que desea cerrar la ventana? \nSe perderan todos los datos del programa", "Cerrar todo el programa", 
+				int confirmar = JOptionPane.showOptionDialog(null, "Esta seguro que desea cerrar la ventana? \n\nSe perderan todos los datos del programa", "Cerrar todo el programa", 
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
 				if (confirmar == JOptionPane.YES_OPTION) {
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

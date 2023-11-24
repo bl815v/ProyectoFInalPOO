@@ -16,8 +16,8 @@ public class VentanaCompra extends JFrame{
 	public VentanaCompra() {
 		JFrame Ventana = this;
 		setTitle("Catalogo - HIDE&SEEK");
-		setSize(730, 700);
-		setMinimumSize(new Dimension(710, 620));
+		setSize(750, 680);
+		setMinimumSize(new Dimension(750, 620));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
 

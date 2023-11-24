@@ -10,20 +10,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class PanelAbono extends JPanel{
+public class PanelSobrecupo extends JPanel{
 	
-	private JLabel etitulo, esaldoPendiente, eDineropendiente, eingrese, edinero, epesos;
+	private JLabel etitulo, ecupoDisponible, eDinerodisponible, eingrese, edinero, epesos;
 	private JTextField tmonto;
-	private JButton babonar, bcerrar;
+	private JButton bsolicitar, bcerrar;
 	
-	public PanelAbono() {
+	public PanelSobrecupo() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(580, 280));
 
 		inicializarComponentes();
 		setVisible(false);
 		
-		Estandar.revisarTextField(tmonto, eingrese, "Ingrese la cantidad de dinero a abonar:");	
+		Estandar.revisarTextField(tmonto, eingrese, "Ingrese cuanto sobrecupo solicita:");	
 	}
 	
 	public void inicializarComponentes() {
@@ -31,15 +31,15 @@ public class PanelAbono extends JPanel{
 		add(etitulo);
 		add(Estandar.Espacio());
 		
-		esaldoPendiente = Estandar.labelGris("Saldo Pendiente:");
-		add(esaldoPendiente);
+		ecupoDisponible = Estandar.labelGris("Cupo Disponible:");
+		add(ecupoDisponible);
 		
-		eDineropendiente = Estandar.labelNegro("$ 1000000 pesos");
-		add(eDineropendiente);
+		eDinerodisponible = Estandar.labelNegro("$ 1000000 pesos");
+		add(eDinerodisponible);
 		
 		add(Estandar.Espacio());
 		
-		eingrese = Estandar.labelNegro("Ingrese la cantidad de dinero a abonar:");
+		eingrese = Estandar.labelNegro("Ingrese cuanto sobrecupo solicita:");
 		add(eingrese);
 		
 		add(Estandar.Espacio());
@@ -65,17 +65,17 @@ public class PanelAbono extends JPanel{
 		
 		JPanel auxBotones = new JPanel();
 		auxBotones.setLayout(new GridLayout(1,2, 20, 25));
-		babonar = Estandar.boton("Abonar");
-		babonar.setActionCommand("bABONAR");
-		auxBotones.add(babonar);
+		bsolicitar = Estandar.boton("Solicitar");
+		bsolicitar.setActionCommand("bSOLICITAR");
+		auxBotones.add(bsolicitar);
 						
 		bcerrar = Estandar.boton("Cancelar");
-		bcerrar.setActionCommand("bCANCELARABONO");
+		bcerrar.setActionCommand("bCANCELARSOBRECUPO");
 		auxBotones.add(bcerrar);
 		add(auxBotones);	
 	
 	}
-
+	
 	
 	public JLabel getEtitulo() {
 		return etitulo;
@@ -85,20 +85,20 @@ public class PanelAbono extends JPanel{
 		this.etitulo = etitulo;
 	}
 
-	public JLabel getEsaldoPendiente() {
-		return esaldoPendiente;
+	public JLabel getEcupoDisponible() {
+		return ecupoDisponible;
 	}
 
-	public void setEsaldoPendiente(JLabel esaldoPendiente) {
-		this.esaldoPendiente = esaldoPendiente;
+	public void setEcupoDisponible(JLabel ecupoDisponible) {
+		this.ecupoDisponible = ecupoDisponible;
 	}
 
-	public JLabel geteDineropendiente() {
-		return eDineropendiente;
+	public JLabel geteDinerodisponible() {
+		return eDinerodisponible;
 	}
 
-	public void seteDineropendiente(JLabel eDineropendiente) {
-		this.eDineropendiente = eDineropendiente;
+	public void seteDinerodisponible(JLabel eDinerodisponible) {
+		this.eDinerodisponible = eDinerodisponible;
 	}
 
 	public JLabel getEingrese() {
@@ -133,12 +133,12 @@ public class PanelAbono extends JPanel{
 		this.tmonto = tmonto;
 	}
 
-	public JButton getBabonar() {
-		return babonar;
+	public JButton getBsolicitar() {
+		return bsolicitar;
 	}
 
-	public void setBabonar(JButton babonar) {
-		this.babonar = babonar;
+	public void setBsolicitar(JButton bsolicitar) {
+		this.bsolicitar = bsolicitar;
 	}
 
 	public JButton getBcerrar() {

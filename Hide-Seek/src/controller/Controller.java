@@ -3,6 +3,7 @@ package controller;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.IllegalComponentStateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
@@ -33,6 +34,8 @@ public class Controller implements ActionListener{
 	
 	private ListadodeUsuarios lista;
 	private Correo correos;
+	
+	private Usuario usuario;
 	
 	public Controller() {
 		vInicial = new VentanaInicial();
@@ -68,7 +71,6 @@ public class Controller implements ActionListener{
 		vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
 		}
 		vCompra.getPt().getBcerrar().addActionListener(this);
-		
 	}
 	
 	
@@ -79,25 +81,24 @@ public class Controller implements ActionListener{
 		// Menu LOGIN
 		
 		if(comando.equals("bLOGIN")) {
-			String usuario = vInicial.getPl().getTusuario().getText();
+			String eusuario = vInicial.getPl().getTusuario().getText();
 			char[] clave = vInicial.getPl().getTclave().getPassword();
 			String stringclave = new String(clave);
 			try {
-			String usuarioExist = lista.buscarUsuario(usuario).getUser();
-			String claveUsuario = lista.buscarUsuario(usuario).getClave();
-			if(usuario.equals("") || !usuario.equals(usuarioExist)) {
+			usuario = lista.buscarUsuario(eusuario);
+			if(eusuario.equals("") || !eusuario.equals(usuario.getUser())) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
 				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
-			}else if (clave.length == 0 || !stringclave.equals(claveUsuario.toString())) {
+			}else if (clave.length == 0 || !stringclave.equals(usuario.getClave().toString())) {
 				vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
 				vInicial.getPl().getEsubclave().setForeground(Color.RED);
 			}else {
 				vInicial.setVisible(false);
 				vCliente = new VentanaCliente();
-				Estandar.adaptarPanelCentro(vCliente, vCliente.getPc());
-				vCliente.getPc().getEnombre().setText("Bienvenido, " + lista.buscarUsuario(usuario).getNombre());
-				vCliente.getPc().geteDinerodisponible().setText("$ " + lista.buscarUsuario(usuario).getCredito() + " pesos");
-				vCliente.getPc().geteDineropendiente().setText("$ " + lista.buscarUsuario(usuario).getDeuda() + " pesos");
+				Estandar.adaptarPanelCentro(vCliente, vCliente.getPc());	
+				vCliente.getPc().getEnombre().setText("Bienvenido, " + usuario.getNombre());
+				vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
+				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 		
 				oyentesVcliente();
 				
@@ -217,11 +218,11 @@ public class Controller implements ActionListener{
 					int randomNumber = random.nextInt(2500001) + 500000;
 					int cupo = randomNumber;
 					
-					Usuario usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0);
+					usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0);
 					boolean respuesta = lista.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
-						JOptionPane.showMessageDialog(null, "Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+						MensajeInformacion("Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso");
 					}else {
 						MensajeError("Fallo al registrar");
 					}
@@ -248,32 +249,58 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("bABONARMENU")){
-			vCliente.setTitle("Abono de credito");
-			vCliente.getPa().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
-			vCliente.getPa().getEingrese().setForeground(new Color(92,92,102));
-			vCliente.getPc().setVisible(false);
-			vCliente.getPa().getBabonar().addActionListener(this);
-			vCliente.getPa().getBcerrar().addActionListener(this);
-			vCliente.getPa().setVisible(true);
-			vCliente.getPa().getTmonto().setText(null);
-			vCliente.getLayeredPane().remove(vCliente.getPc());
-			vCliente.getLayeredPane().add(vCliente.getPa(), Integer.valueOf(1));
+			if(usuario.getDeuda() == 0) {
+				MensajeError("No es posible abonar, no cuenta con una deuda");
+			}else {
+				vCliente.setTitle("Abono de credito");
+				vCliente.getPa().geteDineropendiente().setText("$ " + String.valueOf(usuario.getDeuda() + " pesos"));
+				vCliente.getPa().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
+				vCliente.getPa().getEingrese().setForeground(new Color(92,92,102));
+				vCliente.getPc().setVisible(false);
+				vCliente.getPa().getBabonar().addActionListener(this);
+				vCliente.getPa().getBcerrar().addActionListener(this);
+				vCliente.getPa().setVisible(true);
+				vCliente.getPa().getTmonto().setText(null);
+				vCliente.getLayeredPane().remove(vCliente.getPc());
+				vCliente.getLayeredPane().add(vCliente.getPa(), Integer.valueOf(1));
+			}
 		}
 		
 		// Menu Abono
 		if(comando.equals("bABONAR")) {
-			if(vCliente.getPa().getTmonto().getText().equals("")) {
+			long monto = 0;
+			try {
+			monto = Integer.parseInt(vCliente.getPa().getTmonto().getText());
+			}catch(NumberFormatException n) {
+				
+			}
+			if(vCliente.getPa().getTmonto().getText().equals("") ||  monto <= 0 || monto > usuario.getDeuda()) {
 				vCliente.getPa().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
 				vCliente.getPa().getEingrese().setForeground(Color.RED);
+				vCliente.getPa().getTmonto().setText("");
 			}else {
-				System.out.println("abonado " + vCliente.getPa().getTmonto().getText());
+				MensajeInformacion("Ha abonado $" + vCliente.getPa().getTmonto().getText() + " pesos", "Abono exitoso");
+				usuario.setDeuda(usuario.getDeuda()-Integer.parseInt(vCliente.getPa().getTmonto().getText()));
+				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
+				vCliente.getPa().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPa());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+				vCliente.getPa().geteDineropendiente().setText("$ " + String.valueOf(usuario.getDeuda() + " pesos"));
+				vCliente.getPa().getTmonto().setText("");
 			}
 		}
-		if(comando.equals("bCANCELAR")) {
-			vCliente.getPa().setVisible(false);
-			vCliente.getPc().setVisible(true);
-			vCliente.getLayeredPane().remove(vCliente.getPa());
-			vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+		if(comando.equals("bCANCELARABONO")) {
+			try {
+				vCliente.getPa().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPa());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPa().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
 		}
 		
 		// Menu CLIENTE
@@ -301,7 +328,50 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bPEDIRSOBRECUPO")){
 			vCliente.setTitle("Solicitud de sobrecupo");
-			System.out.println("sobre cupo");
+			vCliente.getPs().geteDinerodisponible().setText("$ " + String.valueOf(usuario.getCredito() + " pesos"));
+			vCliente.getPs().getEingrese().setText("Ingrese cuanto sobrecupo solicita:");
+			vCliente.getPs().getEingrese().setForeground(new Color(92,92,102));
+			vCliente.getPc().setVisible(false);
+			vCliente.getPs().getBsolicitar().addActionListener(this);
+			vCliente.getPs().getBcerrar().addActionListener(this);
+			vCliente.getPs().setVisible(true);
+			vCliente.getPs().getTmonto().setText(null);
+			vCliente.getLayeredPane().remove(vCliente.getPc());
+			vCliente.getLayeredPane().add(vCliente.getPs(), Integer.valueOf(1));
+		}
+		
+		// Menu Sobrecupo
+		if(comando.equals("bSOLICITAR")) {
+			long monto = 0;
+			try {
+			monto = Integer.parseInt(vCliente.getPs().getTmonto().getText());
+			}catch(NumberFormatException n) {
+				
+			}
+			if(vCliente.getPs().getTmonto().getText().equals("") || monto <= 0) {
+				vCliente.getPs().getEingrese().setText("Ingrese cuanto sobrecupo solicita:");
+				vCliente.getPs().getEingrese().setForeground(Color.RED);
+				vCliente.getPs().getTmonto().setText("");
+			}else {
+				MensajeInformacion("Ha solicitado un sobrecupo de $" + vCliente.getPs().getTmonto().getText() + " pesos", "Sobrecupo solicitado");
+				vCliente.getPs().getTmonto().setText("");
+				vCliente.getPs().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPs());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
+		}
+		if(comando.equals("bCANCELARSOBRECUPO")) {
+			try {
+				vCliente.getPs().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPs());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPs().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
 		}
 		
 		// Menu CLIENTE
@@ -319,13 +389,21 @@ public class Controller implements ActionListener{
 			if(comando.equals("b"+producto.getNombre())) {
 				 int cantidad = (int) vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).getValue();
 				if( cantidad > 0){
+					int totalCompra =(int) (cantidad*producto.getPrecio());
 					Object[] opciones = {"Sí", "No"}; 
 					int confirmar = JOptionPane.showOptionDialog(null, "Desea comprar "+cantidad+" "+producto.getNombre(), "Confirmar compra", 
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
 					if (confirmar == JOptionPane.YES_OPTION) {
-						JOptionPane.showMessageDialog(null, "Usted ha comprado " + cantidad + " " +producto.getNombre() 
-						+ "\nTotal: " + ((int)cantidad*producto.getPrecio() + " pesos"));
-						vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).setValue(0);
+						if(totalCompra < usuario.getCredito()) {
+							JOptionPane.showMessageDialog(null, "Usted ha comprado " + cantidad + " " +producto.getNombre() 
+							+ "\nTotal: " + totalCompra + " pesos");
+							usuario.setCredito(usuario.getCredito() - totalCompra);
+							usuario.setDeuda(usuario.getDeuda() + totalCompra);
+							vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
+							vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).setValue(0);
+						}else {
+							MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
+						}
 					}
 	
 				}	
@@ -333,6 +411,7 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("bREGRESAR")){
+			vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
 			vCliente.setVisible(true);
 			vCompra.setVisible(false);
 		}
@@ -365,8 +444,10 @@ public class Controller implements ActionListener{
 	
 	public void MensajeError(String texto) {
 		JOptionPane.showMessageDialog(null, texto, "Error", JOptionPane.ERROR_MESSAGE);	
-
 	}
-
+	
+	public void MensajeInformacion(String texto, String titulo) {
+		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);	
+	}
 	
 }
