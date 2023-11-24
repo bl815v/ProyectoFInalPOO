@@ -32,19 +32,15 @@ public class PanelLogin extends JPanel{
 	
 	public void inicializarComponentes() {
 		
-		etitulo = new JLabel("HIDE&SEEK");
-		etitulo.setFont(new Font("Arial", Font.BOLD, 22));
+		etitulo = Estandar.HideSeek();
 		add(etitulo);
 		
-		esubtitulo = new JLabel("Incia sesion para continuar.");
-		esubtitulo.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubtitulo.setForeground(new Color(92,92,102));
+		esubtitulo = Estandar.labelGris("Incia sesion para continuar.");
 		add(esubtitulo);
 		
 		add(Estandar.Espacio());
 		
-		eusuario = new JLabel("Usuario"); 
-		eusuario.setFont(new Font("Arial", Font.PLAIN, 18));
+		eusuario = Estandar.labelNegro("Usuario");
 		add(eusuario);
 		esubusuario = new JLabel("Ingrese su nombre de usuario (alias):");
 		esubusuario.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -64,8 +60,7 @@ public class PanelLogin extends JPanel{
         
         add(Estandar.Separador());
 		
-		eclave = new JLabel("Clave"); 
-		eclave.setFont(new Font("Arial", Font.PLAIN, 18));
+		eclave = Estandar.labelNegro("Clave"); 
 		add(eclave);
 		esubclave = new JLabel("Ingrese su clave:");
 		esubclave.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -99,7 +94,6 @@ public class PanelLogin extends JPanel{
 		bregistrate = Estandar.botonSinFondo("Registrate"); 
 		bregistrate.setActionCommand("bREGISTRATE");
 		add(bregistrate);
-		
 	}
 
 

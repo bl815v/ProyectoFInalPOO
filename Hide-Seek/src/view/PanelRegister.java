@@ -45,45 +45,29 @@ public class PanelRegister extends JPanel{
 		JPanel Derecha = new JPanel();
 		Derecha.setLayout(new BoxLayout(Derecha, BoxLayout.Y_AXIS));
 				
-		etitulo = new JLabel("HIDE&SEEK");
-		etitulo.setFont(new Font("Arial", Font.BOLD, 22));
+		etitulo = Estandar.HideSeek();
 		Izquierda.add(etitulo);
-		esubtitulo = new JLabel("Registrese para continuar.");
-		esubtitulo.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubtitulo.setForeground(new Color(92,92,102));
+		esubtitulo = Estandar.labelGris("Registrese para continuar.");
 		Izquierda.add(esubtitulo);
-		JSeparator espacio = new JSeparator();
-		espacio.setPreferredSize(new Dimension(1, 50));
-		espacio.setMaximumSize(new Dimension(1, 50));
-		espacio.setForeground(getBackground());
+		
+		JSeparator espacio = Estandar.Espacio(1,50);
 		Izquierda.add(espacio);
 		
-		enombre = new JLabel("Nombres y apellidos"); 
-		enombre.setFont(new Font("Arial", Font.PLAIN, 18));
+		enombre = Estandar.labelNegro("Nombres y apellidos"); 
 		Izquierda.add(enombre);
-		esubnombre = new JLabel("Ingrese sus nombres y apellidos:");
-		esubnombre.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubnombre.setForeground(new Color(92,92,102));
+		esubnombre = Estandar.labelGris("Ingrese sus nombres y apellidos:");
 		Izquierda.add(esubnombre);
 		
 		JPanel panelAuxTnombre = new JPanel(new BorderLayout()); 
 		panelAuxTnombre.setMaximumSize(new Dimension(600, 30)); 
-		tnombre = new JTextField();
-		tnombre.setBorder(null);
-		tnombre.setBackground(null);
-		tnombre.setFont(new Font("Arial", Font.PLAIN, 13));
-		tnombre.setForeground(new Color(92,92,102));
-		tnombre.setPreferredSize(new Dimension(300, 30)); 
+		tnombre = campoTexto();
         panelAuxTnombre.add(tnombre, BorderLayout.CENTER);
         Izquierda.add(panelAuxTnombre);
         Izquierda.add(Estandar.Separador());
 		
-		egenero = new JLabel("Genero"); 
-		egenero.setFont(new Font("Arial", Font.PLAIN, 18));
+		egenero = Estandar.labelNegro("Genero"); 
 		Izquierda.add(egenero);
-		esubgenero = new JLabel("Ingrese su genero:");
-		esubgenero.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubgenero.setForeground(new Color(92,92,102));
+		esubgenero = Estandar.labelGris("Ingrese su genero:");
 		Izquierda.add(esubgenero);
 		
 		JPanel panelAuxgenero = new JPanel(new BorderLayout());
@@ -101,82 +85,51 @@ public class PanelRegister extends JPanel{
 		Izquierda.add(Estandar.Espacio());
 		
 		Derecha.add(Estandar.Espacio(1, 95));
-		eusuario = new JLabel("Usuario");
-		eusuario.setFont(new Font("Arial", Font.PLAIN, 18));
+		eusuario = Estandar.labelNegro("Usuario");
 		Derecha.add(eusuario);
-		esubusuario = new JLabel("Ingrese un nombre de usuario (alias):");
-		esubusuario.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubusuario.setForeground(new Color(92,92,102));
+		esubusuario = Estandar.labelGris("Ingrese un nombre de usuario (alias):");
 		Derecha.add(esubusuario);
 		
 		JPanel panelAuxTusuario = new JPanel(new BorderLayout()); 
 		panelAuxTusuario.setMaximumSize(new Dimension(600, 30)); 
-        tusuario = new JTextField();
-        tusuario.setBorder(null);
-        tusuario.setBackground(null);
-		tusuario.setFont(new Font("Arial", Font.PLAIN, 13));
-		tusuario.setForeground(new Color(92,92,102));
-        tusuario.setPreferredSize(new Dimension(300, 30)); 
+        tusuario = campoTexto(); 
         panelAuxTusuario.add(tusuario, BorderLayout.CENTER);
         Derecha.add(panelAuxTusuario);
         Derecha.add(Estandar.Separador());
         
-        ecorreo = new JLabel("Correo"); 
-		ecorreo.setFont(new Font("Arial", Font.PLAIN, 18));
+        ecorreo = Estandar.labelNegro("Correo"); 
 		Derecha.add(ecorreo);
-		esubcorreo = new JLabel("Ingrese su correo electronico:");
-		esubcorreo.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubcorreo.setForeground(new Color(92,92,102));
+		esubcorreo = Estandar.labelGris("Ingrese su correo electronico:");
 		Derecha.add(esubcorreo);
 		
 		JPanel panelAuxTcorreo = new JPanel(new BorderLayout()); 
 		panelAuxTcorreo.setMaximumSize(new Dimension(600, 30)); 
-		tcorreo = new JTextField();
-		tcorreo.setBorder(null);
-		tcorreo.setBackground(null);
-		tcorreo.setFont(new Font("Arial", Font.PLAIN, 13));
-		tcorreo.setForeground(new Color(92,92,102));
-		tcorreo.setPreferredSize(new Dimension(300, 30)); 
+		tcorreo = campoTexto();
 		panelAuxTcorreo.add(tcorreo, BorderLayout.CENTER);
 		Derecha.add(panelAuxTcorreo);
 		Derecha.add(Estandar.Separador());
 
-		eclave = new JLabel("Clave"); 
-		eclave.setFont(new Font("Arial", Font.PLAIN, 18));
+		eclave = Estandar.labelNegro("Clave"); 
 		Izquierda.add(eclave);
-		esubclave = new JLabel("Ingrese una clave:");
-		esubclave.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubclave.setForeground(new Color(92,92,102));
+		esubclave = Estandar.labelGris("Ingrese una clave:");
 		Izquierda.add(esubclave);
 		
 		JPanel panelAuxTclave = new JPanel(new BorderLayout()); 
 		panelAuxTclave.setMaximumSize(new Dimension(600, 30)); 
-        tclave = new JPasswordField();
-        tclave.setBorder(null);
-        tclave.setBackground(null);
-        tclave.setFont(new Font("Arial", Font.PLAIN, 13));
-        tclave.setForeground(new Color(92,92,102));
-        tclave.setPreferredSize(new Dimension(300, 30));
+        tclave = campoClave();
         panelAuxTclave.add(tclave, BorderLayout.CENTER);
         Izquierda.add(panelAuxTclave);
         Izquierda.add(Estandar.Separador(500, 30));
 		
-		erepetir = new JLabel("Repita la clave"); 
+		erepetir = Estandar.labelNegro("Repita la clave"); 
 		erepetir.setFont(new Font("Arial", Font.PLAIN, 18));
 		Derecha.add(erepetir);
-		esubrepetir = new JLabel("Ingrese la anterior clave:");
-		esubrepetir.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubrepetir.setForeground(new Color(92,92,102));
+		esubrepetir = Estandar.labelGris("Ingrese la anterior clave:");
 		Derecha.add(esubrepetir);
 		
 		JPanel panelAuxTrepetir = new JPanel(new BorderLayout()); 
 		panelAuxTrepetir.setMaximumSize(new Dimension(600, 30)); 
-        trepetir = new JPasswordField();
-        trepetir.setBorder(null);
-        trepetir.setBackground(null);
-        trepetir.setFont(new Font("Arial", Font.PLAIN, 13));
-        trepetir.setForeground(new Color(92,92,102));
-        trepetir.setPreferredSize(new Dimension(300, 30));
+        trepetir = campoClave();
         panelAuxTrepetir.add(trepetir, BorderLayout.CENTER);
         Derecha.add(panelAuxTrepetir);
         Derecha.add(Estandar.Separador());
@@ -189,9 +142,8 @@ public class PanelRegister extends JPanel{
 		
 
 		Izquierda.add(Estandar.Espacio(1, 60));
-		eyatienes = new JLabel("Ya tienes una cuenta?"); 
+		eyatienes = Estandar.labelGris("Ya tienes una cuenta?"); 
 		eyatienes.setFont(new Font("Arial", Font.PLAIN, 14));
-		eyatienes.setForeground(new Color(92,92,102));
 		Izquierda.add(eyatienes);
 		
 		blogin = Estandar.botonSinFondo("Inicia sesion"); 
@@ -202,6 +154,27 @@ public class PanelRegister extends JPanel{
 		add(Derecha);
 		
 	}
+	
+	private JTextField campoTexto() {
+		JTextField campo = new JTextField();
+		campo.setBorder(null);
+		campo.setBackground(null);
+		campo.setFont(new Font("Arial", Font.PLAIN, 13));
+		campo.setForeground(new Color(92,92,102));
+		campo.setPreferredSize(new Dimension(300, 30)); 
+		return campo;
+	}
+	
+	private JPasswordField campoClave() {
+		JPasswordField campo = new JPasswordField();
+		campo.setBorder(null);
+		campo.setBackground(null);
+		campo.setFont(new Font("Arial", Font.PLAIN, 13));
+		campo.setForeground(new Color(92,92,102));
+		campo.setPreferredSize(new Dimension(300, 30));
+		return campo;
+	}
+
 	
 
 	public JLabel getEtitulo() {

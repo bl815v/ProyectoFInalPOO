@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -46,9 +45,7 @@ public class PanelTienda extends JPanel{
 
 		norte.add(Estandar.Espacio(1,10));
 
-		esubtitulo = new JLabel("Selecciona la cantidad de productos a comprar "); 
-		esubtitulo.setFont(new Font("Arial", Font.PLAIN, 16));
-		esubtitulo.setForeground(new Color(92,92,102));
+		esubtitulo = Estandar.labelGris("Selecciona la cantidad de productos a comprar "); 
 		norte.add(esubtitulo);
 		
 		add(norte, BorderLayout.NORTH);
@@ -70,10 +67,10 @@ public class PanelTienda extends JPanel{
             panelProducto.add(etiquetaImagen);
             
             JPanel panelInfoProducto = new JPanel(new GridLayout(5, 1));
-            JLabel nombreProducto = new JLabel(producto.getNombre());
+            JLabel nombreProducto = Estandar.labelNegro(producto.getNombre());
             panelInfoProducto.add(nombreProducto);
             
-            JLabel precio = new JLabel("Precio: $" + String.valueOf((int)producto.getPrecio() + " pesos"));
+            JLabel precio = Estandar.labelGris("Precio: $" + String.valueOf((int)producto.getPrecio() + " pesos"));
             panelInfoProducto.add(precio);
 
             JPanel panelBotonCantidad = new JPanel(new GridLayout(1, 2));

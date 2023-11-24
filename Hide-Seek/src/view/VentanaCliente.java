@@ -10,8 +10,11 @@ import javax.swing.JLayeredPane;
 
 public class VentanaCliente extends JFrame{
 	
-	private PanelCliente pc;
 	private JLayeredPane layeredPane;
+	
+	private PanelCliente pc;
+	private PanelAbono pa;
+	
 	
 	public VentanaCliente() {
 		JFrame Ventana = this;
@@ -31,6 +34,7 @@ public class VentanaCliente extends JFrame{
             @Override
             public void componentResized(ComponentEvent e) {
             	Estandar.adaptarPanelCentro(Ventana, pc);
+            	Estandar.adaptarPanelCentro(Ventana, pa);
             }
         });
        
@@ -40,11 +44,22 @@ public class VentanaCliente extends JFrame{
 		layeredPane = new JLayeredPane();
 		getContentPane().add(layeredPane, BorderLayout.CENTER);
 		pc = new PanelCliente();
+		pa = new PanelAbono();
+		
 		layeredPane.add(pc, Integer.valueOf(1));	
 	
 		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, pc);
+	}
+
+	
+	public JLayeredPane getLayeredPane() {
+		return layeredPane;
+	}
+
+	public void setLayeredPane(JLayeredPane layeredPane) {
+		this.layeredPane = layeredPane;
 	}
 
 	public PanelCliente getPc() {
@@ -55,12 +70,12 @@ public class VentanaCliente extends JFrame{
 		this.pc = pc;
 	}
 
-	public JLayeredPane getLayeredPane() {
-		return layeredPane;
+	public PanelAbono getPa() {
+		return pa;
 	}
 
-	public void setLayeredPane(JLayeredPane layeredPane) {
-		this.layeredPane = layeredPane;
+	public void setPa(PanelAbono pa) {
+		this.pa = pa;
 	}
 	
 }

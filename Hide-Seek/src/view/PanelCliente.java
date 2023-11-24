@@ -1,9 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -30,14 +28,12 @@ public class PanelCliente extends JPanel{
 		JPanel norte = new JPanel();
 		norte.setLayout(new BoxLayout(norte, BoxLayout.Y_AXIS));
 		
-		etitulo = new JLabel("HIDE&SEEK");
-		etitulo.setFont(new Font("Arial", Font.BOLD, 22));
+		etitulo = Estandar.HideSeek();
 		norte.add(etitulo);
 
 		norte.add(Estandar.Espacio(1,10));
 
-		enombre = new JLabel("Bienvenido, "); 
-		enombre.setFont(new Font("Arial", Font.PLAIN, 18));
+		enombre = Estandar.labelNegro("Bienvenido, "); 
 		norte.add(enombre);
 		
 		add(norte, BorderLayout.NORTH);
@@ -54,16 +50,13 @@ public class PanelCliente extends JPanel{
 		eblanco = new JLabel();
 		arriba.add(eblanco);
 		
-		ecupoDisponible = new JLabel("Cupo Disponible:");
-		ecupoDisponible.setFont(new Font("Arial", Font.PLAIN, 16));
-		ecupoDisponible.setForeground(new Color(92,92,102));
+		ecupoDisponible = Estandar.labelGris("Cupo Disponible:");
 		arriba.add(ecupoDisponible);
 		
 		eblanco = new JLabel();
 		arriba.add(eblanco);
 		
-		eDinerodisponible = new JLabel("$ 1000000 pesos");
-		eDinerodisponible.setFont(new Font("Arial", Font.PLAIN, 18));
+		eDinerodisponible = Estandar.labelNegro("$ 1000000 pesos");
 		arriba.add(eDinerodisponible);
 		
 		bcomprar = Estandar.boton("Comprar");
@@ -75,16 +68,13 @@ public class PanelCliente extends JPanel{
 		eblanco = new JLabel();
 		arriba.add(eblanco);
 		
-		esaldoPendiente = new JLabel("Saldo Pendiente:");
-		esaldoPendiente.setFont(new Font("Arial", Font.PLAIN, 16));
-		esaldoPendiente.setForeground(new Color(92,92,102));
+		esaldoPendiente =Estandar.labelGris("Saldo Pendiente:");
 		arriba.add(esaldoPendiente);
 		
 		eblanco = new JLabel();
 		arriba.add(eblanco);
 		
-		eDineropendiente = new JLabel("$ 1000000 pesos");
-		eDineropendiente.setFont(new Font("Arial", Font.PLAIN, 18));
+		eDineropendiente = Estandar.labelNegro("$ 1000000 pesos");
 		arriba.add(eDineropendiente);
 
 		babonar = Estandar.boton("Abonar");
@@ -120,11 +110,7 @@ public class PanelCliente extends JPanel{
 		JPanel sur = new JPanel();
 		sur.setLayout(new BorderLayout());
 		
-		bcerrar = new JButton("Cerrar sesion");
-		bcerrar.setBackground(null);
-		bcerrar.setBorder(null);
-		bcerrar.setFont(new Font("Arial", Font.PLAIN, 14));
-		bcerrar.setForeground(new Color(84, 160, 227));
+		bcerrar = Estandar.botonSinFondo("Cerrar sesion");
 		bcerrar.setActionCommand("bCERRARSESION");
 		sur.add(Estandar.Espacio(), BorderLayout.NORTH);
 		sur.add(bcerrar, BorderLayout.WEST);

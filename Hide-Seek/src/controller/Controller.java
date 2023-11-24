@@ -122,7 +122,7 @@ public class Controller implements ActionListener{
 			vInicial.getPr().getEsubrepetir().setText("Ingrese la anterior clave:");
 			vInicial.getPr().getEsubrepetir().setForeground(new Color(92,92,102));
 			
-			vInicial.getPr().getLista_genero().removeActionListener(this);;
+			vInicial.getPr().getLista_genero().removeActionListener(this);
 			vInicial.getPl().setVisible(false);
 			vInicial.getPl().getTusuario().setText(null);
 			vInicial.getPl().getTclave().setText(null);
@@ -244,30 +244,67 @@ public class Controller implements ActionListener{
 			vCliente.setVisible(false);
 			vCompra = new VentanaCompra();
 			Estandar.adaptarPanelCentro(vCompra, vCompra.getPt());
-			
-
 			oyentesVcompra();
 		}
 		
 		if(comando.equals("bABONARMENU")){
-			System.out.println("Abonando");
+			vCliente.setTitle("Abono de credito");
+			vCliente.getPa().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
+			vCliente.getPa().getEingrese().setForeground(new Color(92,92,102));
+			vCliente.getPc().setVisible(false);
+			vCliente.getPa().getBabonar().addActionListener(this);
+			vCliente.getPa().getBcerrar().addActionListener(this);
+			vCliente.getPa().setVisible(true);
+			vCliente.getPa().getTmonto().setText(null);
+			vCliente.getLayeredPane().remove(vCliente.getPc());
+			vCliente.getLayeredPane().add(vCliente.getPa(), Integer.valueOf(1));
 		}
 		
+		// Menu Abono
+		if(comando.equals("bABONAR")) {
+			if(vCliente.getPa().getTmonto().getText().equals("")) {
+				vCliente.getPa().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
+				vCliente.getPa().getEingrese().setForeground(Color.RED);
+			}else {
+				System.out.println("abonado " + vCliente.getPa().getTmonto().getText());
+			}
+		}
+		if(comando.equals("bCANCELAR")) {
+			vCliente.getPa().setVisible(false);
+			vCliente.getPc().setVisible(true);
+			vCliente.getLayeredPane().remove(vCliente.getPa());
+			vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+		}
+		
+		// Menu CLIENTE
+		
 		if(comando.equals("bNUEVAPAREJA")){
+			vCliente.setTitle("Agregar nueva pareja");
 			System.out.println("Agregar nueva pareja");
 		}
-
+		
+		// Menu CLIENTE
+		
 		if(comando.equals("bPAREJASACTUALES")){
+			vCliente.setTitle("Parejas actuales");
 			System.out.println("lista de parejas");
 		}
-
+		
+		// Menu CLIENTE
+		
 		if(comando.equals("bVERHORARIOS")){
+			vCliente.setTitle("Horarios");
 			System.out.println("horarios");
 		}
 		
+		// Menu CLIENTE
+		
 		if(comando.equals("bPEDIRSOBRECUPO")){
+			vCliente.setTitle("Solicitud de sobrecupo");
 			System.out.println("sobre cupo");
 		}
+		
+		// Menu CLIENTE
 		
 		if(comando.equals("bCERRARSESION")){
 			vCliente.setVisible(false);

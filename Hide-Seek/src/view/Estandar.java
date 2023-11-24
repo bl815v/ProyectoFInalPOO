@@ -24,6 +24,25 @@ import javax.swing.event.DocumentListener;
 
 public abstract class Estandar {
 	
+	public static JLabel HideSeek() {
+		JLabel etitulo = new JLabel("HIDE&SEEK");
+		etitulo.setFont(new Font("Arial", Font.BOLD, 22));
+		return etitulo;
+	}
+	
+	public static JLabel labelGris(String nombre) {
+		JLabel subtitulo = new JLabel(nombre);
+		subtitulo.setFont(new Font("Arial", Font.PLAIN, 16));
+		subtitulo.setForeground(new Color(92,92,102));
+		return subtitulo;
+	}
+	
+	public static JLabel labelNegro(String nombre) {
+		JLabel titulo = new JLabel(nombre);
+		titulo.setFont(new Font("Arial", Font.PLAIN, 18));;
+		return titulo;
+	}
+	
 	public static void alertaCerrarVentana(JFrame frame) {
 		frame.addWindowListener(new WindowAdapter() {
 		    @Override
@@ -85,6 +104,7 @@ public abstract class Estandar {
 	
 	public static JSeparator Espacio() {
         JSeparator espacio = new JSeparator();
+        espacio.setForeground(Color.white);
 		espacio.setPreferredSize(new Dimension(1, 30));
 		espacio.setMaximumSize(new Dimension(1, 30));
 		return espacio;
@@ -92,6 +112,7 @@ public abstract class Estandar {
 	
 	public static JSeparator Espacio(int x, int y) {
         JSeparator espacio = new JSeparator();
+        espacio.setForeground(Color.white);
 		espacio.setPreferredSize(new Dimension(x, y));
 		espacio.setMaximumSize(new Dimension(x, y));
 		return espacio;
