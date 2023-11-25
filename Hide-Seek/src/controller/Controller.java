@@ -387,6 +387,7 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bCERRARSESION")){
 			vCliente.setVisible(false);
+			vInicial.getLayeredPane().add(Estandar.fondoImagen, Integer.valueOf(0));
 			vInicial.setVisible(true);
 			vInicial.getPl().getTclave().setText(null);
 			vInicial.getPl().getTusuario().setText(null);
