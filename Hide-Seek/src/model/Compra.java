@@ -1,19 +1,21 @@
 package model;
 
+import java.time.LocalTime;
+
 public class Compra extends Producto {
 	
 	private Usuario Comprador;
-	private Hora HoradeCompra;
+	private LocalTime HoradeCompra;
 	
 
-	public Compra(String nombre, String img, double precio, Usuario comprador, Hora horadecompra) {
+	public Compra(String nombre, String img, double precio, Usuario comprador, LocalTime localTime) {
 		super(nombre, img, precio);
 		
 		this.Nombre=nombre;
 		this.Img=img;
 		this.Precio=precio;
 		this.Comprador=comprador;
-		this.HoradeCompra=horadecompra;
+		this.HoradeCompra=localTime;
 	}
 
 

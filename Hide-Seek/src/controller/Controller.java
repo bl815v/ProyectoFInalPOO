@@ -15,7 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+import model.Compra;
 import model.Correo;
+import model.Hora;
+import model.ListadeCompras;
 import model.ListadeProductos;
 import model.ListadodeUsuarios;
 import model.Producto;
@@ -426,6 +429,13 @@ public class Controller implements ActionListener{
 							usuario.setDeuda(usuario.getDeuda() + totalCompra);
 							vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 							vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).setValue(0);
+							
+							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta());
+							for (int i = 0; i < cantidad; i++) {
+								ListadeCompras.add(x);
+								
+							}
+							
 						}else {
 							MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
 						}
