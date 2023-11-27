@@ -34,7 +34,7 @@ public class Controller implements ActionListener{
 	private VentanaInicial vInicial;
 	private VentanaCliente vCliente;
 	private VentanaCompra vCompra;
-	
+	private ListadeCompras listadecompra;	
 	private ListadodeUsuarios lista;
 	private Correo correos;
 	
@@ -44,7 +44,7 @@ public class Controller implements ActionListener{
 		vInicial = new VentanaInicial();
 		lista = new ListadodeUsuarios();
 		correos = new Correo();
-		
+		listadecompra=new ListadeCompras();
 		asignarOyentes();
 
 	}
@@ -433,7 +433,7 @@ public class Controller implements ActionListener{
 							
 							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta());
 							for (int i = 0; i < cantidad; i++) {
-								ListadeCompras.add(x);
+								listadecompra.agregarCompra(x);
 								
 							}
 							

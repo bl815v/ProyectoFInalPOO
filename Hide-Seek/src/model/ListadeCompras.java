@@ -11,6 +11,9 @@ private ArrayList<Compra>ListadeCompras;
 		
 	
 	}
+	 public void agregarCompra(Compra compra) {
+		 ListadeCompras.add(compra);
+	 }
 
 	public ArrayList<Compra> getListadeCompras() {
 		return ListadeCompras;
