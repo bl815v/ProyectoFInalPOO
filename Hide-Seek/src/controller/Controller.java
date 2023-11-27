@@ -22,6 +22,7 @@ import model.ListadeCompras;
 import model.ListadeProductos;
 import model.ListadodeUsuarios;
 import model.Producto;
+import model.Sede;
 import model.Usuario;
 import view.Estandar;
 import view.VentanaCliente;
@@ -37,7 +38,6 @@ public class Controller implements ActionListener{
 	private ListadeCompras listadecompra;	
 	private ListadodeUsuarios lista;
 	private Correo correos;
-	
 	private Usuario usuario;
 	
 	public Controller() {
@@ -431,7 +431,9 @@ public class Controller implements ActionListener{
 							vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 							vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).setValue(0);
 							
-							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta());
+							//String combobox objeto SEDE
+							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta(),);
+							
 							for (int i = 0; i < cantidad; i++) {
 								listadecompra.agregarCompra(x);
 								

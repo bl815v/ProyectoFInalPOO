@@ -8,7 +8,9 @@ public class Admin extends Persona{
 		this.Rol=rol;
 		this.clave=clave;
 		
-	}	
+	}
+	
+	
 	
 }
 	

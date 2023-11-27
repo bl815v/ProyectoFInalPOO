@@ -7,11 +7,12 @@ public class Pareja extends Persona{
 	private String genero;
 	private int credito;
 	private int deuda;
+	private Sede sededecompra;
 	private String Horario[][];
 	
 	
 	public Pareja(String nombre, String user, String rol, String contraseña,String correo, 
-			String genero, int credito, int deuda, String horario[][]) {
+			String genero, int credito, int deuda, String horario[][], Sede sededecompra) {
 	super(user,rol,contraseña);
 	this.nombre=nombre;
 	this.correo=correo;
@@ -22,6 +23,7 @@ public class Pareja extends Persona{
 	this.credito=credito;
 	this.deuda=deuda;
 	this.Horario=horario;
+	this.sededecompra=sededecompra;
 	}
 
 

@@ -5,17 +5,27 @@ import java.time.LocalTime;
 public class Compra extends Producto {
 	
 	private Usuario Comprador;
-	private LocalTime HoradeCompra;
+	private Sede Sededondesecompra;
 	
 
-	public Compra(String nombre, String img, double precio, Usuario comprador, LocalTime localTime) {
+	public Compra(String nombre, String img, double precio, Usuario comprador, LocalTime localTime, Sede sededecompra) {
 		super(nombre, img, precio);
 		
 		this.Nombre=nombre;
 		this.Img=img;
 		this.Precio=precio;
 		this.Comprador=comprador;
-		this.HoradeCompra=localTime;
+		this.Sededondesecompra=sededecompra;
+	}
+
+
+	public Sede getSededondesecompra() {
+		return Sededondesecompra;
+	}
+
+
+	public void setSededondesecompra(Sede sededondesecompra) {
+		Sededondesecompra = sededondesecompra;
 	}
 
 
@@ -29,12 +39,4 @@ public class Compra extends Producto {
 	}
 
 
-	public Hora getHoradeCompra() {
-		return HoradeCompra;
-	}
-
-
-	public void setHoradeCompra(Hora horadeCompra) {
-		HoradeCompra = horadeCompra;
-	}
 }
