@@ -17,7 +17,7 @@ public class VentanaCompra extends JFrame{
 		JFrame Ventana = this;
 		setTitle("Catalogo - HIDE&SEEK");
 		setSize(750, 680);
-		setMinimumSize(new Dimension(750, 620));
+		setMinimumSize(new Dimension(770, 620));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
 
@@ -42,8 +42,8 @@ public class VentanaCompra extends JFrame{
 		pt = new PanelTienda();
 		layeredPane.add(pt, Integer.valueOf(1));	
 	
-		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
-		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
+		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
+		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, pt);
 	}
 

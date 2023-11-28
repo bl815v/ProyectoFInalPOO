@@ -46,8 +46,8 @@ public class VentanaInicial extends JFrame{
 		pr = new PanelRegister();
 		layeredPane.add(pl, Integer.valueOf(1));	
 	
-		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
-		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
+		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
+		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, pl);
 	}
 	

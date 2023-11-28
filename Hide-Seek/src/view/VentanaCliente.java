@@ -51,8 +51,8 @@ public class VentanaCliente extends JFrame{
 		
 		layeredPane.add(pc, Integer.valueOf(1));	
 	
-		Estandar.fondoImagen.setBounds(0, 0, getWidth(), getHeight());
-		layeredPane.add(Estandar.fondoImagen, Integer.valueOf(0));
+		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
+		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, pc);
 	}
 
