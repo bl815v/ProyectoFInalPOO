@@ -11,11 +11,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
 
+import model.Admin;
 import model.Compra;
 import model.Correo;
 import model.Hora;
@@ -30,6 +28,7 @@ import model.Producto;
 import model.Sede;
 import model.Usuario;
 import view.Estandar;
+import view.VentanaAdmin;
 import view.VentanaCliente;
 import view.VentanaCompra;
 import view.VentanaInicial;
@@ -40,19 +39,23 @@ public class Controller implements ActionListener{
 	private VentanaInicial vInicial;
 	private VentanaCliente vCliente;
 	private VentanaCompra vCompra;
+	private VentanaAdmin vAdmin;
 	private ListadeCompras listadecompra;	
 	private ListadodeUsuarios lista;
 	private ListadeParejas listapareja;
 	private ListadeSedes listaSedes; 
 	private Correo correos;
 	private Usuario usuario;
+	private Admin admin;
 	private Pareja pareja;
+	
 	
 	public Controller() { 
 		vInicial = new VentanaInicial();
 		lista = new ListadodeUsuarios();
 		listapareja = new ListadeParejas(); 
 		correos = new Correo();
+		admin = new Admin("ADMIN", "Admin", "0000");
 		listadecompra=new ListadeCompras();
 		listaSedes = new ListadeSedes();
 		asignarOyentes();
@@ -103,6 +106,22 @@ public class Controller implements ActionListener{
 			String eusuario = vInicial.getPl().getTusuario().getText();
 			char[] clave = vInicial.getPl().getTclave().getPassword();
 			String stringclave = new String(clave);
+			if(eusuario.equals("ADMIN")) {
+				if (clave.length == 0 || !stringclave.equals(admin.getClave().toString())) {
+					vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
+					vInicial.getPl().getEsubclave().setForeground(Color.RED);
+				}else {
+					vInicial.setVisible(false);
+					vAdmin = new VentanaAdmin();
+					vAdmin.setVisible(true);
+					Estandar.adaptarPanelCentro(vAdmin, vAdmin.getPa());	
+					vAdmin.getPa().getBinformes().addActionListener(this);
+					vAdmin.getPa().getBusuarios().addActionListener(this);
+					vAdmin.getPa().getBparejas().addActionListener(this);
+					vAdmin.getPa().getBsolicitudes().addActionListener(this);
+					vAdmin.getPa().getBsedes().addActionListener(this);
+				}
+			}
 			try {
 			usuario = lista.buscarUsuario(eusuario);
 			if(eusuario.equals("") || !eusuario.equals(usuario.getUser())) {
@@ -119,7 +138,7 @@ public class Controller implements ActionListener{
 				vCliente.getPc().getEnombre().setText("Bienvenido, " + usuario.getNombre());
 				vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
 				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
-		
+
 				oyentesVcliente();
 				
 			}
@@ -129,6 +148,26 @@ public class Controller implements ActionListener{
 			}
 		}
 		
+		// COMANDOS ADMIN
+		if(comando.equals("BINFORMES_ADMIN")) {
+			System.out.println("Informes estadisticos");
+		}
+		
+		if(comando.equals("BUSUARIOS_ADMIN")) {
+			System.out.println("lista de usuarios");
+		}
+		
+		if(comando.equals("BPAREJAS_ADMIN")) {
+			System.out.println("lista de parejas");
+		}
+		
+		if(comando.equals("BSOLICITUDES_ADMIN")) {
+			System.out.println("Solicitudes de sobrecupo");
+		}
+		
+		if(comando.equals("BSEDES_ADMIN")) {
+			System.out.println("Lista de sedes");
+		}
 		
 		if (comando.equals("bREGISTRATE")) {
 			vInicial.getPr().getEsubnombre().setText("Ingrese sus nombres y apellidos:");
@@ -486,20 +525,25 @@ public class Controller implements ActionListener{
 		int[][] horarioPareja = Horarios.nuevoHorario();
 		for (int i = 0; i < 49; i++) { 	
 			final int j = i;
-			JButton horarioselect = vCliente.getPrh().buscarboton("b"+i);
-			horarioselect.addActionListener(et -> {
-				int fila = j / 7;
-				int columna = j % 7;
-				if(horarioPareja[fila][columna] == 0) {
-					horarioselect.setBackground(new Color(255, 122, 129));
-					horarioPareja[fila][columna] = 1;
-				}else if(horarioPareja[fila][columna] == 1){
-					horarioselect.setBackground(new Color(171, 245, 169));
-					horarioPareja[fila][columna] = 0;
-				}
-				System.out.println("Fila: " + fila + ", Columna: " + columna+" = " + horarioPareja[fila][columna]);
+			try {
+				JButton horarioselect = vCliente.getPrh().buscarboton("b"+i);
 				
-			});
+				horarioselect.addActionListener(et -> {
+					int fila = j / 7;
+					int columna = j % 7;
+					if(horarioPareja[fila][columna] == 0) {
+						horarioselect.setBackground(new Color(255, 122, 129));
+						horarioPareja[fila][columna] = 1;
+					}else if(horarioPareja[fila][columna] == 1){
+						horarioselect.setBackground(new Color(171, 245, 169));
+						horarioPareja[fila][columna] = 0;
+					}
+					System.out.println("Fila: " + fila + ", Columna: " + columna+" = " + horarioPareja[fila][columna]);
+					
+				});
+			}catch (NullPointerException noexiste) {
+				
+			}
 		}
 		if(comando.equals("bRegistrarpareja")) {
 			String nombre = vCliente.getPrp().getTnombre().getText();
