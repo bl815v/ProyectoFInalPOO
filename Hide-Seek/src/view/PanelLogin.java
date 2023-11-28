@@ -60,12 +60,7 @@ public class PanelLogin extends JPanel{
 		
 		JPanel panelAuxTusuario = new JPanel(new BorderLayout()); 
 		panelAuxTusuario.setMaximumSize(new Dimension(600, 30)); 
-        tusuario = new JTextField();
-        tusuario.setBorder(null);
-        tusuario.setBackground(null);
-		tusuario.setFont(new Font("Arial", Font.PLAIN, 13));
-		tusuario.setForeground(new Color(92,92,102));
-        tusuario.setPreferredSize(new Dimension(300, 30));
+        tusuario = Estandar.campoTexto();
         panelAuxTusuario.add(tusuario, BorderLayout.CENTER);
         add(panelAuxTusuario);
         
@@ -80,12 +75,7 @@ public class PanelLogin extends JPanel{
 
 		JPanel panelAuxTclave = new JPanel(new BorderLayout()); 
 		panelAuxTclave.setMaximumSize(new Dimension(600, 30)); 
-        tclave = new JPasswordField();
-        tclave.setBorder(null);
-        tclave.setBackground(null);
-        tclave.setFont(new Font("Arial", Font.PLAIN, 13));
-        tclave.setForeground(new Color(92,92,102));
-        tclave.setPreferredSize(new Dimension(300, 30));
+        tclave = Estandar.campoClave();
         panelAuxTclave.add(tclave, BorderLayout.CENTER);
         add(panelAuxTclave);
        

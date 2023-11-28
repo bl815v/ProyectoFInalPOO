@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -18,9 +19,13 @@ import javax.swing.JSpinner;
 import model.Compra;
 import model.Correo;
 import model.Hora;
+import model.Horarios;
 import model.ListadeCompras;
+import model.ListadeParejas;
 import model.ListadeProductos;
+import model.ListadeSedes;
 import model.ListadodeUsuarios;
+import model.Pareja;
 import model.Producto;
 import model.Sede;
 import model.Usuario;
@@ -37,18 +42,23 @@ public class Controller implements ActionListener{
 	private VentanaCompra vCompra;
 	private ListadeCompras listadecompra;	
 	private ListadodeUsuarios lista;
+	private ListadeParejas listapareja;
+	private ListadeSedes listaSedes; 
 	private Correo correos;
 	private Usuario usuario;
+	private Pareja pareja;
 	
-	public Controller() {
+	public Controller() { 
 		vInicial = new VentanaInicial();
 		lista = new ListadodeUsuarios();
+		listapareja = new ListadeParejas(); 
 		correos = new Correo();
 		listadecompra=new ListadeCompras();
+		listaSedes = new ListadeSedes();
 		asignarOyentes();
 
 	}
-	
+
 	public void asignarOyentes() {
 		vInicial.getPl().getBentrar().addActionListener(this);
 		vInicial.getPl().getBregistrate().addActionListener(this);
@@ -63,12 +73,17 @@ public class Controller implements ActionListener{
 		vCliente.getPc().getBabonar().addActionListener(this);
 		vCliente.getPc().getBparejasActuales().addActionListener(this);
 		vCliente.getPc().getBnuevaPareja().addActionListener(this);
-		vCliente.getPc().getBverHorarios().addActionListener(this);
+		vCliente.getPc().getBhistorial().addActionListener(this);
 		vCliente.getPc().getBpedirSobrecupo().addActionListener(this);
 		vCliente.getPc().getBcerrar().addActionListener(this);
+
+		vCliente.getPrp().getBregresar().addActionListener(this);
+		vCliente.getPrp().getBregistrar().addActionListener(this);
+		
 	}
 	
 	public void oyentesVcompra() {
+		
 		ListadeProductos listaProductos = new ListadeProductos();
 		for (Producto producto : listaProductos.getListadeProductos()) {
 		vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
@@ -99,6 +114,7 @@ public class Controller implements ActionListener{
 			}else {
 				vInicial.setVisible(false);
 				vCliente = new VentanaCliente();
+				vCliente.setVisible(true);
 				Estandar.adaptarPanelCentro(vCliente, vCliente.getPc());	
 				vCliente.getPc().getEnombre().setText("Bienvenido, " + usuario.getNombre());
 				vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
@@ -112,7 +128,6 @@ public class Controller implements ActionListener{
 				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
 			}
 		}
-		
 		
 		
 		if (comando.equals("bREGISTRATE")) {
@@ -151,7 +166,6 @@ public class Controller implements ActionListener{
 		if(comando.equals("bmenuLOGIN")) {
 			volver();
 		}
-		
 		
 		
 		if(comando.equals("bREGISTRAR")) {
@@ -252,6 +266,10 @@ public class Controller implements ActionListener{
 			vCompra.getPt().getEsedes().setForeground(new Color(92,92,102));
 			vCompra.getPt().getLista_sedes().addItem(" ");
 			vCompra.getPt().getLista_sedes().setSelectedItem(" ");
+
+			for (Sede sede : listaSedes.getListadeSedes()) {
+				vCompra.getPt().getLista_sedes().addItem(sede.getNombre());
+			}
 			oyentesVcompra();
 		}
 		
@@ -316,8 +334,253 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bNUEVAPAREJA")){
 			vCliente.setTitle("Agregar nueva pareja");
-			System.out.println("Agregar nueva pareja");
+			vCliente.getPrp().getEsubnombre().setText("Ingrese sus nombres y apellidos:");
+			vCliente.getPrp().getEsubnombre().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubusuario().setText("Ingrese su nombre de usuario (alias):");
+			vCliente.getPrp().getEsubusuario().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubcorreo().setText("Ingrese su correo electronico:");
+			vCliente.getPrp().getEsubcorreo().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubcredito().setText("Ingrese la cantidad de dinero ($):");
+			vCliente.getPrp().getEsubcredito().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubclave().setText("Ingrese su clave:");
+			vCliente.getPrp().getEsubclave().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubrepetir().setText("Ingrese la anterior clave:");
+			vCliente.getPrp().getEsubrepetir().setForeground(new Color(92,92,102));
+			vCliente.getPrp().getEsubrepetir().setText("Ingrese la anterior clave:");
+			vCliente.getPrp().getEsubrepetir().setForeground(new Color(92,92,102));
+			
+			vCliente.getPrp().getLista_genero().removeActionListener(this);
+			vCliente.getPrp().getLista_sedes().removeActionListener(this);
+			vCliente.getPc().setVisible(false);
+			vCliente.getPrp().getLista_genero().addItem(" ");
+			vCliente.getPrp().getLista_genero().setSelectedItem(" ");
+			vCliente.getPrp().getLista_genero().addActionListener(this);
+			vCliente.getPrp().getLista_sedes().addItem(" ");
+			vCliente.getPrp().getLista_sedes().setSelectedItem(" ");
+			vCliente.getPrp().getLista_sedes().addActionListener(this);
+			vCliente.getPrp().setVisible(true);
+			vCliente.getLayeredPane().remove(vCliente.getPc());
+			vCliente.getLayeredPane().add(vCliente.getPrp(), Integer.valueOf(1));
+			Estandar.adaptarPanelCentro(vCliente, vCliente.getPrp());
+			vCliente.setMinimumSize(new Dimension(675, 580));
+			if(695 > vCliente.getSize().height) {
+				vCliente.setSize(720, 770);
+			}
+			vCliente.setLocationRelativeTo(null);
 		}
+		// Menu registrar pareja
+		if(comando.equals("LISTAsedes")) {
+			vCliente.getPrp().getLista_sedes().removeItem(" ");
+			Estandar.revisarJComboBoxString(vCliente.getPrp().getLista_sedes(), vCliente.getPrp().getEsubsede(), "Ingrese la sede:");
+		}
+		
+
+		if(comando.equals("LISTAgeneropareja")) {
+			vCliente.getPrp().getLista_genero().removeItem(" ");
+			Estandar.revisarJComboBoxString(vCliente.getPrp().getLista_genero(), vCliente.getPrp().getEsubgenero(), "Ingrese su genero:");
+		}
+		if(comando.equals("bSiguiente")) {
+			boolean vnombre, vusuario, vgenero, vcorreo, vclave,vcorreoR,vusuarioR, vcredito, vsede;
+			if(vCliente.getPrp().getTnombre().getText().equals("")) {
+				vCliente.getPrp().getEsubnombre().setText("Debe ingresar un nombre");
+				vCliente.getPrp().getEsubnombre().setForeground(Color.RED);
+				vnombre = false;
+			}else {
+				vnombre = true;
+			}
+			if(vCliente.getPrp().getTusuario().getText().equals("")) {
+				vCliente.getPrp().getEsubusuario().setText("Ingrese un usuario valido");
+				vCliente.getPrp().getEsubusuario().setForeground(Color.RED);
+				vusuario = false;
+			}else {
+				vusuario = true;
+			}
+			if(vCliente.getPrp().getLista_genero().getSelectedItem().equals(" ")) {
+				vCliente.getPrp().getEsubgenero().setText("Debe seleccionar su genero");
+				vCliente.getPrp().getEsubgenero().setForeground(Color.RED);
+				vgenero = false;
+			}else {
+				vgenero = true;
+			}
+			if(vCliente.getPrp().getTcorreo().getText().equals("")) {
+				vCliente.getPrp().getEsubcorreo().setText("Debe ingresar un correo valido");
+				vCliente.getPrp().getEsubcorreo().setForeground(Color.RED);
+				vcorreo = false;
+			}else {
+				vcorreo=true;
+			}
+			int credito = 0;
+			try{
+				credito = Integer.parseInt(vCliente.getPrp().getTcredito().getText());	
+			}catch(NumberFormatException n) {
+				vCliente.getPrp().getEsubcredito().setText("Debe ingresar un credito valido");
+				vCliente.getPrp().getEsubcredito().setForeground(Color.RED);
+				vcredito = false;
+			}
+			if(vCliente.getPrp().getTcredito().getText().equals("") || credito <= 0 || credito > usuario.getCredito()) {
+				vCliente.getPrp().getEsubcredito().setText("Debe ingresar un credito valido");
+				vCliente.getPrp().getEsubcredito().setForeground(Color.RED);
+				vcredito = false;
+			}else {
+				vcredito=true;
+			}
+			if(vCliente.getPrp().getLista_sedes().getSelectedItem().equals(" ")) {
+				vCliente.getPrp().getEsubsede().setText("Debe seleccionar una sede");
+				vCliente.getPrp().getEsubsede().setForeground(Color.RED);
+				vsede = false;
+			}else {
+				vsede = true;
+			}
+			
+			if (lista.correoRepetido(vCliente.getPrp().getTcorreo().getText()) || listapareja.correoRepetido(vCliente.getPrp().getTcorreo().getText())) {
+				vCliente.getPrp().getEsubcorreo().setText("El correo ya existe");
+				vCliente.getPrp().getEsubcorreo().setForeground(Color.RED);
+				vcorreoR = false;
+			}else {
+				vcorreoR = true;
+			}
+			if(lista.usuarioRepetido(vCliente.getPrp().getTusuario().getText()) || listapareja.usuarioRepetido(vCliente.getPrp().getTusuario().getText())) {
+				vCliente.getPrp().getEsubusuario().setText("El usuario ya existe");
+				vCliente.getPrp().getEsubusuario().setForeground(Color.RED);
+				vusuarioR=false;
+			}else {
+				vusuarioR = true;
+			}
+			if (vCliente.getPrp().getTclave().getPassword().length == 0) {
+				vCliente.getPrp().getEsubclave().setText("Debe ingresar una clave");
+				vCliente.getPrp().getEsubclave().setForeground(Color.RED);
+				vclave = false;
+			} else {
+				vclave = true;
+			}
+			if(vnombre && vusuario && vgenero && vcorreo && vclave && vcorreoR && vusuarioR &vsede & vcredito){
+				char[] clave = vCliente.getPrp().getTclave().getPassword();
+				char[] repetir = vCliente.getPrp().getTrepetir().getPassword();
+				
+				if (!Arrays.equals(clave, repetir)) {
+					vCliente.getPrp().getEsubrepetir().setText("Las claves no coinciden");
+					vCliente.getPrp().getEsubrepetir().setForeground(Color.RED);
+				}else {
+					
+					vCliente.getPrh().getBregistrar().addActionListener(this);
+					vCliente.getPrh().getBregresar().addActionListener(this);
+					for (int i = 0; i < 49; i++) { 
+						vCliente.getPrh().buscarboton("b"+i).addActionListener(this);
+					}
+					vCliente.getPrh().getEbienvenido().setText("Asignar horario a " + vCliente.getPrp().getTnombre().getText());
+					vCliente.getPrh().getEsubbienvenido().setText("Haz clic en la franja de horario en la que prodra ir:");
+					vCliente.getPrh().getEsubbienvenido().setForeground(new Color(92,92,102));
+					vCliente.getPrp().setVisible(false);
+					vCliente.getPrh().setVisible(true);
+					vCliente.getLayeredPane().remove(vCliente.getPrp());
+					vCliente.getLayeredPane().add(vCliente.getPrh(), Integer.valueOf(1));
+					Estandar.adaptarPanelCentro(vCliente, vCliente.getPrp());
+					vCliente.setMinimumSize(new Dimension(700, 800));
+					if(700 > vCliente.getSize().height) {
+						vCliente.setSize(700, 800);
+					}
+					
+				}
+			}
+		}
+		int[][] horarioPareja = Horarios.nuevoHorario();
+		for (int i = 0; i < 49; i++) { 	
+			final int j = i;
+			JButton horarioselect = vCliente.getPrh().buscarboton("b"+i);
+			horarioselect.addActionListener(et -> {
+				int fila = j / 7;
+				int columna = j % 7;
+				if(horarioPareja[fila][columna] == 0) {
+					horarioselect.setBackground(new Color(255, 122, 129));
+					horarioPareja[fila][columna] = 1;
+				}else if(horarioPareja[fila][columna] == 1){
+					horarioselect.setBackground(new Color(171, 245, 169));
+					horarioPareja[fila][columna] = 0;
+				}
+				System.out.println("Fila: " + fila + ", Columna: " + columna+" = " + horarioPareja[fila][columna]);
+				
+			});
+		}
+		if(comando.equals("bRegistrarpareja")) {
+			String nombre = vCliente.getPrp().getTnombre().getText();
+			String alias = vCliente.getPrp().getTusuario().getText();
+			String correo = vCliente.getPrp().getTcorreo().getText();
+			String genero = vCliente.getPrp().getLista_genero().getItemAt(0);
+			String clavefinal = new String(vCliente.getPrp().getTclave().getPassword());
+			for (int i = 0; i < horarioPareja.length; i++) {
+	            for (int j = 0; j < horarioPareja[i].length; j++) {
+	                System.out.print(horarioPareja[i][j] + "\t");
+	            }
+	            System.out.println();
+	        }
+			
+			Sede sedeSelec = null;
+			for (Sede sede : listaSedes.getListadeSedes()) {
+				if(vCliente.getPrp().getLista_sedes().getSelectedItem().equals(sede.getNombre())) {
+					 sedeSelec = sede;	
+				}	
+			}
+			int credito = Integer.parseInt(vCliente.getPrp().getTcredito().getText());
+			if(Horarios.validarHorario(horarioPareja)) {
+				pareja = new Pareja(nombre, alias, "Pareja", clavefinal, correo, genero, credito, 0, horarioPareja, sedeSelec, usuario);
+				boolean respuesta = listapareja.agregarParejas(pareja);
+				if (respuesta) {
+					MensajeInformacion("Se ha registrado la pareja exitosamente!", "Registro exitoso");
+				}else {
+					MensajeError("Fallo al registrar");
+				}
+				listapareja.agregarParejas(pareja);
+				correos.enviarCorreo(correo,alias,clavefinal);
+			}else {
+				vCliente.getPrh().getEsubbienvenido().setForeground(Color.RED);
+			}
+		}
+		
+		if(comando.equals("bREGRESARhorario")) {
+			try {
+				vCliente.getPrh().setVisible(false);
+				vCliente.getPrp().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPrh());
+				vCliente.getLayeredPane().add(vCliente.getPrp(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPrh().setVisible(false);
+				vCliente.getPrp().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPrp(), Integer.valueOf(1));
+			}
+		}
+
+		
+		if(comando.equals("bREGRESARpareja")) {
+			vCliente.setTitle("Menu principal - HIDE&SEEK");
+			vCliente.setMinimumSize(new Dimension(675, 580));
+			try {
+				vCliente.getPrp().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPrp());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPrp().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
+			try {
+				vCliente.getPrp().getLista_genero().removeItem(" ");
+			}catch(ArrayIndexOutOfBoundsException a) {
+				
+			}
+			try {
+				vCliente.getPrp().getLista_sedes().removeItem(" ");
+			}catch(ArrayIndexOutOfBoundsException a) {
+				
+			}
+			vCliente.getPrp().getTnombre().setText(null);
+			vCliente.getPrp().getTusuario().setText(null);
+			vCliente.getPrp().getTcorreo().setText(null);
+			vCliente.getPrp().getTclave().setText(null);
+			vCliente.getPrp().getTrepetir().setText(null);
+			vCliente.getPrp().getTcredito().setText(null);
+
+		}		
 		
 		// Menu CLIENTE
 		
@@ -387,7 +650,7 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bCERRARSESION")){
 			vCliente.setVisible(false);
-			vInicial.getLayeredPane().add(Estandar.fondoImagen, Integer.valueOf(0));
+			vInicial.getLayeredPane().add(Estandar.getFondoImagen(), Integer.valueOf(0));
 			vInicial.setVisible(true);
 			vInicial.getPl().getTclave().setText(null);
 			vInicial.getPl().getTusuario().setText(null);
@@ -430,13 +693,17 @@ public class Controller implements ActionListener{
 							usuario.setDeuda(usuario.getDeuda() + totalCompra);
 							vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 							vCompra.getPt().buscarSpinner("sp"+producto.getNombre()).setValue(0);
-							
-							//String combobox objeto SEDE
-							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta(),);
-							
+							Sede sedecompra = null;
+							for (Sede sede : listaSedes.getListadeSedes()) {
+								if(vCompra.getPt().getLista_sedes().getSelectedItem().equals(sede.getNombre())) {
+									sedecompra = sede;	
+								}
+								
+							}
+							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta(), sedecompra);
+
 							for (int i = 0; i < cantidad; i++) {
 								listadecompra.agregarCompra(x);
-								
 							}
 							
 						}else {

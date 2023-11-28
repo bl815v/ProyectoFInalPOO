@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import model.Usuario;
 
 public class ListadodeUsuarios {
 private ArrayList<Usuario>ListadeUsuarios;
@@ -36,20 +35,24 @@ private ArrayList<Usuario>ListadeUsuarios;
 	}
 	
 	public boolean correoRepetido(String correo) {
+		if(ListadeUsuarios.isEmpty()) {
+			return false;
+		}
 		for (Usuario usuario:ListadeUsuarios) {
 			if (!usuario.getCorreo().equals(correo)) {
 				return false;	
-				
 			}
 		}
 		return true;		
 	}
 	
 	public boolean usuarioRepetido(String user) {
+		if(ListadeUsuarios.isEmpty()) {
+			return false;
+		}
 		for (Usuario usuario:ListadeUsuarios) {
 			if (!usuario.getUser().equals(user)) {
-				return false;	
-				
+				return false;			
 			}
 		}
 		return true;		

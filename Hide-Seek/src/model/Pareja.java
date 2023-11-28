@@ -8,11 +8,12 @@ public class Pareja extends Persona{
 	private int credito;
 	private int deuda;
 	private Sede sededecompra;
-	private String Horario[][];
+	private int Horario[][];
+	private Usuario usuario;
 	
 	
 	public Pareja(String nombre, String user, String rol, String contraseña,String correo, 
-			String genero, int credito, int deuda, String horario[][], Sede sededecompra) {
+			String genero, int credito, int deuda, int horario[][], Sede sededecompra, Usuario usuario) {
 	super(user,rol,contraseña);
 	this.nombre=nombre;
 	this.correo=correo;
@@ -24,6 +25,16 @@ public class Pareja extends Persona{
 	this.deuda=deuda;
 	this.Horario=horario;
 	this.sededecompra=sededecompra;
+	this.usuario = usuario;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 
@@ -77,15 +88,23 @@ public class Pareja extends Persona{
 	}
 
 
-	public String[][] getHorario() {
+	public int[][] getHorario() {
 		return Horario;
 	}
 
 
-	public void setHorario(String[][] horario) {
+	public void setHorario(int[][] horario) {
 		Horario = horario;
 	}
-	
-	
+
+
+	public Sede getSededecompra() {
+		return sededecompra;
+	}
+
+
+	public void setSededecompra(Sede sededecompra) {
+		this.sededecompra = sededecompra;
+	}
 
 }

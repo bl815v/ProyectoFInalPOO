@@ -1,43 +1,37 @@
 package model;
 
-public class Horarios {
+public abstract class Horarios {
+
 	
-	  private static String[][] horario = {
-			  
-		        {"0", "0", "0", "0", "0", "0"},
-		        {"0", "0", "0", "0", "0", "0"},
-		        {"0", "0", "0", "0", "0", "0"},
-		        {"0", "0", "0", "0", "0", "0"},
-		        {"1", "1", "1", "1", "1", "1"},
-		        {"1", "1", "1", "1", "1", "1"},	        
-		    };
-	  
-	  public boolean horarioLibre() {
-	        for (int i = 0; i < 8; i++) {
-	            for (int j = 0; j < 8; j++) {
-	                if (horario[i][j].equals("1") ) {
-	                    return true;
-	                }
+	public static int[][] nuevoHorario() {
+		int[][] horario = new int[7][7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				horario[i][j] = 0;
+			}
+		}
+		return horario;
+	}
+
+	public static boolean horarioLibre(int[][] horario) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (horario[i][j] == 1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean validarHorario(int[][] horarioPareja) {
+	    for (int[] fila : horarioPareja) {
+	        for (int valor : fila) {
+	            if (valor == 1) {
+	                return true;
 	            }
 	        }
-	        return false;
 	    }
-	  static void showChairs() {
-	        System.out.println("L M C J V S");
-	        for (int i = 0; i < 6; i++) {
-	            for (int j = 0; j < 6; j++) {
-	                System.out.print("9:00 - 11:00 " + horario[1][j] + "\n" + 
-	                		         "11:00 - 13:00 " + horario[2][j] + "\n" + 
-	                		         "13:00 - 15:00 " + horario[3][j] + "\n" + 
-	                		         "15:00 - 17:00 " + horario[4][j] + "\n" + 
-	                		         "17:00 - 19:00 " + horario[5][j] + "\n" + 
-	                		         "19:00 - 21:00 " + horario[6][j] + "\n" );
-	            }
-	            System.out.println();
-	        }
-	        System.out.println("\n");
-	  
-	  
-	  
-	  }
+	    return false;
+	}
 }

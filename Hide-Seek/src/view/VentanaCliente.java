@@ -15,7 +15,8 @@ public class VentanaCliente extends JFrame{
 	private PanelCliente pc;
 	private PanelAbono pa;
 	private PanelSobrecupo ps;
-	
+	private PanelRegisterPareja prp;
+	private PanelRegisterHorario prh;
 	
 	public VentanaCliente() {
 		JFrame Ventana = this;
@@ -37,6 +38,8 @@ public class VentanaCliente extends JFrame{
             	Estandar.adaptarPanelCentro(Ventana, pc);
             	Estandar.adaptarPanelCentro(Ventana, pa);
             	Estandar.adaptarPanelCentro(Ventana, ps);
+            	Estandar.adaptarPanelCentro(Ventana, prp);
+            	Estandar.adaptarPanelCentro(Ventana, prh);
             }
         });
        
@@ -48,6 +51,8 @@ public class VentanaCliente extends JFrame{
 		pc = new PanelCliente();
 		pa = new PanelAbono();
 		ps = new PanelSobrecupo();
+		prp = new PanelRegisterPareja();
+		prh = new PanelRegisterHorario();
 		
 		layeredPane.add(pc, Integer.valueOf(1));	
 	
@@ -87,6 +92,22 @@ public class VentanaCliente extends JFrame{
 
 	public void setPs(PanelSobrecupo ps) {
 		this.ps = ps;
+	}
+
+	public PanelRegisterPareja getPrp() {
+		return prp;
+	}
+
+	public void setPrp(PanelRegisterPareja prp) {
+		this.prp = prp;
+	}
+
+	public PanelRegisterHorario getPrh() {
+		return prh;
+	}
+
+	public void setPrh(PanelRegisterHorario prh) {
+		this.prh = prh;
 	}
 	
 }

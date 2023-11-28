@@ -11,6 +11,14 @@ private ArrayList<Sede>listadeSedes;
 		listadeSedes.add(x);
 	
 	}
+
 	
+	public ArrayList<Sede> getListadeSedes() {
+		return listadeSedes;
+	}
+
+	public void setListadeSedes(ArrayList<Sede> listadeSedes) {
+		this.listadeSedes = listadeSedes;
+	}
 
 }

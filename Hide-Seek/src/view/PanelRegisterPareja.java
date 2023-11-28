@@ -15,25 +15,29 @@ import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-public class PanelRegister extends JPanel{
+import model.ListadeSedes;
+import model.Sede;
+
+public class PanelRegisterPareja extends JPanel{
 
 	private JLabel etitulo, esubtitulo, enombre, esubnombre, egenero, esubgenero, ecorreo, esubcorreo;
-	private JLabel eusuario, esubusuario, eclave, esubclave, erepetir, esubrepetir, eyatienes;
-	private JComboBox<String> lista_genero;
-	private JTextField tnombre, tcorreo, tusuario;
+	private JLabel eusuario, esubusuario, eclave, esubclave, erepetir, esubrepetir, ecredito, esubcredito, esede, esubsede;
+	private JComboBox<String> lista_genero, lista_sedes;
+	private JTextField tnombre, tcorreo, tusuario, tcredito;
 	private JPasswordField tclave, trepetir;
-	private JButton bregistrar, blogin; 
+	private JButton bsiguiente, bregresar; 
 	
-	public PanelRegister() {
+	public PanelRegisterPareja() {
 		setLayout(new GridLayout(1, 2, 20, 0));
-		setPreferredSize(new Dimension(670, 500));
-		
+		setPreferredSize(new Dimension(670, 650));
+	
 		inicializarComponentes();
 		setVisible(true);
 		
 		Estandar.revisarTextField(tnombre, esubnombre, "Ingrese sus nombres y apellidos:");
 		Estandar.revisarTextField(tusuario, esubusuario, "Ingrese su nombre de usuario (alias):");
 		Estandar.revisarTextField(tcorreo, esubcorreo, "Ingrese su correo electronico:");
+		Estandar.revisarTextField(tcredito, esubcredito, "Ingrese la cantidad de dinero ($):");
 		
 		Estandar.revisarTextField(tclave, esubclave, "Ingrese su clave:");
 		Estandar.revisarTextField(trepetir, esubrepetir, "Ingrese la anterior clave:");
@@ -79,9 +83,29 @@ public class PanelRegister extends JPanel{
 		lista_genero.addItem("Otro");
 		lista_genero.setFont(new Font("Arial", Font.PLAIN, 13));
 		lista_genero.setForeground(new Color(92,92,102));
-		lista_genero.setActionCommand("LISTAgenero");
+		lista_genero.setActionCommand("LISTAgeneropareja");
 		panelAuxgenero.add(lista_genero, BorderLayout.CENTER);
 		Izquierda.add(panelAuxgenero);
+		Izquierda.add(Estandar.Espacio());
+		
+		esede = Estandar.labelNegro("Sede"); 
+		Izquierda.add(esede);
+		esubsede = Estandar.labelGris("Ingrese la sede:");
+		Izquierda.add(esubsede);
+		
+		JPanel panelAuxsede = new JPanel(new BorderLayout());
+		panelAuxsede.setAlignmentX(LEFT_ALIGNMENT); 
+		panelAuxsede.setMaximumSize(new Dimension(250, 30)); 
+		lista_sedes = new JComboBox<String>();
+		ListadeSedes listaSedes = new ListadeSedes();
+		for (Sede sede : listaSedes.getListadeSedes()) {
+			lista_sedes.addItem(sede.getNombre());
+		}
+		lista_sedes.setFont(new Font("Arial", Font.PLAIN, 13));
+		lista_sedes.setForeground(new Color(92,92,102));
+		lista_sedes.setActionCommand("LISTAsedes");
+		panelAuxsede.add(lista_sedes, BorderLayout.CENTER);
+		Izquierda.add(panelAuxsede);
 		Izquierda.add(Estandar.Espacio());
 		
 		Derecha.add(Estandar.Espacio(1, 95));
@@ -109,6 +133,18 @@ public class PanelRegister extends JPanel{
 		Derecha.add(panelAuxTcorreo);
 		Derecha.add(Estandar.Separador());
 
+        ecredito = Estandar.labelNegro("Asignar de su credito"); 
+		Derecha.add(ecredito);
+		esubcredito = Estandar.labelGris("Ingrese la cantidad de dinero ($):");
+		Derecha.add(esubcredito);
+		
+		JPanel panelAuxTcredito = new JPanel(new BorderLayout()); 
+		panelAuxTcredito.setMaximumSize(new Dimension(600, 30)); 
+		tcredito = Estandar.campoTexto();
+		panelAuxTcredito.add(tcredito, BorderLayout.CENTER);
+		Derecha.add(panelAuxTcredito);
+		Derecha.add(Estandar.Separador());
+		
 		eclave = Estandar.labelNegro("Clave"); 
 		Izquierda.add(eclave);
 		esubclave = Estandar.labelGris("Ingrese una clave:");
@@ -136,25 +172,20 @@ public class PanelRegister extends JPanel{
 		
 		
 		Derecha.add(Estandar.Espacio(1, 50));
-		bregistrar = Estandar.boton("Registrar");
-		bregistrar.setActionCommand("bREGISTRAR");
-		Derecha.add(bregistrar);
+		bsiguiente = Estandar.boton("Siguiente ->");
+		bsiguiente.setActionCommand("bSiguiente");
+		Derecha.add(bsiguiente);
 		
-
-		Izquierda.add(Estandar.Espacio(1, 60));
-		eyatienes = Estandar.labelGris("Ya tienes una cuenta?"); 
-		eyatienes.setFont(new Font("Arial", Font.PLAIN, 14));
-		Izquierda.add(eyatienes);
 		
-		blogin = Estandar.botonSinFondo("Inicia sesion"); 
-		blogin.setActionCommand("bmenuLOGIN");
-		Izquierda.add(blogin);
+		bregresar = Estandar.botonSinFondo("<- Regresar"); 
+		bregresar.setActionCommand("bREGRESARpareja");
+		Izquierda.add(bregresar);
 		
 		add(Izquierda);
 		add(Derecha);
 		
 	}
-
+	
 
 	public JLabel getEtitulo() {
 		return etitulo;
@@ -268,14 +299,6 @@ public class PanelRegister extends JPanel{
 		this.esubrepetir = esubrepetir;
 	}
 
-	public JLabel getEyatienes() {
-		return eyatienes;
-	}
-
-	public void setEyatienes(JLabel eyatienes) {
-		this.eyatienes = eyatienes;
-	}
-
 	public JComboBox<String> getLista_genero() {
 		return lista_genero;
 	}
@@ -325,21 +348,67 @@ public class PanelRegister extends JPanel{
 	}
 
 	public JButton getBregistrar() {
-		return bregistrar;
+		return bsiguiente;
 	}
 
 	public void setBregistrar(JButton bregistrar) {
-		this.bregistrar = bregistrar;
+		this.bsiguiente = bregistrar;
 	}
 
-	public JButton getBlogin() {
-		return blogin;
+	public JLabel getEcredito() {
+		return ecredito;
 	}
 
-	public void setBlogin(JButton blogin) {
-		this.blogin = blogin;
+	public void setEcredito(JLabel ecredito) {
+		this.ecredito = ecredito;
 	}
 
+	public JLabel getEsubcredito() {
+		return esubcredito;
+	}
+
+	public void setEsubcredito(JLabel esubcredito) {
+		this.esubcredito = esubcredito;
+	}
+
+	public JLabel getEsede() {
+		return esede;
+	}
+
+	public void setEsede(JLabel esede) {
+		this.esede = esede;
+	}
+
+	public JLabel getEsubsede() {
+		return esubsede;
+	}
+
+	public void setEsubsede(JLabel esubsede) {
+		this.esubsede = esubsede;
+	}
+
+	public JComboBox<String> getLista_sedes() {
+		return lista_sedes;
+	}
+
+	public void setLista_sedes(JComboBox<String> lista_sedes) {
+		this.lista_sedes = lista_sedes;
+	}
+
+	public JTextField getTcredito() {
+		return tcredito;
+	}
+
+	public void setTcredito(JTextField tcredito) {
+		this.tcredito = tcredito;
+	}
+
+	public JButton getBregresar() {
+		return bregresar;
+	}
+
+	public void setBregresar(JButton bregresar) {
+		this.bregresar = bregresar;
+	}
 	
-
 }

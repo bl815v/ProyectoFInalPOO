@@ -8,8 +8,8 @@ private ArrayList<Pareja>listadeParejas;
 	public  ListadeParejas() {
 	
 		listadeParejas= new ArrayList<Pareja>();
-		Pareja x = new Pareja(null, null, null, null, null, null, 0, 0, null);
-		listadeParejas.add(x);
+		//Pareja x = new Pareja("nombre", "1", "Pareja", "clavefinal", "correo", "genero", 1, 0, new int[6][6],  new Sede("Calle 94f bis #77-55", "Sede Cortijo"));
+		//listadeParejas.add(x);
 	
 	}
 	
@@ -36,20 +36,24 @@ private ArrayList<Pareja>listadeParejas;
 	}
 	
 	public boolean correoRepetido(String correo) {
-		for (Pareja usuario:listadeParejas) {
-			if (!usuario.getCorreo().equals(correo)) {
-				return false;	
-				
+		if(listadeParejas.isEmpty()) {
+			return false;
+		}
+		for (Pareja pareja:listadeParejas) {
+			if (!pareja.getCorreo().equals(correo)) {
+				return false;			
 			}
 		}
 		return true;		
 	}
 	
 	public boolean usuarioRepetido(String user) {
-		for (Pareja usuario:listadeParejas) {
-			if (!usuario.getUser().equals(user)) {
+		if(listadeParejas.isEmpty()) {
+			return false;
+		}
+		for (Pareja pareja:listadeParejas) {
+			if (!pareja.getUser().equals(user)) {
 				return false;	
-				
 			}
 		}
 		return true;		

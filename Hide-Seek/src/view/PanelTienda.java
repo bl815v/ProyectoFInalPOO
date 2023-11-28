@@ -56,7 +56,6 @@ public class PanelTienda extends JPanel{
 		panelAuxsedes.setLayout(new BoxLayout(panelAuxsedes, BoxLayout.X_AXIS));
 		panelAuxsedes.setMaximumSize(new Dimension(400, 30)); 
 		lista_sedes = new JComboBox<String>();
-		lista_sedes.addItem("sede null");
 		lista_sedes.setFont(new Font("Arial", Font.PLAIN, 14));
 		lista_sedes.setForeground(new Color(92,92,102));
 		lista_sedes.setActionCommand("LISTASEDES");

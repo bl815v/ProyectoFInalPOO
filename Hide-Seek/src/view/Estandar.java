@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -184,6 +185,34 @@ public abstract class Estandar {
 		separador.setMaximumSize(new Dimension(x, y));
 		separador.setForeground(new Color(84, 160, 227));
 		return separador;
+	}
+/**
+ * Crea un JTextField sin fondo ni marco, usado para que el usuario ingrese datos escritos.
+ * Fuente Arial, 13px. Tamaño preferido: 300px ancho, 30px largo.
+ * @return JTextField sin fondo.
+ */
+	public static JTextField campoTexto() {
+		JTextField campo = new JTextField();
+		campo.setBorder(null);
+		campo.setBackground(null);
+		campo.setFont(new Font("Arial", Font.PLAIN, 13));
+		campo.setForeground(new Color(92,92,102));
+		campo.setPreferredSize(new Dimension(300, 30)); 
+		return campo;
+	}
+/**
+ * Crea un JPasswordField sin fondo ni marco, usado para que el usuario ingrese claves.
+ * Fuente Arial, 13px. Tamaño preferido: 300px ancho, 30px largo.
+ * @return JPasswordField sin fondo.
+ */
+	public static JPasswordField campoClave() {
+		JPasswordField campo = new JPasswordField();
+		campo.setBorder(null);
+		campo.setBackground(null);
+		campo.setFont(new Font("Arial", Font.PLAIN, 13));
+		campo.setForeground(new Color(92,92,102));
+		campo.setPreferredSize(new Dimension(300, 30));
+		return campo;
 	}
 /**
  * Genera el fondo de la ventana.

@@ -6,7 +6,6 @@ public class Compra extends Producto {
 	
 	private Usuario Comprador;
 	private Sede Sededondesecompra;
-	
 
 	public Compra(String nombre, String img, double precio, Usuario comprador, LocalTime localTime, Sede sededecompra) {
 		super(nombre, img, precio);
