@@ -9,9 +9,6 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.xml.validation.Validator;
 
 import model.Admin;
 import model.Compra;
@@ -41,7 +38,7 @@ public class Controller implements ActionListener{
 	private VentanaCompra vCompra;
 	private VentanaAdmin vAdmin;
 	private ListadeCompras listadecompra;	
-	private ListadodeUsuarios lista;
+	private ListadodeUsuarios ListadeUsuarios;
 	private ListadeParejas listapareja;
 	private ListadeSedes listaSedes; 
 	private Correo correos;
@@ -52,7 +49,7 @@ public class Controller implements ActionListener{
 	
 	public Controller() { 
 		vInicial = new VentanaInicial();
-		lista = new ListadodeUsuarios();
+		ListadeUsuarios = new ListadodeUsuarios();
 		listapareja = new ListadeParejas(); 
 		correos = new Correo();
 		admin = new Admin("ADMIN", "Admin", "0000");
@@ -124,14 +121,16 @@ public class Controller implements ActionListener{
 				}
 			}
 			try {
-			usuario = lista.buscarUsuario(eusuario);
+			
+			pareja=listapareja.buscarParejas(eusuario);
+			usuario = ListadeUsuarios.buscarUsuario(eusuario);
 			if(eusuario.equals("") || !eusuario.equals(usuario.getUser())) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
 				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
 			}else if (clave.length == 0 || !stringclave.equals(usuario.getClave().toString())) {
 				vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
 				vInicial.getPl().getEsubclave().setForeground(Color.RED);
-			}else {
+			}else  {
 				vInicial.setVisible(false);
 				vCliente = new VentanaCliente();
 				vCliente.setVisible(true);
@@ -142,14 +141,18 @@ public class Controller implements ActionListener{
 
 				oyentesVcliente();
 			}
-			}catch(NullPointerException n) {
+			}
+			
+			catch(NullPointerException n) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
 				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
 			}
+			
 		}
 		
 		// COMANDOS ADMIN
 		if(comando.equals("BINFORMES_ADMIN")) {
+			System.out.println("Informes estadisticos");
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verInformes();
 		}
@@ -157,7 +160,7 @@ public class Controller implements ActionListener{
 		if(comando.equals("BUSUARIOS_ADMIN")) {
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verUsuarios();
-	        for (Usuario usuario : lista.getListadeUsuarios()) {
+	        for (Usuario usuario : ListadeUsuarios.getListadeUsuarios()) {
 	            Object[] fila = {
 	                    usuario.getNombre(),
 	                    usuario.getUser(),
@@ -172,10 +175,10 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("BSOLICITUDES_ADMIN")) {
+			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verSolicitudes();
-			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
-	        for (Usuario usuario : lista.getListadeUsuarios()) {
+	        for (Usuario usuario : ListadeUsuarios.getListadeUsuarios()) {
 	            if(usuario.getSobrecupo() > 0) {
 		        	Object[] fila = {
 		                    usuario.getNombre(),
@@ -184,40 +187,14 @@ public class Controller implements ActionListener{
 		                    usuario.getCredito(),
 		                    usuario.getDeuda(),
 		                    usuario.getSobrecupo()
-	            	};
-	            	vAdmin.getPa().getModelSol().addRow(fila);
+		            };
+		            vAdmin.getPa().getModelSol().addRow(fila);
 	            }
 	        }
 		}
 		
-		if (comando.equals("AceptSolicitADMIN")) {
-		    JTable tablaSolicitudes = vAdmin.getPa().getTablaSolicitudes();
-		    int filaSeleccionada = tablaSolicitudes.getSelectedRow();
-
-		    if (filaSeleccionada != -1) {
-		        String usuario = tablaSolicitudes.getValueAt(filaSeleccionada, 1).toString();
-		        Usuario usuarioSeleccionado = null;
-		        for (Usuario u : lista.getListadeUsuarios()) {
-		            if (u.getUser().equals(usuario)) {
-		                usuarioSeleccionado = u;
-		                break;
-		            }
-		        }
-
-		        if (usuarioSeleccionado != null) {
-		            int sobrecupo = Integer.parseInt(tablaSolicitudes.getValueAt(filaSeleccionada, 5).toString());
-
-		            int creditoActual = usuarioSeleccionado.getCredito();
-		            usuarioSeleccionado.setCredito(creditoActual + sobrecupo);
-		            usuarioSeleccionado.setSobrecupo(0);
-		            
-		            DefaultTableModel modelSol = vAdmin.getPa().getModelSol();
-		            modelSol.removeRow(filaSeleccionada);
-
-				    vAdmin.getPa().limpiarVista();
-				    MensajeInformacion("Sobrecupo aceptado exitosamente", "Sobrecupo aceptado");
-		        }
-		    }
+		if(comando.equals("AceptSolicitADMIN")) {
+			System.out.println("solicitud aceptada");
 		}
 		
 		if(comando.equals("BSEDES_ADMIN")) {
@@ -301,14 +278,14 @@ public class Controller implements ActionListener{
 			}else {
 				vcorreo=true;
 			}
-			if (lista.correoRepetido(vInicial.getPr().getTcorreo().getText())) {
+			if (ListadeUsuarios.correoRepetido(vInicial.getPr().getTcorreo().getText())) {
 				vInicial.getPr().getEsubcorreo().setText("El correo ya existe");
 				vInicial.getPr().getEsubcorreo().setForeground(Color.RED);
 				vcorreoR = false;
 			}else {
 				vcorreoR = true;
 			}
-			if(lista.usuarioRepetido(vInicial.getPr().getTusuario().getText())) {
+			if(ListadeUsuarios.usuarioRepetido(vInicial.getPr().getTusuario().getText())) {
 				vInicial.getPr().getEsubusuario().setText("El usuario ya existe");
 				vInicial.getPr().getEsubusuario().setForeground(Color.RED);
 				vusuarioR=false;
@@ -340,14 +317,14 @@ public class Controller implements ActionListener{
 					int cupo = randomNumber;
 					
 					usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0, 0);
-					boolean respuesta = lista.agregarUsuario(usuario);
+					boolean respuesta = ListadeUsuarios.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
 						MensajeInformacion("Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso");
 					}else {
 						MensajeError("Fallo al registrar");
 					}
-					lista.agregarUsuario(usuario);
+					ListadeUsuarios.agregarUsuario(usuario);
 					correos.enviarCorreo(correo,alias,clavefinal);
 					
 				}
@@ -535,14 +512,14 @@ public class Controller implements ActionListener{
 				vsede = true;
 			}
 			
-			if (lista.correoRepetido(vCliente.getPrp().getTcorreo().getText()) || listapareja.correoRepetido(vCliente.getPrp().getTcorreo().getText())) {
+			if (ListadeUsuarios.correoRepetido(vCliente.getPrp().getTcorreo().getText()) || listapareja.correoRepetido(vCliente.getPrp().getTcorreo().getText())) {
 				vCliente.getPrp().getEsubcorreo().setText("El correo ya existe");
 				vCliente.getPrp().getEsubcorreo().setForeground(Color.RED);
 				vcorreoR = false;
 			}else {
 				vcorreoR = true;
 			}
-			if(lista.usuarioRepetido(vCliente.getPrp().getTusuario().getText()) || listapareja.usuarioRepetido(vCliente.getPrp().getTusuario().getText())) {
+			if(ListadeUsuarios.usuarioRepetido(vCliente.getPrp().getTusuario().getText()) || listapareja.usuarioRepetido(vCliente.getPrp().getTusuario().getText())) {
 				vCliente.getPrp().getEsubusuario().setText("El usuario ya existe");
 				vCliente.getPrp().getEsubusuario().setForeground(Color.RED);
 				vusuarioR=false;
@@ -778,7 +755,8 @@ public class Controller implements ActionListener{
 		            Object[] fila = {
 		            		compra.getNombre(),
 		            		compra.getPrecio(),
-		            		//compra.get hora de compra 
+		            		compra.getHora(),
+		            		compra.getFecha(),
 		            		compra.getSededondesecompra().getNombre()
 		            };
 		            vCliente.getPhc().getModel().addRow(fila);
@@ -906,7 +884,8 @@ public class Controller implements ActionListener{
 								}
 								
 							}
-							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, Hora.obtenerHoraExacta(), sedecompra);
+							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), usuario, sedecompra);
+							
 
 							for (int i = 0; i < cantidad; i++) {
 								listadecompra.agregarCompra(x);

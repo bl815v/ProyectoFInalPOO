@@ -46,7 +46,7 @@ public class PanelHistorialCompras extends JPanel{
 		// Center
 		JPanel centro = new JPanel();
 		centro.setLayout(new BorderLayout());
-        String[] columnas = {"Nombre", "Precio", "Hora", "Sede"};
+        String[] columnas = {"Nombre", "Precio", "Hora", "Fecha", "Sede"};
         model = new DefaultTableModel(null, columnas);
         tablacompras = new JTable(model);
 
