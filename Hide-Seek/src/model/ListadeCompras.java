@@ -24,7 +24,6 @@ private ArrayList<Compra>ListadeCompras;
 	}
 
 	 
-	 
 	
 	
 

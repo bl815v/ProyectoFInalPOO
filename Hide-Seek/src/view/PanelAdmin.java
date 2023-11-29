@@ -19,10 +19,10 @@ import model.Usuario;
 public class PanelAdmin extends JPanel{
 	
 	private JLabel etitulo, enombre;
-	private JButton binformes, busuarios, bparejas, bsolicitudes, bsedes, bcerrar;
-	private JTable tablaUsuarios;
-	
+	private JButton binformes, busuarios, bsolicitudes, bsedes, bcerrar;
 	private ListadodeUsuarios listauser;
+	
+	private JPanel cuadroUsuarios, cuadroInformes;
 	
 	public PanelAdmin() {
 		setLayout(new BorderLayout());
@@ -45,10 +45,6 @@ public class PanelAdmin extends JPanel{
 		busuarios.setActionCommand("BUSUARIOS_ADMIN");
 		Auxbotones.add(busuarios);
 		
-		bparejas = Estandar.boton("Parejas");
-		bparejas.setActionCommand("BPAREJAS_ADMIN");
-		Auxbotones.add(bparejas);
-		
 		bsolicitudes = Estandar.boton("Solicitudes");
 		bsolicitudes.setActionCommand("BSOLICITUDES_ADMIN");
 		Auxbotones.add(bsolicitudes);
@@ -60,11 +56,10 @@ public class PanelAdmin extends JPanel{
 		add(Auxbotones, BorderLayout.NORTH);
 		
 		// Center
-		JPanel centro = new JPanel();
-		centro.setLayout(new BorderLayout());
-		 String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Género", "Crédito", "Deuda"};
+		JPanel cuadroUsuarios = new JPanel(new BorderLayout());
+		String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Genero", "Credito", "Deuda"};
 	        DefaultTableModel model = new DefaultTableModel(null, columnas);
-	        tablaUsuarios = new JTable(model);
+	    	JTable tablaUsuarios = new JTable(model);
 
 	        for (Usuario usuario : listauser.getListadeUsuarios()) {
 	            Object[] fila = {
@@ -79,9 +74,15 @@ public class PanelAdmin extends JPanel{
 	            model.addRow(fila);
 	        }
 
-	        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
-	        centro.add(scrollPane, BorderLayout.CENTER);
-		add(centro, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
+        cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
+        cuadroUsuarios.setVisible(false);
+		add(cuadroUsuarios, BorderLayout.CENTER);
+		
+		JPanel cuadroInformes = new JPanel(new BorderLayout());
+		cuadroInformes.add(Estandar.labelGris("Generando informes estadisticos"));
+		cuadroInformes.setVisible(false);
+		add(cuadroInformes, BorderLayout.CENTER);
 				
 		// South
 		JPanel sur = new JPanel();
@@ -126,14 +127,6 @@ public class PanelAdmin extends JPanel{
 		this.busuarios = busuarios;
 	}
 
-	public JButton getBparejas() {
-		return bparejas;
-	}
-
-	public void setBparejas(JButton bparejas) {
-		this.bparejas = bparejas;
-	}
-
 	public JButton getBsolicitudes() {
 		return bsolicitudes;
 	}
@@ -158,14 +151,6 @@ public class PanelAdmin extends JPanel{
 		this.bcerrar = bcerrar;
 	}
 
-	public JTable getTablaUsuarios() {
-		return tablaUsuarios;
-	}
-
-	public void setTablaUsuarios(JTable tablaUsuarios) {
-		this.tablaUsuarios = tablaUsuarios;
-	}
-
 	public ListadodeUsuarios getListauser() {
 		return listauser;
 	}
@@ -173,5 +158,22 @@ public class PanelAdmin extends JPanel{
 	public void setListauser(ListadodeUsuarios listauser) {
 		this.listauser = listauser;
 	}
+
+	public JPanel getCuadroUsuarios() {
+		return cuadroUsuarios;
+	}
+
+	public void setCuadroUsuarios(JPanel cuadroUsuarios) {
+		this.cuadroUsuarios = cuadroUsuarios;
+	}
+
+	public JPanel getCuadroInformes() {
+		return cuadroInformes;
+	}
+
+	public void setCuadroInformes(JPanel cuadroInformes) {
+		this.cuadroInformes = cuadroInformes;
+	}
+	
 	
 }

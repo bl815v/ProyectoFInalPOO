@@ -12,18 +12,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import model.ListadeCompras;
 import model.ListadeParejas;
 import model.ListadeProductos;
 import model.Pareja;
 
-public class PanelVerParejas extends JPanel{
+public class PanelHistorialCompras extends JPanel{
 	
 	private JLabel etitulo;
 	private JButton bvolver;
-	private JTable tablaparejas;
+	private JTable tablacompras;
 	
 	private DefaultTableModel model; 
-	public PanelVerParejas() {
+	public PanelHistorialCompras() {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(680, 520));
 
@@ -37,7 +38,7 @@ public class PanelVerParejas extends JPanel{
 		JPanel norte = new JPanel();
 		norte.setLayout(new BoxLayout(norte, BoxLayout.Y_AXIS));
 		
-		etitulo = Estandar.labelNegro("Tus parejas");
+		etitulo = Estandar.labelNegro("Tus compras");
 		norte.add(etitulo);
 		
 		add(norte, BorderLayout.NORTH);
@@ -45,11 +46,11 @@ public class PanelVerParejas extends JPanel{
 		// Center
 		JPanel centro = new JPanel();
 		centro.setLayout(new BorderLayout());
-        String[] columnas = {"Nombre", "Usuario", "Correo", "Genero", "Credito", "Deuda"};
+        String[] columnas = {"Nombre", "Precio", "Hora", "Sede"};
         model = new DefaultTableModel(null, columnas);
-        tablaparejas = new JTable(model);
+        tablacompras = new JTable(model);
 
-        JScrollPane scrollPane = new JScrollPane(tablaparejas);
+        JScrollPane scrollPane = new JScrollPane(tablacompras);
         centro.add(scrollPane, BorderLayout.CENTER);
 		
 		add(centro, BorderLayout.CENTER);
@@ -58,7 +59,7 @@ public class PanelVerParejas extends JPanel{
 		JPanel sur = new JPanel();
 		sur.setLayout(new BorderLayout());
 		bvolver = Estandar.botonSinFondo("<- Regresar");
-		bvolver.setActionCommand("bVOLVERVERPAREJAS");
+		bvolver.setActionCommand("bVOLVERVERHISTORIALCOMPRAS");
 		sur.add(Estandar.Espacio(), BorderLayout.NORTH);
 		sur.add(bvolver, BorderLayout.WEST);
 		add(sur, BorderLayout.SOUTH);
@@ -72,7 +73,6 @@ public class PanelVerParejas extends JPanel{
 		this.etitulo = etitulo;
 	}
 
-
 	public JButton getBvolver() {
 		return bvolver;
 	}
@@ -81,12 +81,12 @@ public class PanelVerParejas extends JPanel{
 		this.bvolver = bvolver;
 	}
 
-	public JTable getTablaparejas() {
-		return tablaparejas;
+	public JTable getTablacompras() {
+		return tablacompras;
 	}
 
-	public void setTablaparejas(JTable tablaparejas) {
-		this.tablaparejas = tablaparejas;
+	public void setTablacompras(JTable tablacompras) {
+		this.tablacompras = tablacompras;
 	}
 
 	public DefaultTableModel getModel() {
@@ -97,5 +97,4 @@ public class PanelVerParejas extends JPanel{
 		this.model = model;
 	}
 	
-
 }

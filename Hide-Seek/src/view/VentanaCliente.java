@@ -17,6 +17,8 @@ public class VentanaCliente extends JFrame{
 	private PanelSobrecupo ps;
 	private PanelRegisterPareja prp;
 	private PanelRegisterHorario prh;
+	private PanelVerParejas pvp;
+	private PanelHistorialCompras phc;
 	
 	public VentanaCliente() {
 		JFrame Ventana = this;
@@ -40,6 +42,9 @@ public class VentanaCliente extends JFrame{
             	Estandar.adaptarPanelCentro(Ventana, ps);
             	Estandar.adaptarPanelCentro(Ventana, prp);
             	Estandar.adaptarPanelCentro(Ventana, prh);
+            	Estandar.adaptarPanelCentro(Ventana, pvp);
+            	Estandar.adaptarPanelCentro(Ventana, phc);
+
             }
         });
        
@@ -53,6 +58,8 @@ public class VentanaCliente extends JFrame{
 		ps = new PanelSobrecupo();
 		prp = new PanelRegisterPareja();
 		prh = new PanelRegisterHorario();
+		pvp = new PanelVerParejas();
+		phc = new PanelHistorialCompras();
 		
 		layeredPane.add(pc, Integer.valueOf(1));	
 	
@@ -108,6 +115,22 @@ public class VentanaCliente extends JFrame{
 
 	public void setPrh(PanelRegisterHorario prh) {
 		this.prh = prh;
+	}
+
+	public PanelVerParejas getPvp() {
+		return pvp;
+	}
+
+	public void setPvp(PanelVerParejas pvp) {
+		this.pvp = pvp;
+	}
+
+	public PanelHistorialCompras getPhc() {
+		return phc;
+	}
+
+	public void setPhc(PanelHistorialCompras phc) {
+		this.phc = phc;
 	}
 	
 }

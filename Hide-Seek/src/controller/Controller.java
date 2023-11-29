@@ -1,12 +1,9 @@
 package controller;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.IllegalComponentStateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -82,9 +79,10 @@ public class Controller implements ActionListener{
 
 		vCliente.getPrp().getBregresar().addActionListener(this);
 		vCliente.getPrp().getBregistrar().addActionListener(this);
-		
 	}
+	
 	int[][] horarioPareja = Horarios.nuevoHorario();
+	
 	public void oyentesVcompra() {
 		
 		ListadeProductos listaProductos = new ListadeProductos();
@@ -117,9 +115,9 @@ public class Controller implements ActionListener{
 					Estandar.adaptarPanelCentro(vAdmin, vAdmin.getPa());	
 					vAdmin.getPa().getBinformes().addActionListener(this);
 					vAdmin.getPa().getBusuarios().addActionListener(this);
-					vAdmin.getPa().getBparejas().addActionListener(this);
 					vAdmin.getPa().getBsolicitudes().addActionListener(this);
 					vAdmin.getPa().getBsedes().addActionListener(this);
+					vAdmin.getPa().getBcerrar().addActionListener(this);
 				}
 			}
 			try {
@@ -140,7 +138,6 @@ public class Controller implements ActionListener{
 				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 
 				oyentesVcliente();
-				
 			}
 			}catch(NullPointerException n) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
@@ -154,11 +151,7 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("BUSUARIOS_ADMIN")) {
-			System.out.println("lista de usuarios");
-		}
-		
-		if(comando.equals("BPAREJAS_ADMIN")) {
-			System.out.println("lista de parejas");
+			vAdmin.getPa().getCuadroUsuarios().setVisible(true);
 		}
 		
 		if(comando.equals("BSOLICITUDES_ADMIN")) {
@@ -167,6 +160,15 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("BSEDES_ADMIN")) {
 			System.out.println("Lista de sedes");
+		}
+		if(comando.equals("bCERRARSESIONADMIN")) {
+			vAdmin.setVisible(false);
+			vInicial.getLayeredPane().add(Estandar.getFondoImagen(), Integer.valueOf(0));
+			vInicial.setVisible(true);
+			vInicial.getPl().getTclave().setText(null);
+			vInicial.getPl().getTusuario().setText(null);
+			vInicial.getPl().getEsubusuario().setText("Ingrese su nombre de usuario (alias):");
+			vInicial.getPl().getEsubusuario().setForeground(new Color(92,92,102));
 		}
 		
 		if (comando.equals("bREGISTRATE")) {
@@ -573,11 +575,13 @@ public class Controller implements ActionListener{
 					vCliente.setMinimumSize(new Dimension(675, 580));
 					try {
 						vCliente.getPrp().setVisible(false);
+						vCliente.getPrh().setVisible(false);
 						vCliente.getPc().setVisible(true);
 						vCliente.getLayeredPane().remove(vCliente.getPrp());
 						vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
 					}catch (IllegalArgumentException hp) {
 						vCliente.getPrp().setVisible(false);
+						vCliente.getPrh().setVisible(false);
 						vCliente.getPc().setVisible(true);
 						vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
 					}
@@ -657,14 +661,82 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bPAREJASACTUALES")){
 			vCliente.setTitle("Parejas actuales");
-			System.out.println("lista de parejas");
+			vCliente.getPc().setVisible(false);
+			vCliente.getPvp().setVisible(true);
+
+			vCliente.getPvp().getBvolver().addActionListener(this);
+			
+			vCliente.getLayeredPane().remove(vCliente.getPc());
+			vCliente.getLayeredPane().add(vCliente.getPvp(), Integer.valueOf(1));
+			vCliente.setLocationRelativeTo(null);
+
+	        try {
+		        for (Pareja pareja : listapareja.getListadeParejas()) {
+		            Object[] fila = {
+		            		pareja.getNombre(),
+		            		pareja.getUser(),
+		            		pareja.getCorreo(),
+		            		pareja.getGenero(),
+		            		pareja.getCredito(),
+		            		pareja.getDeuda()
+		            };
+		            vCliente.getPvp().getModel().addRow(fila);
+		        }
+	        }catch (NullPointerException nulo) {
+				
+			}
+
+		}
+
+		// Comandos parejas actuales
+		if(comando.equals("bVOLVERVERPAREJAS")) {
+			try {
+				vCliente.getPvp().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPvp());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPvp().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
 		}
 		
 		// Menu CLIENTE
 		
 		if(comando.equals("bHISTORIAL")){
 			vCliente.setTitle("Historial de compras");
-			System.out.println("Historial");
+			vCliente.getPc().setVisible(false);
+			vCliente.getPhc().getBvolver().addActionListener(this);
+			vCliente.getPhc().setVisible(true);
+			vCliente.getLayeredPane().remove(vCliente.getPc());
+			vCliente.getLayeredPane().add(vCliente.getPhc(), Integer.valueOf(1));
+			try {
+		        for (Compra compra : listadecompra.getListadeCompras()) {
+		            Object[] fila = {
+		            		compra.getNombre(),
+		            		compra.getPrecio(),
+		            		//compra.get hora de compra 
+		            		compra.getSededondesecompra().getNombre()
+		            };
+		            vCliente.getPhc().getModel().addRow(fila);
+		        }
+	        }catch (NullPointerException nulo) {
+				
+			}
+		}
+		// Comandos historial compras
+		if(comando.equals("bVOLVERVERHISTORIALCOMPRAS")) {
+			try {
+				vCliente.getPhc().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().remove(vCliente.getPhc());
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vCliente.getPhc().setVisible(false);
+				vCliente.getPc().setVisible(true);
+				vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+			}
 		}
 		
 		// Menu CLIENTE
