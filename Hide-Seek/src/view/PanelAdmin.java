@@ -19,11 +19,12 @@ import model.Usuario;
 public class PanelAdmin extends JPanel{
 	
 	private JLabel etitulo, enombre;
-	private JButton binformes, busuarios, bsolicitudes, bsedes, bcerrar;
+	private JButton binformes, busuarios, bsolicitudes, bsedes, bcerrar, baceptarsolicitud;
 	private ListadodeUsuarios listauser;
 	
-	private JPanel cuadroUsuarios, cuadroInformes;
-	
+	private JPanel cuadroUsuarios, cuadroInformes, cuadroSolicitudes, cuadroSedes;
+    DefaultTableModel modelU, modelSol, modedlSed;
+
 	public PanelAdmin() {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(680, 520));
@@ -56,33 +57,7 @@ public class PanelAdmin extends JPanel{
 		add(Auxbotones, BorderLayout.NORTH);
 		
 		// Center
-		JPanel cuadroUsuarios = new JPanel(new BorderLayout());
-		String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Genero", "Credito", "Deuda"};
-	        DefaultTableModel model = new DefaultTableModel(null, columnas);
-	    	JTable tablaUsuarios = new JTable(model);
-
-	        for (Usuario usuario : listauser.getListadeUsuarios()) {
-	            Object[] fila = {
-	                    usuario.getNombre(),
-	                    usuario.getUser(),
-	                    usuario.getRol(),
-	                    usuario.getCorreo(),
-	                    usuario.getGenero(),
-	                    usuario.getCredito(),
-	                    usuario.getDeuda()
-	            };
-	            model.addRow(fila);
-	        }
-
-        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
-        cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
-        cuadroUsuarios.setVisible(false);
-		add(cuadroUsuarios, BorderLayout.CENTER);
-		
-		JPanel cuadroInformes = new JPanel(new BorderLayout());
-		cuadroInformes.add(Estandar.labelGris("Generando informes estadisticos"));
-		cuadroInformes.setVisible(false);
-		add(cuadroInformes, BorderLayout.CENTER);
+				
 				
 		// South
 		JPanel sur = new JPanel();
@@ -93,6 +68,86 @@ public class PanelAdmin extends JPanel{
 		sur.add(Estandar.Espacio(), BorderLayout.NORTH);
 		sur.add(bcerrar, BorderLayout.WEST);
 		add(sur, BorderLayout.SOUTH);
+	}
+	
+	public void verInformes() {
+		JPanel cuadroInformes = new JPanel(new BorderLayout());
+		cuadroInformes.add(Estandar.labelGris("Generando informes estadisticos"));
+		cuadroInformes.setVisible(false);
+		add(cuadroInformes, BorderLayout.CENTER);
+		cuadroInformes.setVisible(true);
+	}
+	
+	public void verUsuarios() {
+		JPanel cuadroUsuarios = new JPanel(new BorderLayout());
+		String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Genero", "Credito", "Deuda"};
+	    modelU = new DefaultTableModel(null, columnas) {
+        	@Override
+        	public boolean isCellEditable(int row, int column) {
+            	return false;
+        	}
+    	};
+	    JTable tablaUsuarios = new JTable(modelU);
+	    JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
+        cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
+        cuadroUsuarios.setVisible(false);
+		add(cuadroUsuarios, BorderLayout.CENTER);
+		cuadroUsuarios.setVisible(true); 
+	}
+	
+	public void verSolicitudes() {
+	    JPanel cuadroSolicitudes = new JPanel(new BorderLayout());
+	    String[] columnas = {"Nombre", "Usuario", "Correo", "Credito", "Deuda", "Solicitud"};
+	    modelSol = new DefaultTableModel(null, columnas) {
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	            return false;
+	        }
+	    };
+	    JTable tablaSolicitudes = new JTable(modelSol);
+	    JScrollPane scrollPane = new JScrollPane(tablaSolicitudes);
+	    cuadroSolicitudes.add(scrollPane, BorderLayout.CENTER);
+	    baceptarsolicitud =Estandar.boton("Aceptar\nSolicitud");
+	    baceptarsolicitud.setActionCommand("AceptSolicitADMIN");
+	    cuadroSolicitudes.add(baceptarsolicitud,BorderLayout.EAST);
+	    add(cuadroSolicitudes, BorderLayout.CENTER);
+	}
+	
+	public void limpiarVista() {
+		try {
+			remove(cuadroInformes);
+			remove(cuadroUsuarios);
+			remove(cuadroSedes);
+			remove(cuadroSolicitudes);
+	        revalidate();
+	        repaint();
+		}catch (NullPointerException e) {
+			
+		}
+	}
+	
+	public DefaultTableModel getModelU() {
+		return modelU;
+	}
+
+	public void setModelU(DefaultTableModel modelU) {
+		this.modelU = modelU;
+	}
+
+	public DefaultTableModel getModelSol() {
+		return modelSol;
+	}
+
+	public void setModelSol(DefaultTableModel modelSol) {
+		this.modelSol = modelSol;
+	}
+
+	public DefaultTableModel getModedlSed() {
+		return modedlSed;
+	}
+
+	public void setModedlSed(DefaultTableModel modedlSed) {
+		this.modedlSed = modedlSed;
 	}
 
 	public JLabel getEtitulo() {
@@ -151,6 +206,14 @@ public class PanelAdmin extends JPanel{
 		this.bcerrar = bcerrar;
 	}
 
+	public JButton getBaceptarsolicitud() {
+		return baceptarsolicitud;
+	}
+
+	public void setBaceptarsolicitud(JButton baceptarsolicitud) {
+		this.baceptarsolicitud = baceptarsolicitud;
+	}
+
 	public ListadodeUsuarios getListauser() {
 		return listauser;
 	}
@@ -174,6 +237,21 @@ public class PanelAdmin extends JPanel{
 	public void setCuadroInformes(JPanel cuadroInformes) {
 		this.cuadroInformes = cuadroInformes;
 	}
-	
+
+	public JPanel getCuadroSolicitudes() {
+		return cuadroSolicitudes;
+	}
+
+	public void setCuadroSolicitudes(JPanel cuadroSolicitudes) {
+		this.cuadroSolicitudes = cuadroSolicitudes;
+	}
+
+	public JPanel getCuadroSedes() {
+		return cuadroSedes;
+	}
+
+	public void setCuadroSedes(JPanel cuadroSedes) {
+		this.cuadroSedes = cuadroSedes;
+	}
 	
 }

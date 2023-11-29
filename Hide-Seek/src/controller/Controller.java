@@ -148,14 +148,48 @@ public class Controller implements ActionListener{
 		// COMANDOS ADMIN
 		if(comando.equals("BINFORMES_ADMIN")) {
 			System.out.println("Informes estadisticos");
+			vAdmin.getPa().limpiarVista();
+			vAdmin.getPa().verInformes();
 		}
 		
 		if(comando.equals("BUSUARIOS_ADMIN")) {
-			vAdmin.getPa().getCuadroUsuarios().setVisible(true);
+			vAdmin.getPa().limpiarVista();
+			vAdmin.getPa().verUsuarios();
+	        for (Usuario usuario : lista.getListadeUsuarios()) {
+	            Object[] fila = {
+	                    usuario.getNombre(),
+	                    usuario.getUser(),
+	                    usuario.getRol(),
+	                    usuario.getCorreo(),
+	                    usuario.getGenero(),
+	                    usuario.getCredito(),
+	                    usuario.getDeuda()
+	            };
+	            vAdmin.getPa().getModelU().addRow(fila);
+	        }
 		}
 		
 		if(comando.equals("BSOLICITUDES_ADMIN")) {
-			System.out.println("Solicitudes de sobrecupo");
+			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
+			vAdmin.getPa().limpiarVista();
+			vAdmin.getPa().verSolicitudes();
+	        for (Usuario usuario : lista.getListadeUsuarios()) {
+	            if(usuario.getSobrecupo() > 0) {
+		        	Object[] fila = {
+		                    usuario.getNombre(),
+		                    usuario.getUser(),
+		                    usuario.getCorreo(),
+		                    usuario.getCredito(),
+		                    usuario.getDeuda(),
+		                    usuario.getSobrecupo()
+		            };
+		            vAdmin.getPa().getModelSol().addRow(fila);
+	            }
+	        }
+		}
+		
+		if(comando.equals("AceptSolicitADMIN")) {
+			System.out.println("solicitud aceptada");
 		}
 		
 		if(comando.equals("BSEDES_ADMIN")) {
@@ -271,13 +305,13 @@ public class Controller implements ActionListener{
 					String nombre = vInicial.getPr().getTnombre().getText();
 					String alias = vInicial.getPr().getTusuario().getText();
 					String correo = vInicial.getPr().getTcorreo().getText();
-					String genero = vInicial.getPr().getLista_genero().getItemAt(0);
+					String genero = vInicial.getPr().getLista_genero().getSelectedItem().toString();
 					String clavefinal = new String(vInicial.getPr().getTclave().getPassword());
 					Random random = new Random();	
 					int randomNumber = random.nextInt(2500001) + 500000;
 					int cupo = randomNumber;
 					
-					usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0);
+					usuario = new Usuario(nombre, alias, "Usuario", clavefinal, correo, genero, cupo, 0, 0);
 					boolean respuesta = lista.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
@@ -516,9 +550,9 @@ public class Controller implements ActionListener{
 					vCliente.getLayeredPane().remove(vCliente.getPrp());
 					vCliente.getLayeredPane().add(vCliente.getPrh(), Integer.valueOf(1));
 					Estandar.adaptarPanelCentro(vCliente, vCliente.getPrp());
-					vCliente.setMinimumSize(new Dimension(700, 800));
+					vCliente.setMinimumSize(new Dimension(700, 580));
 					if(700 > vCliente.getSize().height) {
-						vCliente.setSize(700, 800);
+						vCliente.setSize(700, 600);
 					}
 					
 				}
@@ -757,7 +791,7 @@ public class Controller implements ActionListener{
 		
 		// Menu Sobrecupo
 		if(comando.equals("bSOLICITAR")) {
-			long monto = 0;
+			int monto = 0;
 			try {
 			monto = Integer.parseInt(vCliente.getPs().getTmonto().getText());
 			}catch(NumberFormatException n) {
@@ -768,7 +802,8 @@ public class Controller implements ActionListener{
 				vCliente.getPs().getEingrese().setForeground(Color.RED);
 				vCliente.getPs().getTmonto().setText("");
 			}else {
-				MensajeInformacion("Ha solicitado un sobrecupo de $" + vCliente.getPs().getTmonto().getText() + " pesos", "Sobrecupo solicitado");
+				MensajeInformacion("Ha solicitado un sobrecupo de $" + monto + " pesos", "Sobrecupo solicitado");
+				usuario.setSobrecupo(monto);
 				vCliente.getPs().getTmonto().setText("");
 				vCliente.getPs().setVisible(false);
 				vCliente.getPc().setVisible(true);

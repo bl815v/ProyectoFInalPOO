@@ -30,7 +30,7 @@ public class PanelRegisterHorario extends JPanel{
 	
 	public PanelRegisterHorario() {
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(670, 670));
+		setPreferredSize(new Dimension(700, 500));
 	
 		inicializarComponentes();
 		setVisible(true);
@@ -95,7 +95,7 @@ public class PanelRegisterHorario extends JPanel{
             bhorario.setName("b"+i);
             franjaHorario.add(bhorario);
         }
-        horarios.setPreferredSize(new Dimension(300, 300));
+        horarios.setPreferredSize(new Dimension(400, 400));
         centro.add(horarios, BorderLayout.CENTER);
         
         add(centro, BorderLayout.CENTER);
