@@ -32,6 +32,14 @@ import javax.swing.event.DocumentListener;
 public abstract class Estandar {
 	private Color colorAzulado= new Color(84, 160, 227);
 	private static JLabel fondoImagen = new JLabel();
+	
+	public static void MensajeError(String texto) {
+		JOptionPane.showMessageDialog(null, texto, "Error", JOptionPane.ERROR_MESSAGE);	
+	}
+	
+	public static void MensajeInformacion(String texto, String titulo) {
+		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);	
+	}
 /**
  * Crea un JLabel con el texto HIDE&SEEK.
  * Fuente Arial, en negrilla, 22px.

@@ -5,18 +5,19 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.validation.Validator;
 
 import model.Admin;
 import model.Compra;
 import model.Correo;
-import model.Hora;
 import model.Horarios;
 import model.ListadeCompras;
 import model.ListadeParejas;
@@ -29,6 +30,7 @@ import model.Sede;
 import model.Usuario;
 import view.Estandar;
 import view.VentanaAdmin;
+import view.VentanaAgregarSede;
 import view.VentanaCliente;
 import view.VentanaCompra;
 import view.VentanaInicial;
@@ -48,7 +50,7 @@ public class Controller implements ActionListener{
 	private Usuario usuario;
 	private Admin admin;
 	private Pareja pareja;
-	
+	private VentanaAgregarSede vAgregarSede;
 	
 	public Controller() { 
 		vInicial = new VentanaInicial();
@@ -154,40 +156,124 @@ public class Controller implements ActionListener{
 			vAdmin.getPa().verInformes();
 		}
 		
-		if(comando.equals("BUSUARIOS_ADMIN")) {
-			vAdmin.getPa().limpiarVista();
-			vAdmin.getPa().verUsuarios();
-	        for (Usuario usuario : lista.getListadeUsuarios()) {
-	            Object[] fila = {
-	                    usuario.getNombre(),
-	                    usuario.getUser(),
-	                    usuario.getRol(),
-	                    usuario.getCorreo(),
-	                    usuario.getGenero(),
-	                    usuario.getCredito(),
-	                    usuario.getDeuda()
-	            };
-	            vAdmin.getPa().getModelU().addRow(fila);
-	        }
-		}
-		
-		if(comando.equals("BSOLICITUDES_ADMIN")) {
-			vAdmin.getPa().limpiarVista();
-			vAdmin.getPa().verSolicitudes();
-			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
-	        for (Usuario usuario : lista.getListadeUsuarios()) {
-	            if(usuario.getSobrecupo() > 0) {
-		        	Object[] fila = {
+		if (comando.equals("BUSUARIOS_ADMIN")) {
+		    vAdmin.getPa().limpiarVista();
+		    vAdmin.getPa().verUsuarios();
+		    vAdmin.getPa().getBeliminaruser().addActionListener(this);
+		    try {
+		        vAdmin.getPa().getBaceptarsolicitud().removeActionListener(this);
+		    } catch (NullPointerException ex) {
+		    }
+		    try {
+		        vAdmin.getPa().getBeliminarsede().removeActionListener(this);
+		        vAdmin.getPa().getBagregarsede().removeActionListener(this);
+		    } catch (NullPointerException xee) {
+		    }
+
+		    DefaultTableModel modelU = vAdmin.getPa().getModelU();
+		    Set<String> usuariosAgregados = new HashSet<>();
+		    int rowCount = modelU.getRowCount();
+		    for (int i = 0; i < rowCount; i++) {
+		        String userName = modelU.getValueAt(i, 1).toString(); 
+		        usuariosAgregados.add(userName);
+		    }
+
+		    for (Usuario usuario : lista.getListadeUsuarios()) {
+		        String userName = usuario.getUser();
+		        if (!usuariosAgregados.contains(userName)) {
+		            Object[] fila = {
 		                    usuario.getNombre(),
-		                    usuario.getUser(),
+		                    userName,
+		                    usuario.getRol(),
 		                    usuario.getCorreo(),
+		                    usuario.getGenero(),
 		                    usuario.getCredito(),
-		                    usuario.getDeuda(),
-		                    usuario.getSobrecupo()
-	            	};
-	            	vAdmin.getPa().getModelSol().addRow(fila);
-	            }
-	        }
+		                    usuario.getDeuda()
+		            };
+		            modelU.addRow(fila);
+		            usuariosAgregados.add(userName); 
+		        }
+		    }
+		}
+
+		
+		if(comando.equals("BeliminaruserADMIN")) {
+		    JTable tablaUsuarios = vAdmin.getPa().getTablaUsuarios();
+		    int filaSeleccionada = tablaUsuarios.getSelectedRow();
+
+		    if (filaSeleccionada != -1) {
+		        String usuario = tablaUsuarios.getValueAt(filaSeleccionada, 1).toString();
+		        Usuario usuarioSeleccionado = null;
+		        for (Usuario u : lista.getListadeUsuarios()) {
+		            if (u.getUser().equals(usuario)) {
+		                usuarioSeleccionado = u;
+		                break;
+		            }
+		        }
+		        
+		        if (usuarioSeleccionado != null) {
+		        	Object[] opciones = {"Sí", "No"}; 
+					int confirmar = JOptionPane.showOptionDialog(null, "Desea elminar a " + usuarioSeleccionado.getNombre(), "Confirmar eliminacion", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
+					if (confirmar == JOptionPane.YES_OPTION) {
+			        	lista.getListadeUsuarios().remove(usuarioSeleccionado);
+			            DefaultTableModel modelU = vAdmin.getPa().getModelU();
+			            modelU.removeRow(filaSeleccionada);
+					    vAdmin.getPa().limpiarVista();
+					    Estandar.MensajeInformacion("Usuario eliminado exitosamente", "Usuario eliminado");
+					}
+		        }
+		    }
+		}
+
+		if (comando.equals("BSOLICITUDES_ADMIN")) {
+		    vAdmin.getPa().limpiarVista();
+		    vAdmin.getPa().verSolicitudes();
+		    try {
+		        vAdmin.getPa().getBeliminaruser().removeActionListener(this);
+		    } catch (NullPointerException xe) {
+		    }
+		    try {
+		        vAdmin.getPa().getBeliminarsede().removeActionListener(this);
+		        vAdmin.getPa().getBagregarsede().removeActionListener(this);
+		    } catch (NullPointerException xee) {
+		    }
+		    vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
+
+		    DefaultTableModel modelSol = vAdmin.getPa().getModelSol();
+		    Set<String> usuariosAgregados = new HashSet<>();
+		    int rowCount = modelSol.getRowCount();
+
+		    for (int i = 0; i < rowCount; i++) {
+		        String userName = modelSol.getValueAt(i, 1).toString(); 
+		        usuariosAgregados.add(userName);
+		    }
+
+		    List<Usuario> usuariosExistentes = lista.getListadeUsuarios();
+		    for (int i = rowCount - 1; i >= 0; i--) {
+		        String userName = modelSol.getValueAt(i, 1).toString();
+		        if (!usuariosExistentes.stream().anyMatch(u -> u.getUser().equals(userName))) {
+		            modelSol.removeRow(i);
+		        }
+		    }
+
+		    for (Usuario usuario : usuariosExistentes) {
+		        if (usuario.getSobrecupo() > 0) {
+		            String userName = usuario.getUser();
+		            if (!usuariosAgregados.contains(userName)) {
+		                Object[] fila = {
+		                        usuario.getNombre(),
+		                        userName,
+		                        usuario.getCorreo(),
+		                        usuario.getCredito(),
+		                        usuario.getDeuda(),
+		                        usuario.getSobrecupo()
+		                };
+		                modelSol.addRow(fila);
+		                usuariosAgregados.add(userName);
+		            }
+		        }
+		    }
 		}
 		
 		if (comando.equals("AceptSolicitADMIN")) {
@@ -215,14 +301,122 @@ public class Controller implements ActionListener{
 		            modelSol.removeRow(filaSeleccionada);
 
 				    vAdmin.getPa().limpiarVista();
-				    MensajeInformacion("Sobrecupo aceptado exitosamente", "Sobrecupo aceptado");
+				    Estandar.MensajeInformacion("Sobrecupo aceptado exitosamente", "Sobrecupo aceptado");
 		        }
 		    }
 		}
 		
-		if(comando.equals("BSEDES_ADMIN")) {
-			System.out.println("Lista de sedes");
+		if (comando.equals("BSEDES_ADMIN")) {
+		    vAdmin.getPa().limpiarVista();
+		    vAdmin.getPa().verSedes();
+		    vAdmin.getPa().getBeliminarsede().addActionListener(this);
+		    vAdmin.getPa().getBagregarsede().addActionListener(this);
+		    try {
+		        vAdmin.getPa().getBeliminaruser().removeActionListener(this);
+		    } catch (NullPointerException xe) {
+		    }
+		    try {
+		        vAdmin.getPa().getBaceptarsolicitud().removeActionListener(this);
+		    } catch (NullPointerException xee) {
+		    }
+
+		    DefaultTableModel modelSed = vAdmin.getPa().getModelSed();
+		    Set<String> sedesAgregadas = new HashSet<>();
+		    int rowCount = modelSed.getRowCount();
+		    for (int i = 0; i < rowCount; i++) {
+		        String sedeNombre = modelSed.getValueAt(i, 0).toString();
+		        sedesAgregadas.add(sedeNombre);
+		    }
+
+		    for (Sede sede : listaSedes.getListadeSedes()) {
+		        String sedeNombre = sede.getNombre();
+		        if (!sedesAgregadas.contains(sedeNombre)) {
+		            Object[] fila = {
+		                    sedeNombre,
+		                    sede.getDireccion()
+		            };
+		            modelSed.addRow(fila);
+		            sedesAgregadas.add(sedeNombre); 
+		        }
+		    }
 		}
+		
+		if (comando.equals("EliminarSedeADMIN")) {
+		    JTable tablaSedes = vAdmin.getPa().getTablaSedes();
+		    int filaSeleccionada = tablaSedes.getSelectedRow();
+
+		    if (filaSeleccionada != -1) {
+		        String sede = tablaSedes.getValueAt(filaSeleccionada, 0).toString();
+		        Sede sedeSelec = null;
+		        for (Sede u : listaSedes.getListadeSedes()) {
+		            if (u.getNombre().equals(sede)) {
+		            	sedeSelec = u;
+		                break;
+		            }
+		        }
+
+		        if (sedeSelec != null) {
+		            Object[] opciones = {"Sí", "No"}; 
+					int confirmar = JOptionPane.showOptionDialog(null, "Desea elminar la " + sedeSelec.getNombre(), "Confirmar eliminacion", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
+					if (confirmar == JOptionPane.YES_OPTION) {
+			        	listaSedes.getListadeSedes().remove(sedeSelec);
+			            DefaultTableModel modelSed = vAdmin.getPa().getModelSed();
+			            modelSed.removeRow(filaSeleccionada);
+					    vAdmin.getPa().limpiarVista();
+					    Estandar.MensajeInformacion("Sede eliminada exitosamente", "Sede eliminada");
+					}
+					
+		        }
+		    }
+		}
+		
+		if(comando.equals("AgregarSedeADMIN")) {
+			vAgregarSede = new VentanaAgregarSede();
+			vAgregarSede.getBagregar().addActionListener(this);
+			vAgregarSede.getBcancelar().addActionListener(this);
+			vAgregarSede.setVisible(true);
+			vAdmin.setVisible(false);
+		}
+		
+		if(comando.equals("bCancelarSEDE")) {
+			vAgregarSede.setVisible(false);
+			vAdmin.setVisible(true);
+		}
+		
+		if(comando.equals("bAGREGARSEDE")) {
+			boolean vnombre, vdireccion;
+			if(vAgregarSede.getTnombre().getText().equals("")) {
+				vAgregarSede.getEnombre().setForeground(Color.RED);
+				vnombre = false;
+			}else {
+				vnombre = true;
+			}
+			if(vAgregarSede.getTdireccion().getText().equals("")) {
+				vAgregarSede.getEdireccion().setForeground(Color.RED);
+				vdireccion = false;
+			}else {
+				vdireccion = true;
+			}
+			if(vnombre && vdireccion){
+				String nombresede = vAgregarSede.getTnombre().getText();
+				String direccionsede = vAgregarSede.getTdireccion().getText();
+				Sede sede = new Sede(nombresede, direccionsede);
+				boolean respuesta = listaSedes.agregarSede(sede);
+				if (respuesta) {
+					Estandar.MensajeInformacion("Se ha creado la sede exitosamente!", "Sede creada");
+					vAgregarSede.getTdireccion().setText("");
+					vAgregarSede.getTnombre().setText("");
+					vAgregarSede.setVisible(false);
+					vAdmin.setVisible(true);
+					vAdmin.getPa().limpiarVista();
+				}else {
+					Estandar.MensajeError("Fallo al registrar");
+				}
+				listaSedes.agregarSede(sede);
+			}
+		}		
+		
 		if(comando.equals("bCERRARSESIONADMIN")) {
 			vAdmin.setVisible(false);
 			vInicial.getLayeredPane().add(Estandar.getFondoImagen(), Integer.valueOf(0));
@@ -343,9 +537,9 @@ public class Controller implements ActionListener{
 					boolean respuesta = lista.agregarUsuario(usuario);
 					if (respuesta) {
 						volver();
-						MensajeInformacion("Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso");
+						Estandar.MensajeInformacion("Se ha registrado exitosamente!\n\nSe le ha asignado un cupo de $" + cupo + " pesos", "Registro exitoso");
 					}else {
-						MensajeError("Fallo al registrar");
+						Estandar.MensajeError("Fallo al registrar");
 					}
 					lista.agregarUsuario(usuario);
 					correos.enviarCorreo(correo,alias,clavefinal);
@@ -378,7 +572,7 @@ public class Controller implements ActionListener{
 		
 		if(comando.equals("bABONARMENU")){
 			if(usuario.getDeuda() == 0) {
-				MensajeError("No es posible abonar, no cuenta con una deuda");
+				Estandar.MensajeError("No es posible abonar, no cuenta con una deuda");
 			}else {
 				vCliente.setTitle("Abono de credito");
 				vCliente.getPa().geteDineropendiente().setText("$ " + String.valueOf(usuario.getDeuda() + " pesos"));
@@ -407,7 +601,7 @@ public class Controller implements ActionListener{
 				vCliente.getPa().getEingrese().setForeground(Color.RED);
 				vCliente.getPa().getTmonto().setText("");
 			}else {
-				MensajeInformacion("Ha abonado $" + vCliente.getPa().getTmonto().getText() + " pesos", "Abono exitoso");
+				Estandar.MensajeInformacion("Ha abonado $" + vCliente.getPa().getTmonto().getText() + " pesos", "Abono exitoso");
 				usuario.setDeuda(usuario.getDeuda()-Integer.parseInt(vCliente.getPa().getTmonto().getText()));
 				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
 				usuario.setCredito(usuario.getCredito()+Integer.parseInt(vCliente.getPa().getTmonto().getText()));
@@ -586,33 +780,11 @@ public class Controller implements ActionListener{
 				}
 			}
 		}
-		for (int i = 0; i < 49; i++) { 	
-			final int j = i;
-			try {
-				JButton horarioselect = vCliente.getPrh().buscarboton("b"+i);
-				
-				horarioselect.addActionListener(et -> {
-					int fila = j / 7;
-					int columna = j % 7;
-					if(horarioPareja[fila][columna] == 0) {
-						horarioselect.setBackground(new Color(255, 122, 129));
-						horarioPareja[fila][columna] = 1;
-					}else if(horarioPareja[fila][columna] == 1){
-						horarioselect.setBackground(new Color(171, 245, 169));
-						horarioPareja[fila][columna] = 0;
-					}
-					System.out.println("Fila: " + fila + ", Columna: " + columna+" = " + horarioPareja[fila][columna]);
-					
-				});
-			}catch (NullPointerException noexiste) {
-				
-			}
-		}
 		if(comando.equals("bRegistrarpareja")) {
 			String nombre = vCliente.getPrp().getTnombre().getText();
 			String alias = vCliente.getPrp().getTusuario().getText();
 			String correo = vCliente.getPrp().getTcorreo().getText();
-			String genero = vCliente.getPrp().getLista_genero().getItemAt(0);
+			String genero = vCliente.getPrp().getLista_genero().getSelectedItem().toString();
 			String clavefinal = new String(vCliente.getPrp().getTclave().getPassword());
 			for (int i = 0; i < horarioPareja.length; i++) {
 	            for (int j = 0; j < horarioPareja[i].length; j++) {
@@ -629,11 +801,13 @@ public class Controller implements ActionListener{
 			}
 			int credito = Integer.parseInt(vCliente.getPrp().getTcredito().getText());
 			if(Horarios.validarHorario(horarioPareja)) {
+				usuario.setCredito(usuario.getCredito()-credito);
 				pareja = new Pareja(nombre, alias, "Pareja", clavefinal, correo, genero, credito, 0, horarioPareja, sedeSelec, usuario);
 				boolean respuesta = listapareja.agregarParejas(pareja);
 				if (respuesta) {
-					MensajeInformacion("Se ha registrado la pareja exitosamente!", "Registro exitoso");
+					Estandar.MensajeInformacion("Se ha registrado la pareja exitosamente!", "Registro exitoso");
 					vCliente.setTitle("Menu principal - HIDE&SEEK");
+					vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
 					vCliente.setMinimumSize(new Dimension(675, 580));
 					try {
 						vCliente.getPrp().setVisible(false);
@@ -664,7 +838,7 @@ public class Controller implements ActionListener{
 					vCliente.getPrp().getTrepetir().setText(null);
 					vCliente.getPrp().getTcredito().setText(null);
 				}else {
-					MensajeError("Fallo al registrar");
+					Estandar.MensajeError("Fallo al registrar");
 				}
 				listapareja.agregarParejas(pareja);
 				correos.enviarCorreo(correo,alias,clavefinal);
@@ -831,7 +1005,7 @@ public class Controller implements ActionListener{
 				vCliente.getPs().getEingrese().setForeground(Color.RED);
 				vCliente.getPs().getTmonto().setText("");
 			}else {
-				MensajeInformacion("Ha solicitado un sobrecupo de $" + monto + " pesos", "Sobrecupo solicitado");
+				Estandar.MensajeInformacion("Ha solicitado un sobrecupo de $" + monto + " pesos", "Sobrecupo solicitado");
 				usuario.setSobrecupo(monto);
 				vCliente.getPs().getTmonto().setText("");
 				vCliente.getPs().setVisible(false);
@@ -913,7 +1087,7 @@ public class Controller implements ActionListener{
 							}
 							
 						}else {
-							MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
+							Estandar.MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
 						}
 					}
 				}
@@ -950,14 +1124,6 @@ public class Controller implements ActionListener{
 		vInicial.getLayeredPane().add(vInicial.getPl(), Integer.valueOf(1));
 		vInicial.setMinimumSize(new Dimension(280, 470));
 		vInicial.setLocationRelativeTo(null);
-	}
-	
-	public void MensajeError(String texto) {
-		JOptionPane.showMessageDialog(null, texto, "Error", JOptionPane.ERROR_MESSAGE);	
-	}
-	
-	public void MensajeInformacion(String texto, String titulo) {
-		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);	
 	}
 	
 }

@@ -19,12 +19,12 @@ import model.Usuario;
 public class PanelAdmin extends JPanel{
 	
 	private JLabel etitulo, enombre;
-	private JButton binformes, busuarios, bsolicitudes, bsedes, bcerrar, baceptarsolicitud;
+	private JButton binformes, busuarios, bsolicitudes, bsedes, bcerrar, baceptarsolicitud, beliminaruser, beliminarsede, bagregarsede;
 	private ListadodeUsuarios listauser;
 	
 	private JPanel cuadroUsuarios, cuadroInformes, cuadroSolicitudes, cuadroSedes;
-    DefaultTableModel modelU, modelSol, modedlSed;
-    JTable tablaSolicitudes,tablaUsuarios;
+    DefaultTableModel modelU, modelSol, modelSed;
+    JTable tablaSolicitudes,tablaUsuarios, tablaSedes;
 
 	public PanelAdmin() {
 		setLayout(new BorderLayout());
@@ -72,108 +72,122 @@ public class PanelAdmin extends JPanel{
 	}
 	
 	public void verInformes() {
-		JPanel cuadroInformes = new JPanel(new BorderLayout());
-		cuadroInformes.add(Estandar.labelGris("Generando informes estadisticos"));
-		cuadroInformes.setVisible(false);
-		add(cuadroInformes, BorderLayout.CENTER);
-		cuadroInformes.setVisible(true);
+	    if (cuadroInformes == null) {
+	        cuadroInformes = new JPanel(new BorderLayout());
+	        cuadroInformes.add(Estandar.labelGris("Generando informes estadisticos"));
+	        add(cuadroInformes, BorderLayout.CENTER);
+	    }
+
+	    cuadroInformes.setVisible(true);
+	    revalidate();
+	    repaint();
 	}
 	
 	public void verUsuarios() {
-		JPanel cuadroUsuarios = new JPanel(new BorderLayout());
-		String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Genero", "Credito", "Deuda"};
-	    modelU = new DefaultTableModel(null, columnas) {
-        	@Override
-        	public boolean isCellEditable(int row, int column) {
-            	return false;
-        	}
-    	};
-	    tablaUsuarios = new JTable(modelU);
-	    JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
-        cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
-        cuadroUsuarios.setVisible(false);
-		add(cuadroUsuarios, BorderLayout.CENTER);
-		cuadroUsuarios.setVisible(true); 
+	    if (cuadroUsuarios == null) {
+	        cuadroUsuarios = new JPanel(new BorderLayout());
+	        String[] columnas = {"Nombre", "Usuario", "Rol", "Correo", "Genero", "Credito", "Deuda"};
+	        modelU = new DefaultTableModel(null, columnas) {
+	            @Override
+	            public boolean isCellEditable(int row, int column) {
+	                return false;
+	            }
+	        };
+	        tablaUsuarios = new JTable(modelU);
+	        JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
+	        cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
+	        JPanel auxUser = new JPanel(new BorderLayout());
+	        beliminaruser = Estandar.boton("Eliminar usuario");
+	        beliminaruser.setActionCommand("BeliminaruserADMIN");
+	        auxUser.add(beliminaruser, BorderLayout.NORTH);
+	        cuadroUsuarios.add(auxUser, BorderLayout.EAST);
+	        add(cuadroUsuarios, BorderLayout.CENTER);
+	    }
+
+	    cuadroUsuarios.setVisible(true);
+	    revalidate();
+	    repaint();
 	}
 	
 	public void verSolicitudes() {
-	    JPanel cuadroSolicitudes = new JPanel(new BorderLayout());
-	    String[] columnas = {"Nombre", "Usuario", "Correo", "Credito", "Deuda", "Solicitud"};
-	    modelSol = new DefaultTableModel(null, columnas) {
-	        @Override
-	        public boolean isCellEditable(int row, int column) {
-	            return false;
-	        }
-	    };
-	    tablaSolicitudes = new JTable(modelSol);
-	    JScrollPane scrollPane = new JScrollPane(tablaSolicitudes);
-	    cuadroSolicitudes.add(scrollPane, BorderLayout.CENTER);
-	    JPanel aux = new JPanel(new BorderLayout());
-	    baceptarsolicitud =Estandar.boton("Aceptar Solicitud");
-	    baceptarsolicitud.setActionCommand("AceptSolicitADMIN");
-	    aux.add(baceptarsolicitud, BorderLayout.NORTH);
-	    cuadroSolicitudes.add(aux,BorderLayout.EAST);
-	    cuadroSolicitudes.setVisible(false);
-	    add(cuadroSolicitudes, BorderLayout.CENTER);
+	    if (cuadroSolicitudes == null) {
+	        cuadroSolicitudes = new JPanel(new BorderLayout());
+	        String[] columnas = {"Nombre", "Usuario", "Correo", "Credito", "Deuda", "Solicitud"};
+	        modelSol = new DefaultTableModel(null, columnas) {
+	            @Override
+	            public boolean isCellEditable(int row, int column) {
+	                return false;
+	            }
+	        };
+	        tablaSolicitudes = new JTable(modelSol);
+	        JScrollPane scrollPane = new JScrollPane(tablaSolicitudes);
+	        cuadroSolicitudes.add(scrollPane, BorderLayout.CENTER);
+	        JPanel auxSolic = new JPanel(new BorderLayout());
+	        baceptarsolicitud = Estandar.boton("Aceptar Solicitud");
+	        baceptarsolicitud.setActionCommand("AceptSolicitADMIN");
+	        auxSolic.add(baceptarsolicitud, BorderLayout.NORTH);
+	        cuadroSolicitudes.add(auxSolic, BorderLayout.EAST);
+	        add(cuadroSolicitudes, BorderLayout.CENTER);
+	    }
+
 	    cuadroSolicitudes.setVisible(true);
+	    revalidate();
+	    repaint();
+	}
+	
+	public void verSedes() {
+	    if (cuadroSedes == null) {
+	        cuadroSedes = new JPanel(new BorderLayout());
+	        String[] columnas = {"Nombre", "Direccion"};
+	        modelSed = new DefaultTableModel(null, columnas) {
+	            @Override
+	            public boolean isCellEditable(int row, int column) {
+	                return false;
+	            }
+	        };
+	        tablaSedes = new JTable(modelSed);
+	        JScrollPane scrollPane = new JScrollPane(tablaSedes);
+	        cuadroSedes.add(scrollPane, BorderLayout.CENTER);
+	        JPanel auxSede = new JPanel(new BorderLayout());
+	        JPanel auxBotonsede = new JPanel();
+	        auxBotonsede.setLayout(new BoxLayout(auxBotonsede, BoxLayout.Y_AXIS));
+	        beliminarsede = Estandar.boton("Eliminar sede");
+	        beliminarsede.setActionCommand("EliminarSedeADMIN");
+	        auxBotonsede.add(beliminarsede);
+
+	        bagregarsede = Estandar.boton("Agregar sede");
+	        bagregarsede.setActionCommand("AgregarSedeADMIN");
+	        auxBotonsede.add(bagregarsede);
+
+	        auxSede.add(auxBotonsede, BorderLayout.NORTH);
+	        cuadroSedes.add(auxSede, BorderLayout.EAST);
+	        add(cuadroSedes, BorderLayout.CENTER);
+	    }
+
+	    cuadroSedes.setVisible(true);
+	    revalidate();
+	    repaint();
 	}
 	
 	public void limpiarVista() {
-		try {
-			remove(cuadroInformes);
-			cuadroInformes.setVisible(false);
-			remove(cuadroUsuarios);
-			cuadroUsuarios.setVisible(false);
-			remove(cuadroSedes);
-			cuadroSedes.setVisible(false);
-			remove(cuadroSolicitudes);
-			cuadroSolicitudes.setVisible(false);
-			
-	        revalidate();
-	        repaint();
-		}catch (NullPointerException e) {
-			
-		}
-	}
-	
-	public JTable getTablaSolicitudes() {
-		return tablaSolicitudes;
-	}
+	    if (cuadroInformes != null) {
+	        cuadroInformes.setVisible(false);
+	    }
 
-	public void setTablaSolicitudes(JTable tablaSolicitudes) {
-		this.tablaSolicitudes = tablaSolicitudes;
-	}
+	    if (cuadroUsuarios != null) {
+	        cuadroUsuarios.setVisible(false);
+	    }
 
-	public JTable getTablaUsuarios() {
-		return tablaUsuarios;
-	}
+	    if (cuadroSolicitudes != null) {
+	        cuadroSolicitudes.setVisible(false);
+	    }
 
-	public void setTablaUsuarios(JTable tablaUsuarios) {
-		this.tablaUsuarios = tablaUsuarios;
-	}
+	    if (cuadroSedes != null) {
+	        cuadroSedes.setVisible(false);
+	    }
 
-	public DefaultTableModel getModelU() {
-		return modelU;
-	}
-
-	public void setModelU(DefaultTableModel modelU) {
-		this.modelU = modelU;
-	}
-
-	public DefaultTableModel getModelSol() {
-		return modelSol;
-	}
-
-	public void setModelSol(DefaultTableModel modelSol) {
-		this.modelSol = modelSol;
-	}
-
-	public DefaultTableModel getModedlSed() {
-		return modedlSed;
-	}
-
-	public void setModedlSed(DefaultTableModel modedlSed) {
-		this.modedlSed = modedlSed;
+	    revalidate();
+	    repaint();
 	}
 
 	public JLabel getEtitulo() {
@@ -240,6 +254,30 @@ public class PanelAdmin extends JPanel{
 		this.baceptarsolicitud = baceptarsolicitud;
 	}
 
+	public JButton getBeliminaruser() {
+		return beliminaruser;
+	}
+
+	public void setBeliminaruser(JButton beliminaruser) {
+		this.beliminaruser = beliminaruser;
+	}
+
+	public JButton getBeliminarsede() {
+		return beliminarsede;
+	}
+
+	public void setBeliminarsede(JButton beliminarsede) {
+		this.beliminarsede = beliminarsede;
+	}
+	
+	public JButton getBagregarsede() {
+		return bagregarsede;
+	}
+
+	public void setBagregarsede(JButton bagregarsede) {
+		this.bagregarsede = bagregarsede;
+	}
+
 	public ListadodeUsuarios getListauser() {
 		return listauser;
 	}
@@ -279,5 +317,53 @@ public class PanelAdmin extends JPanel{
 	public void setCuadroSedes(JPanel cuadroSedes) {
 		this.cuadroSedes = cuadroSedes;
 	}
-	
+
+	public DefaultTableModel getModelU() {
+		return modelU;
+	}
+
+	public void setModelU(DefaultTableModel modelU) {
+		this.modelU = modelU;
+	}
+
+	public DefaultTableModel getModelSol() {
+		return modelSol;
+	}
+
+	public void setModelSol(DefaultTableModel modelSol) {
+		this.modelSol = modelSol;
+	}
+
+	public DefaultTableModel getModelSed() {
+		return modelSed;
+	}
+
+	public void setModelSed(DefaultTableModel modelSed) {
+		this.modelSed = modelSed;
+	}
+
+	public JTable getTablaSolicitudes() {
+		return tablaSolicitudes;
+	}
+
+	public void setTablaSolicitudes(JTable tablaSolicitudes) {
+		this.tablaSolicitudes = tablaSolicitudes;
+	}
+
+	public JTable getTablaUsuarios() {
+		return tablaUsuarios;
+	}
+
+	public void setTablaUsuarios(JTable tablaUsuarios) {
+		this.tablaUsuarios = tablaUsuarios;
+	}
+
+	public JTable getTablaSedes() {
+		return tablaSedes;
+	}
+
+	public void setTablaSedes(JTable tablaSedes) {
+		this.tablaSedes = tablaSedes;
+	}
+
 }

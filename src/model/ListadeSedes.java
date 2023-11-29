@@ -11,7 +11,27 @@ private ArrayList<Sede>listadeSedes;
 		listadeSedes.add(x);
 	
 	}
-
+	
+	public Sede buscarSede(String nombre) {
+		Sede encontrada = null;
+		for(Sede x : listadeSedes) {
+			if(x.getNombre().equals(nombre)) {
+				encontrada = x;
+			}
+		}
+		return encontrada;
+	}
+	
+	public boolean agregarSede(Sede sede) {
+		
+		Sede aux = buscarSede(sede.getNombre());
+		
+		if (aux==null) {
+			listadeSedes.add(sede);
+			return true;
+		}		
+		return false;
+	}
 	
 	public ArrayList<Sede> getListadeSedes() {
 		return listadeSedes;
