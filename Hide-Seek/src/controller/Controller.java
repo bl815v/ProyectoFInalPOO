@@ -9,6 +9,9 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.validation.Validator;
 
 import model.Admin;
 import model.Compra;
@@ -147,7 +150,6 @@ public class Controller implements ActionListener{
 		
 		// COMANDOS ADMIN
 		if(comando.equals("BINFORMES_ADMIN")) {
-			System.out.println("Informes estadisticos");
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verInformes();
 		}
@@ -170,9 +172,9 @@ public class Controller implements ActionListener{
 		}
 		
 		if(comando.equals("BSOLICITUDES_ADMIN")) {
-			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verSolicitudes();
+			vAdmin.getPa().getBaceptarsolicitud().addActionListener(this);
 	        for (Usuario usuario : lista.getListadeUsuarios()) {
 	            if(usuario.getSobrecupo() > 0) {
 		        	Object[] fila = {
@@ -182,14 +184,40 @@ public class Controller implements ActionListener{
 		                    usuario.getCredito(),
 		                    usuario.getDeuda(),
 		                    usuario.getSobrecupo()
-		            };
-		            vAdmin.getPa().getModelSol().addRow(fila);
+	            	};
+	            	vAdmin.getPa().getModelSol().addRow(fila);
 	            }
 	        }
 		}
 		
-		if(comando.equals("AceptSolicitADMIN")) {
-			System.out.println("solicitud aceptada");
+		if (comando.equals("AceptSolicitADMIN")) {
+		    JTable tablaSolicitudes = vAdmin.getPa().getTablaSolicitudes();
+		    int filaSeleccionada = tablaSolicitudes.getSelectedRow();
+
+		    if (filaSeleccionada != -1) {
+		        String usuario = tablaSolicitudes.getValueAt(filaSeleccionada, 1).toString();
+		        Usuario usuarioSeleccionado = null;
+		        for (Usuario u : lista.getListadeUsuarios()) {
+		            if (u.getUser().equals(usuario)) {
+		                usuarioSeleccionado = u;
+		                break;
+		            }
+		        }
+
+		        if (usuarioSeleccionado != null) {
+		            int sobrecupo = Integer.parseInt(tablaSolicitudes.getValueAt(filaSeleccionada, 5).toString());
+
+		            int creditoActual = usuarioSeleccionado.getCredito();
+		            usuarioSeleccionado.setCredito(creditoActual + sobrecupo);
+		            usuarioSeleccionado.setSobrecupo(0);
+		            
+		            DefaultTableModel modelSol = vAdmin.getPa().getModelSol();
+		            modelSol.removeRow(filaSeleccionada);
+
+				    vAdmin.getPa().limpiarVista();
+				    MensajeInformacion("Sobrecupo aceptado exitosamente", "Sobrecupo aceptado");
+		        }
+		    }
 		}
 		
 		if(comando.equals("BSEDES_ADMIN")) {

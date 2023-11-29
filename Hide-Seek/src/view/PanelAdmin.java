@@ -24,6 +24,7 @@ public class PanelAdmin extends JPanel{
 	
 	private JPanel cuadroUsuarios, cuadroInformes, cuadroSolicitudes, cuadroSedes;
     DefaultTableModel modelU, modelSol, modedlSed;
+    JTable tablaSolicitudes,tablaUsuarios;
 
 	public PanelAdmin() {
 		setLayout(new BorderLayout());
@@ -87,7 +88,7 @@ public class PanelAdmin extends JPanel{
             	return false;
         	}
     	};
-	    JTable tablaUsuarios = new JTable(modelU);
+	    tablaUsuarios = new JTable(modelU);
 	    JScrollPane scrollPane = new JScrollPane(tablaUsuarios);
         cuadroUsuarios.add(scrollPane, BorderLayout.CENTER);
         cuadroUsuarios.setVisible(false);
@@ -104,21 +105,30 @@ public class PanelAdmin extends JPanel{
 	            return false;
 	        }
 	    };
-	    JTable tablaSolicitudes = new JTable(modelSol);
+	    tablaSolicitudes = new JTable(modelSol);
 	    JScrollPane scrollPane = new JScrollPane(tablaSolicitudes);
 	    cuadroSolicitudes.add(scrollPane, BorderLayout.CENTER);
-	    baceptarsolicitud =Estandar.boton("Aceptar\nSolicitud");
+	    JPanel aux = new JPanel(new BorderLayout());
+	    baceptarsolicitud =Estandar.boton("Aceptar Solicitud");
 	    baceptarsolicitud.setActionCommand("AceptSolicitADMIN");
-	    cuadroSolicitudes.add(baceptarsolicitud,BorderLayout.EAST);
+	    aux.add(baceptarsolicitud, BorderLayout.NORTH);
+	    cuadroSolicitudes.add(aux,BorderLayout.EAST);
+	    cuadroSolicitudes.setVisible(false);
 	    add(cuadroSolicitudes, BorderLayout.CENTER);
+	    cuadroSolicitudes.setVisible(true);
 	}
 	
 	public void limpiarVista() {
 		try {
 			remove(cuadroInformes);
+			cuadroInformes.setVisible(false);
 			remove(cuadroUsuarios);
+			cuadroUsuarios.setVisible(false);
 			remove(cuadroSedes);
+			cuadroSedes.setVisible(false);
 			remove(cuadroSolicitudes);
+			cuadroSolicitudes.setVisible(false);
+			
 	        revalidate();
 	        repaint();
 		}catch (NullPointerException e) {
@@ -126,6 +136,22 @@ public class PanelAdmin extends JPanel{
 		}
 	}
 	
+	public JTable getTablaSolicitudes() {
+		return tablaSolicitudes;
+	}
+
+	public void setTablaSolicitudes(JTable tablaSolicitudes) {
+		this.tablaSolicitudes = tablaSolicitudes;
+	}
+
+	public JTable getTablaUsuarios() {
+		return tablaUsuarios;
+	}
+
+	public void setTablaUsuarios(JTable tablaUsuarios) {
+		this.tablaUsuarios = tablaUsuarios;
+	}
+
 	public DefaultTableModel getModelU() {
 		return modelU;
 	}
