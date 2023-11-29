@@ -84,7 +84,7 @@ public class Controller implements ActionListener{
 		vCliente.getPrp().getBregistrar().addActionListener(this);
 		
 	}
-	
+	int[][] horarioPareja = Horarios.nuevoHorario();
 	public void oyentesVcompra() {
 		
 		ListadeProductos listaProductos = new ListadeProductos();
@@ -522,7 +522,6 @@ public class Controller implements ActionListener{
 				}
 			}
 		}
-		int[][] horarioPareja = Horarios.nuevoHorario();
 		for (int i = 0; i < 49; i++) { 	
 			final int j = i;
 			try {
@@ -570,6 +569,34 @@ public class Controller implements ActionListener{
 				boolean respuesta = listapareja.agregarParejas(pareja);
 				if (respuesta) {
 					MensajeInformacion("Se ha registrado la pareja exitosamente!", "Registro exitoso");
+					vCliente.setTitle("Menu principal - HIDE&SEEK");
+					vCliente.setMinimumSize(new Dimension(675, 580));
+					try {
+						vCliente.getPrp().setVisible(false);
+						vCliente.getPc().setVisible(true);
+						vCliente.getLayeredPane().remove(vCliente.getPrp());
+						vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+					}catch (IllegalArgumentException hp) {
+						vCliente.getPrp().setVisible(false);
+						vCliente.getPc().setVisible(true);
+						vCliente.getLayeredPane().add(vCliente.getPc(), Integer.valueOf(1));
+					}
+					try {
+						vCliente.getPrp().getLista_genero().removeItem(" ");
+					}catch(ArrayIndexOutOfBoundsException a) {
+						
+					}
+					try {
+						vCliente.getPrp().getLista_sedes().removeItem(" ");
+					}catch(ArrayIndexOutOfBoundsException a) {
+						
+					}
+					vCliente.getPrp().getTnombre().setText(null);
+					vCliente.getPrp().getTusuario().setText(null);
+					vCliente.getPrp().getTcorreo().setText(null);
+					vCliente.getPrp().getTclave().setText(null);
+					vCliente.getPrp().getTrepetir().setText(null);
+					vCliente.getPrp().getTcredito().setText(null);
 				}else {
 					MensajeError("Fallo al registrar");
 				}
