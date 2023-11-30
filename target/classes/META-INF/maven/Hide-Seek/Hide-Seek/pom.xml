@@ -25,10 +25,23 @@
     </plugins>
   </build>
   <dependencies>
+	<!-- JavaMail -->
 	<dependency>
       <groupId>com.sun.mail</groupId>
       <artifactId>javax.mail</artifactId>
       <version>1.6.2</version>
     </dependency>
+     <!-- JFreeChart -->
+    <dependency>
+        <groupId>org.jfree</groupId>
+        <artifactId>jfreechart</artifactId>
+        <version>1.5.3</version>
+    </dependency>
+    <!-- Apache PDFBox -->
+    <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.30</version>
+	</dependency>
   </dependencies>
 </project>
