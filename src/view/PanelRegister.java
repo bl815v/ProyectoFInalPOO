@@ -14,7 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-
+/**
+ * La clase PanelRegister representa un panel de registro que permite a los usuarios crear una nueva cuenta.
+ * Contiene campos para ingresar información personal, como nombres, género, correo electrónico, nombre de usuario y contraseña.
+ * Además, proporciona botones para el registro y para iniciar sesión si ya se tiene una cuenta.
+ * @author Esteban Arevalo
+ */
 public class PanelRegister extends JPanel{
 
 	private JLabel etitulo, esubtitulo, enombre, esubnombre, egenero, esubgenero, ecorreo, esubcorreo;
@@ -23,7 +28,11 @@ public class PanelRegister extends JPanel{
 	private JTextField tnombre, tcorreo, tusuario;
 	private JPasswordField tclave, trepetir;
 	private JButton bregistrar, blogin; 
-	
+    /**
+     * Constructor para PanelRegister.
+     * Inicializa el diseño, tamaño y componentes del panel de registro.
+     * Además, realiza la configuración de revisión de campos de texto mediante el método revisarTextField.
+     */
 	public PanelRegister() {
 		setLayout(new GridLayout(1, 2, 20, 0));
 		setPreferredSize(new Dimension(670, 500));
@@ -38,7 +47,9 @@ public class PanelRegister extends JPanel{
 		Estandar.revisarTextField(tclave, esubclave, "Ingrese su clave:");
 		Estandar.revisarTextField(trepetir, esubrepetir, "Ingrese la anterior clave:");
 	}
-	
+    /**
+     * Inicializa los componentes de la interfaz gráfica y los organiza en el panel.
+     */
 	public void inicializarComponentes() {
 		JPanel Izquierda = new JPanel();
 		Izquierda.setLayout(new BoxLayout(Izquierda, BoxLayout.Y_AXIS));
@@ -61,9 +72,9 @@ public class PanelRegister extends JPanel{
 		JPanel panelAuxTnombre = new JPanel(new BorderLayout()); 
 		panelAuxTnombre.setMaximumSize(new Dimension(600, 30)); 
 		tnombre = Estandar.campoTexto();
-        panelAuxTnombre.add(tnombre, BorderLayout.CENTER);
-        Izquierda.add(panelAuxTnombre);
-        Izquierda.add(Estandar.Separador());
+                panelAuxTnombre.add(tnombre, BorderLayout.CENTER);
+                Izquierda.add(panelAuxTnombre);
+                Izquierda.add(Estandar.Separador());
 		
 		egenero = Estandar.labelNegro("Genero"); 
 		Izquierda.add(egenero);
@@ -154,192 +165,373 @@ public class PanelRegister extends JPanel{
 		add(Derecha);
 		
 	}
+ /**
+     * Obtiene la etiqueta del título.
+     * @return La etiqueta del título.
+     */
+    public JLabel getEtitulo() {
+        return etitulo;
+    }
+
+    /**
+     * Establece la etiqueta del título.
+     * @param etitulo La nueva etiqueta del título.
+     */
+    public void setEtitulo(JLabel etitulo) {
+        this.etitulo = etitulo;
+    }
+
+    /**
+     * Obtiene la etiqueta del subtitulo.
+     * @return La etiqueta del subtitulo.
+     */
+    public JLabel getEsubtitulo() {
+        return esubtitulo;
+    }
+
+    /**
+     * Establece la etiqueta del subtitulo.
+     * @param esubtitulo La nueva etiqueta del subtitulo.
+     */
+    public void setEsubtitulo(JLabel esubtitulo) {
+        this.esubtitulo = esubtitulo;
+    }
+
+	/**
+ * Obtiene la etiqueta para el nombre.
+ * @return La etiqueta para el nombre.
+ */
+public JLabel getEnombre() {
+    return enombre;
+}
+
+/**
+ * Establece la etiqueta para el nombre.
+ * @param enombre La nueva etiqueta para el nombre.
+ */
+public void setEnombre(JLabel enombre) {
+    this.enombre = enombre;
+}
+
+/**
+ * Obtiene la etiqueta secundaria para el nombre.
+ * @return La etiqueta secundaria para el nombre.
+ */
+public JLabel getEsubnombre() {
+    return esubnombre;
+}
+
+/**
+ * Establece la etiqueta secundaria para el nombre.
+ * @param esubnombre La nueva etiqueta secundaria para el nombre.
+ */
+public void setEsubnombre(JLabel esubnombre) {
+    this.esubnombre = esubnombre;
+}
+
+/**
+ * Obtiene la etiqueta para el género.
+ * @return La etiqueta para el género.
+ */
+public JLabel getEgenero() {
+    return egenero;
+}
+
+/**
+ * Establece la etiqueta para el género.
+ * @param egenero La nueva etiqueta para el género.
+ */
+public void setEgenero(JLabel egenero) {
+    this.egenero = egenero;
+}
+/**
+ * Obtiene la etiqueta secundaria para el género.
+ * @return La etiqueta secundaria para el género.
+ */
+public JLabel getEsubgenero() {
+    return esubgenero;
+}
+
+/**
+ * Establece la etiqueta secundaria para el género.
+ * @param esubgenero La nueva etiqueta secundaria para el género.
+ */
+public void setEsubgenero(JLabel esubgenero) {
+    this.esubgenero = esubgenero;
+}
+
+/**
+ * Obtiene la etiqueta para el correo.
+ * @return La etiqueta para el correo.
+ */
+public JLabel getEcorreo() {
+    return ecorreo;
+}
+
+/**
+ * Establece la etiqueta para el correo.
+ * @param ecorreo La nueva etiqueta para el correo.
+ */
+public void setEcorreo(JLabel ecorreo) {
+    this.ecorreo = ecorreo;
+}
+
+/**
+ * Obtiene la etiqueta secundaria para el correo.
+ * @return La etiqueta secundaria para el correo.
+ */
+public JLabel getEsubcorreo() {
+    return esubcorreo;
+}
+
+/**
+ * Establece la etiqueta secundaria para el correo.
+ * @param esubcorreo La nueva etiqueta secundaria para el correo.
+ */
+public void setEsubcorreo(JLabel esubcorreo) {
+    this.esubcorreo = esubcorreo;
+}
 
 
-	public JLabel getEtitulo() {
-		return etitulo;
-	}
+	/**
+ * Obtiene la etiqueta para el usuario.
+ * @return La etiqueta para el usuario.
+ */
+public JLabel getEusuario() {
+    return eusuario;
+}
 
-	public void setEtitulo(JLabel etitulo) {
-		this.etitulo = etitulo;
-	}
+/**
+ * Establece la etiqueta para el usuario.
+ * @param eusuario La nueva etiqueta para el usuario.
+ */
+public void setEusuario(JLabel eusuario) {
+    this.eusuario = eusuario;
+}
 
-	public JLabel getEsubtitulo() {
-		return esubtitulo;
-	}
+/**
+ * Obtiene la etiqueta secundaria para el usuario.
+ * @return La etiqueta secundaria para el usuario.
+ */
+public JLabel getEsubusuario() {
+    return esubusuario;
+}
 
-	public void setEsubtitulo(JLabel esubtitulo) {
-		this.esubtitulo = esubtitulo;
-	}
+/**
+ * Establece la etiqueta secundaria para el usuario.
+ * @param esubusuario La nueva etiqueta secundaria para el usuario.
+ */
+public void setEsubusuario(JLabel esubusuario) {
+    this.esubusuario = esubusuario;
+}
 
-	public JLabel getEnombre() {
-		return enombre;
-	}
+/**
+ * Obtiene la etiqueta para la clave.
+ * @return La etiqueta para la clave.
+ */
+public JLabel getEclave() {
+    return eclave;
+}
 
-	public void setEnombre(JLabel enombre) {
-		this.enombre = enombre;
-	}
+/**
+ * Establece la etiqueta para la clave.
+ * @param eclave La nueva etiqueta para la clave.
+ */
+public void setEclave(JLabel eclave) {
+    this.eclave = eclave;
+}
 
-	public JLabel getEsubnombre() {
-		return esubnombre;
-	}
+/**
+ * Obtiene la etiqueta secundaria para la clave.
+ * @return La etiqueta secundaria para la clave.
+ */
+public JLabel getEsubclave() {
+    return esubclave;
+}
 
-	public void setEsubnombre(JLabel esubnombre) {
-		this.esubnombre = esubnombre;
-	}
+/**
+ * Establece la etiqueta secundaria para la clave.
+ * @param esubclave La nueva etiqueta secundaria para la clave.
+ */
+public void setEsubclave(JLabel esubclave) {
+    this.esubclave = esubclave;
+}
 
-	public JLabel getEgenero() {
-		return egenero;
-	}
+/**
+ * Obtiene la etiqueta para repetir la clave.
+ * @return La etiqueta para repetir la clave.
+ */
+public JLabel getErepetir() {
+    return erepetir;
+}
 
-	public void setEgenero(JLabel egenero) {
-		this.egenero = egenero;
-	}
+/**
+ * Establece la etiqueta para repetir la clave.
+ * @param erepetir La nueva etiqueta para repetir la clave.
+ */
+public void setErepetir(JLabel erepetir) {
+    this.erepetir = erepetir;
+}
 
-	public JLabel getEsubgenero() {
-		return esubgenero;
-	}
+/**
+ * Obtiene la etiqueta secundaria para repetir la clave.
+ * @return La etiqueta secundaria para repetir la clave.
+ */
+public JLabel getEsubrepetir() {
+    return esubrepetir;
+}
 
-	public void setEsubgenero(JLabel esubgenero) {
-		this.esubgenero = esubgenero;
-	}
+/**
+ * Establece la etiqueta secundaria para repetir la clave.
+ * @param esubrepetir La nueva etiqueta secundaria para repetir la clave.
+ */
+public void setEsubrepetir(JLabel esubrepetir) {
+    this.esubrepetir = esubrepetir;
+}
 
-	public JLabel getEcorreo() {
-		return ecorreo;
-	}
+/**
+ * Obtiene la etiqueta para el mensaje "Ya tienes una cuenta?".
+ * @return La etiqueta para el mensaje "Ya tienes una cuenta?".
+ */
+public JLabel getEyatienes() {
+    return eyatienes;
+}
 
-	public void setEcorreo(JLabel ecorreo) {
-		this.ecorreo = ecorreo;
-	}
+/**
+ * Establece la etiqueta para el mensaje "Ya tienes una cuenta?".
+ * @param eyatienes La nueva etiqueta para el mensaje "Ya tienes una cuenta?".
+ */
+public void setEyatienes(JLabel eyatienes) {
+    this.eyatienes = eyatienes;
+}
 
-	public JLabel getEsubcorreo() {
-		return esubcorreo;
-	}
+/**
+ * Obtiene la lista desplegable para el género.
+ * @return La lista desplegable para el género.
+ */
+public JComboBox<String> getLista_genero() {
+    return lista_genero;
+}
 
-	public void setEsubcorreo(JLabel esubcorreo) {
-		this.esubcorreo = esubcorreo;
-	}
+/**
+ * Establece la lista desplegable para el género.
+ * @param lista_genero La nueva lista desplegable para el género.
+ */
+public void setLista_genero(JComboBox<String> lista_genero) {
+    this.lista_genero = lista_genero;
+}
 
-	public JLabel getEusuario() {
-		return eusuario;
-	}
+/**
+ * Obtiene el campo de texto para el nombre.
+ * @return El campo de texto para el nombre.
+ */
+public JTextField getTnombre() {
+    return tnombre;
+}
 
-	public void setEusuario(JLabel eusuario) {
-		this.eusuario = eusuario;
-	}
+/**
+ * Establece el campo de texto para el nombre.
+ * @param tnombre El nuevo campo de texto para el nombre.
+ */
+public void setTnombre(JTextField tnombre) {
+    this.tnombre = tnombre;
+}
 
-	public JLabel getEsubusuario() {
-		return esubusuario;
-	}
+/**
+ * Obtiene el campo de texto para el correo.
+ * @return El campo de texto para el correo.
+ */
+public JTextField getTcorreo() {
+    return tcorreo;
+}
 
-	public void setEsubusuario(JLabel esubusuario) {
-		this.esubusuario = esubusuario;
-	}
+/**
+ * Establece el campo de texto para el correo.
+ * @param tcorreo El nuevo campo de texto para el correo.
+ */
+public void setTcorreo(JTextField tcorreo) {
+    this.tcorreo = tcorreo;
+}
 
-	public JLabel getEclave() {
-		return eclave;
-	}
+/**
+ * Obtiene el campo de texto para el usuario.
+ * @return El campo de texto para el usuario.
+ */
+public JTextField getTusuario() {
+    return tusuario;
+}
 
-	public void setEclave(JLabel eclave) {
-		this.eclave = eclave;
-	}
+/**
+ * Establece el campo de texto para el usuario.
+ * @param tusuario El nuevo campo de texto para el usuario.
+ */
+public void setTusuario(JTextField tusuario) {
+    this.tusuario = tusuario;
+}
 
-	public JLabel getEsubclave() {
-		return esubclave;
-	}
+/**
+ * Obtiene el campo de contraseña.
+ * @return El campo de contraseña.
+ */
+public JPasswordField getTclave() {
+    return tclave;
+}
 
-	public void setEsubclave(JLabel esubclave) {
-		this.esubclave = esubclave;
-	}
+/**
+ * Establece el campo de contraseña.
+ * @param tclave El nuevo campo de contraseña.
+ */
+public void setTclave(JPasswordField tclave) {
+    this.tclave = tclave;
+}
 
-	public JLabel getErepetir() {
-		return erepetir;
-	}
+/**
+ * Obtiene el campo de contraseña para repetir.
+ * @return El campo de contraseña para repetir.
+ */
+public JPasswordField getTrepetir() {
+    return trepetir;
+}
 
-	public void setErepetir(JLabel erepetir) {
-		this.erepetir = erepetir;
-	}
+/**
+ * Establece el campo de contraseña para repetir.
+ * @param trepetir El nuevo campo de contraseña para repetir.
+ */
+public void setTrepetir(JPasswordField trepetir) {
+    this.trepetir = trepetir;
+}
 
-	public JLabel getEsubrepetir() {
-		return esubrepetir;
-	}
+/**
+ * Obtiene el botón de registrar.
+ * @return El botón de registrar.
+ */
+public JButton getBregistrar() {
+    return bregistrar;
+}
 
-	public void setEsubrepetir(JLabel esubrepetir) {
-		this.esubrepetir = esubrepetir;
-	}
+/**
+ * Establece el botón de registrar.
+ * @param bregistrar El nuevo botón de registrar.
+ */
+public void setBregistrar(JButton bregistrar) {
+    this.bregistrar = bregistrar;
+}
 
-	public JLabel getEyatienes() {
-		return eyatienes;
-	}
+/**
+ * Obtiene el botón de iniciar sesión.
+ * @return El botón de iniciar sesión.
+ */
+public JButton getBlogin() {
+    return blogin;
+}
 
-	public void setEyatienes(JLabel eyatienes) {
-		this.eyatienes = eyatienes;
-	}
+/**
+ * Establece el botón de iniciar sesión.
+ * @param blogin El nuevo botón de iniciar sesión.
+ */
+public void setBlogin(JButton blogin) {
+    this.blogin = blogin;
+}
 
-	public JComboBox<String> getLista_genero() {
-		return lista_genero;
-	}
-
-	public void setLista_genero(JComboBox<String> lista_genero) {
-		this.lista_genero = lista_genero;
-	}
-
-	public JTextField getTnombre() {
-		return tnombre;
-	}
-
-	public void setTnombre(JTextField tnombre) {
-		this.tnombre = tnombre;
-	}
-
-	public JTextField getTcorreo() {
-		return tcorreo;
-	}
-
-	public void setTcorreo(JTextField tcorreo) {
-		this.tcorreo = tcorreo;
-	}
-
-	public JTextField getTusuario() {
-		return tusuario;
-	}
-
-	public void setTusuario(JTextField tusuario) {
-		this.tusuario = tusuario;
-	}
-
-	public JPasswordField getTclave() {
-		return tclave;
-	}
-
-	public void setTclave(JPasswordField tclave) {
-		this.tclave = tclave;
-	}
-
-	public JPasswordField getTrepetir() {
-		return trepetir;
-	}
-
-	public void setTrepetir(JPasswordField trepetir) {
-		this.trepetir = trepetir;
-	}
-
-	public JButton getBregistrar() {
-		return bregistrar;
-	}
-
-	public void setBregistrar(JButton bregistrar) {
-		this.bregistrar = bregistrar;
-	}
-
-	public JButton getBlogin() {
-		return blogin;
-	}
-
-	public void setBlogin(JButton blogin) {
-		this.blogin = blogin;
-	}
-
-	
 
 }

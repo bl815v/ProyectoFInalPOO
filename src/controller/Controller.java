@@ -1,12 +1,17 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -14,9 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import model.Admin;
 import model.Compra;
 import model.Correo;
+import model.GeneradorImagen;
+import model.GeneradorPDF;
 import model.Horarios;
 import model.ListadeCompras;
 import model.ListadeParejas;
@@ -195,6 +204,32 @@ public class Controller implements ActionListener{
 		if(comando.equals("BINFORMES_ADMIN")) {
 			vAdmin.getPa().limpiarVista();
 			vAdmin.getPa().verInformes();
+            GeneradorImagen generador = new GeneradorImagen();
+			GeneradorPDF creador = new GeneradorPDF();
+			try {
+				Map<String, Integer> resultados = listadecompra.contarComprasConMismoNombre();
+				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+				for(Map.Entry<String,Integer> entry : resultados.entrySet()) {
+			        dataset.addValue(entry.getValue(), "Producto", entry.getKey());
+			      }
+				generador.generarGrafica(dataset);
+				 List<Integer> cantidades = new ArrayList<>(resultados.values());
+			       	String moda = listadecompra.calcularModa(resultados);
+			        double media = listadecompra.calcularMedia(cantidades);
+			        int mediana = listadecompra.calcularMediana(cantidades);
+			        creador.crearPDF(moda,media,mediana);
+			        try {
+			            File file = new File("Informe.pdf");
+			            Desktop.getDesktop().open(file);
+			        } catch (IOException x) {
+			            x.printStackTrace();
+			        }
+				
+			}catch(IndexOutOfBoundsException x) {
+				Estandar.MensajeError("No se puede generar Informe,no hay historial de compras");
+			
+		        
+		}
 		}
 		
 		if (comando.equals("BUSUARIOS_ADMIN")) {

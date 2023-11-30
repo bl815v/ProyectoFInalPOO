@@ -9,7 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * Clase que representa un panel para solicitar sobrecupo.
+ * Extiende JPanel.
+ * @author Esteban Arevalo
+ */
 public class PanelSobrecupo extends JPanel{
 	
 	private JLabel etitulo, ecupoDisponible, eDinerodisponible, eingrese, edinero, epesos;
@@ -25,7 +29,9 @@ public class PanelSobrecupo extends JPanel{
 		
 		Estandar.revisarTextField(tmonto, eingrese, "Ingrese cuanto sobrecupo solicita:");	
 	}
-	
+	/**
+	 * Inicializa los componentes gráficos del panel.
+	 */
 	public void inicializarComponentes() {
 		etitulo = Estandar.HideSeek();
 		add(etitulo);
@@ -77,76 +83,148 @@ public class PanelSobrecupo extends JPanel{
 	}
 	
 	
-	public JLabel getEtitulo() {
-		return etitulo;
-	}
+	/**
+ * Devuelve el objeto JLabel asociado al título.
+ * @return El objeto JLabel del título.
+ */
+public JLabel getEtitulo() {
+    return etitulo;
+}
 
-	public void setEtitulo(JLabel etitulo) {
-		this.etitulo = etitulo;
-	}
+/**
+ * Establece el objeto JLabel asociado al título.
+ * @param etitulo El nuevo objeto JLabel para el título.
+ */
+public void setEtitulo(JLabel etitulo) {
+    this.etitulo = etitulo;
+}
 
-	public JLabel getEcupoDisponible() {
-		return ecupoDisponible;
-	}
+/**
+ * Devuelve el objeto JLabel asociado al cupo disponible.
+ * @return El objeto JLabel del cupo disponible.
+ */
+public JLabel getEcupoDisponible() {
+    return ecupoDisponible;
+}
 
-	public void setEcupoDisponible(JLabel ecupoDisponible) {
-		this.ecupoDisponible = ecupoDisponible;
-	}
+/**
+ * Establece el objeto JLabel asociado al cupo disponible.
+ * @param ecupoDisponible El nuevo objeto JLabel para el cupo disponible.
+ */
+public void setEcupoDisponible(JLabel ecupoDisponible) {
+    this.ecupoDisponible = ecupoDisponible;
+}
 
-	public JLabel geteDinerodisponible() {
-		return eDinerodisponible;
-	}
+/**
+ * Devuelve el objeto JLabel asociado al dinero disponible.
+ * @return El objeto JLabel del dinero disponible.
+ */
+public JLabel geteDinerodisponible() {
+    return eDinerodisponible;
+}
 
-	public void seteDinerodisponible(JLabel eDinerodisponible) {
-		this.eDinerodisponible = eDinerodisponible;
-	}
+/**
+ * Establece el objeto JLabel asociado al dinero disponible.
+ * @param eDinerodisponible El nuevo objeto JLabel para el dinero disponible.
+ */
+public void seteDinerodisponible(JLabel eDinerodisponible) {
+    this.eDinerodisponible = eDinerodisponible;
+}
 
-	public JLabel getEingrese() {
-		return eingrese;
-	}
+/**
+ * Devuelve el objeto JLabel asociado al mensaje "Ingrese cuanto sobrecupo solicita:".
+ * @return El objeto JLabel del mensaje de ingreso.
+ */
+public JLabel getEingrese() {
+    return eingrese;
+}
 
-	public void setEingrese(JLabel eingrese) {
-		this.eingrese = eingrese;
-	}
+/**
+ * Establece el objeto JLabel asociado al mensaje "Ingrese cuanto sobrecupo solicita:".
+ * @param eingrese El nuevo objeto JLabel para el mensaje de ingreso.
+ */
+public void setEingrese(JLabel eingrese) {
+    this.eingrese = eingrese;
+}
 
-	public JLabel getEdinero() {
-		return edinero;
-	}
+/**
+ * Devuelve el objeto JLabel asociado al texto "$ ".
+ * @return El objeto JLabel del símbolo de dinero.
+ */
+public JLabel getEdinero() {
+    return edinero;
+}
 
-	public void setEdinero(JLabel edinero) {
-		this.edinero = edinero;
-	}
+/**
+ * Establece el objeto JLabel asociado al texto "$ ".
+ * @param edinero El nuevo objeto JLabel para el símbolo de dinero.
+ */
+public void setEdinero(JLabel edinero) {
+    this.edinero = edinero;
+}
 
-	public JLabel getEpesos() {
-		return epesos;
-	}
+/**
+ * Devuelve el objeto JLabel asociado al texto " pesos".
+ * @return El objeto JLabel del texto "pesos".
+ */
+public JLabel getEpesos() {
+    return epesos;
+}
 
-	public void setEpesos(JLabel epesos) {
-		this.epesos = epesos;
-	}
+/**
+ * Establece el objeto JLabel asociado al texto " pesos".
+ * @param epesos El nuevo objeto JLabel para el texto "pesos".
+ */
+public void setEpesos(JLabel epesos) {
+    this.epesos = epesos;
+}
 
-	public JTextField getTmonto() {
-		return tmonto;
-	}
+/**
+ * Devuelve el objeto JTextField asociado al monto.
+ * @return El objeto JTextField del monto.
+ */
+public JTextField getTmonto() {
+    return tmonto;
+}
 
-	public void setTmonto(JTextField tmonto) {
-		this.tmonto = tmonto;
-	}
+/**
+ * Establece el objeto JTextField asociado al monto.
+ * @param tmonto El nuevo objeto JTextField para el monto.
+ */
+public void setTmonto(JTextField tmonto) {
+    this.tmonto = tmonto;
+}
 
-	public JButton getBsolicitar() {
-		return bsolicitar;
-	}
+/**
+ * Devuelve el objeto JButton asociado al botón de solicitar.
+ * @return El objeto JButton del botón de solicitar.
+ */
+public JButton getBsolicitar() {
+    return bsolicitar;
+}
 
-	public void setBsolicitar(JButton bsolicitar) {
-		this.bsolicitar = bsolicitar;
-	}
+/**
+ * Establece el objeto JButton asociado al botón de solicitar.
+ * @param bsolicitar El nuevo objeto JButton para el botón de solicitar.
+ */
+public void setBsolicitar(JButton bsolicitar) {
+    this.bsolicitar = bsolicitar;
+}
 
-	public JButton getBcerrar() {
-		return bcerrar;
-	}
+/**
+ * Devuelve el objeto JButton asociado al botón de cerrar.
+ * @return El objeto JButton del botón de cerrar.
+ */
+public JButton getBcerrar() {
+    return bcerrar;
+}
 
-	public void setBcerrar(JButton bcerrar) {
-		this.bcerrar = bcerrar;
-	}
+/**
+ * Establece el objeto JButton asociado al botón de cerrar.
+ * @param bcerrar El nuevo objeto JButton para el botón de cerrar.
+ */
+public void setBcerrar(JButton bcerrar) {
+    this.bcerrar = bcerrar;
+}
 		
 }
