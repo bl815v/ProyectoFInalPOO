@@ -6,7 +6,8 @@ import java.time.LocalTime;
 
 public class Compra extends Producto {
 	
-	private Usuario Comprador;
+	private Usuario Compradoru;
+	private Pareja Compradorp;
 	private Sede Sededondesecompra;
 	String hora;
 	LocalDate fecha;
@@ -18,7 +19,7 @@ public class Compra extends Producto {
 		this.Nombre=nombre;
 		this.Img=img;
 		this.Precio=precio;
-		this.Comprador=comprador;
+		this.Compradoru=comprador;
 		this.Sededondesecompra=sededecompra;
 		this.fecha=LocalDate.now();
 		this.hora=" " + LocalTime.now().getHour() + ":" +LocalTime.now().getMinute() + ":" +LocalTime.now().getSecond();
@@ -27,12 +28,35 @@ public class Compra extends Producto {
 		
 	}
 
-	public Usuario getComprador() {
-		return Comprador;
+	public Compra(String nombre, String img, double precio, Pareja comprador, Sede sededecompra) {
+		super(nombre, img, precio);
+		
+		this.Nombre=nombre;
+		this.Img=img;
+		this.Precio=precio;
+		this.Compradorp=comprador;
+		this.Sededondesecompra=sededecompra;
+		this.fecha=LocalDate.now();
+		this.hora=" " + LocalTime.now().getHour() + ":" +LocalTime.now().getMinute() + ":" +LocalTime.now().getSecond();
+		this.diadecompra=LocalDate.now().getDayOfWeek();
+		
+		
 	}
 
-	public void setComprador(Usuario comprador) {
-		Comprador = comprador;
+	public Usuario getCompradoru() {
+		return Compradoru;
+	}
+
+	public void setCompradoru(Usuario compradoru) {
+		Compradoru = compradoru;
+	}
+
+	public Pareja getCompradorp() {
+		return Compradorp;
+	}
+
+	public void setCompradorp(Pareja compradorp) {
+		Compradorp = compradorp;
 	}
 
 	public Sede getSededondesecompra() {

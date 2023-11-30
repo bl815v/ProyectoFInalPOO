@@ -8,8 +8,10 @@ private ArrayList<Pareja>listadeParejas;
 	public  ListadeParejas() {
 	
 		listadeParejas= new ArrayList<Pareja>();
-		//Pareja x = new Pareja("nombre", "1", "Pareja", "clavefinal", "correo", "genero", 1, 0, new int[6][6],  new Sede("Calle 94f bis #77-55", "Sede Cortijo"));
-		//listadeParejas.add(x);
+		Pareja x = new Pareja("Adriana Garcia","xd", "Pareja", "11", "d@gmail.com", 
+				"Femenino", 10000, 1, new int[1][1], new Sede("carrera 1", "venezuela"), 
+				new ListadodeUsuarios().buscarUsuario("dvd"));
+		listadeParejas.add(x);
 	
 	}
 	

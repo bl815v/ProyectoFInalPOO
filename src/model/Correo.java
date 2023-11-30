@@ -21,7 +21,7 @@ public void enviarCorreo(String correo,String apodo,String clave) {
         Session sesion = Session.getInstance(propiedades, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("hide.seek3111@gmail.com", "nrvr iqnt xges dkvk");
+                return new PasswordAuthentication("pruebaenviarcorreo1305@gmail.com", "zzrc hbzw vgnm vjwb");
             }
         });
 

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,14 +32,18 @@ import view.VentanaAdmin;
 import view.VentanaAgregarSede;
 import view.VentanaCliente;
 import view.VentanaCompra;
+import view.VentanaComprapareja;
 import view.VentanaInicial;
+import view.VentanaPareja;
 
 
 public class Controller implements ActionListener{
 
 	private VentanaInicial vInicial;
 	private VentanaCliente vCliente;
+	private VentanaPareja vParejaInicio;
 	private VentanaCompra vCompra;
+	private VentanaComprapareja vComprapareja;
 	private VentanaAdmin vAdmin;
 	private ListadeCompras listadecompra;	
 	private ListadodeUsuarios lista;
@@ -86,18 +89,34 @@ public class Controller implements ActionListener{
 		vCliente.getPrp().getBregistrar().addActionListener(this);
 	}
 	
+	public void oyentesVpareja() {
+		vParejaInicio.getPpi().getBcomprar().addActionListener(this);
+		vParejaInicio.getPpi().getBabonar().addActionListener(this);
+		vParejaInicio.getPpi().getBhistorial().addActionListener(this);
+		vParejaInicio.getPpi().getBcerrar().addActionListener(this);
+	}
+	
 	int[][] horarioPareja = Horarios.nuevoHorario();
 	
 	public void oyentesVcompra() {
 		
 		ListadeProductos listaProductos = new ListadeProductos();
 		for (Producto producto : listaProductos.getListadeProductos()) {
-		vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
+			vCompra.getPt().buscarBoton("b"+producto.getNombre()).addActionListener(this);
 		}
 		vCompra.getPt().getBcerrar().addActionListener(this);
 		vCompra.getPt().getLista_sedes().addActionListener(this);
 	}
-	
+
+	public void oyentesVcomprapareja() {
+		
+		ListadeProductos listaProductos = new ListadeProductos();
+		for (Producto producto : listaProductos.getListadeProductos()) {
+			vComprapareja.getPtp().buscarBoton("bp"+producto.getNombre()).addActionListener(this);
+		}
+		vComprapareja.getPtp().getBcerrar().addActionListener(this);
+		vComprapareja.getPtp().getLista_sedes().addActionListener(this);
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -124,6 +143,28 @@ public class Controller implements ActionListener{
 					vAdmin.getPa().getBsedes().addActionListener(this);
 					vAdmin.getPa().getBcerrar().addActionListener(this);
 				}
+			}
+			try {
+				pareja = listapareja.buscarParejas(eusuario);
+				if(eusuario.equals("") || !eusuario.equals(pareja.getUser())) {
+					vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
+					vInicial.getPl().getEsubusuario().setForeground(Color.RED);
+				}else if (clave.length == 0 || !stringclave.equals(pareja.getClave().toString())) {
+					vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
+					vInicial.getPl().getEsubclave().setForeground(Color.RED);
+				}else {
+					vInicial.setVisible(false);
+					vParejaInicio = new VentanaPareja();
+					vParejaInicio.setVisible(true);
+					Estandar.adaptarPanelCentro(vParejaInicio, vParejaInicio.getPpi());	
+					vParejaInicio.getPpi().getEnombre().setText("Bienvenido, " + pareja.getNombre());
+					vParejaInicio.getPpi().geteDinerodisponible().setText("$ " + pareja.getCredito() + " pesos");
+					vParejaInicio.getPpi().geteDineropendiente().setText("$ " + pareja.getDeuda() + " pesos");
+
+					oyentesVpareja();
+			}
+			}catch (NullPointerException xd) {
+				
 			}
 			try {
 			usuario = lista.buscarUsuario(eusuario);
@@ -1099,10 +1140,193 @@ public class Controller implements ActionListener{
 			vCliente.setVisible(true);
 			vCompra.setVisible(false);
 		}
+		
+		//comandos ventana pareja
+		if(comando.equals("bCERRARSESIONpareja")) {
+			vParejaInicio.setVisible(false);
+			vInicial.getLayeredPane().add(Estandar.getFondoImagen(), Integer.valueOf(0));
+			vInicial.setVisible(true);
+			vInicial.getPl().getTclave().setText(null);
+			vInicial.getPl().getTusuario().setText(null);
+		}
+		
+		if(comando.equals("bVerHorarioPareja")) {
+			
+		}		
+		
+		if(comando.equals("bHISTORIALpareja")) {
+			vParejaInicio.setTitle("Historial de compras");
+			vParejaInicio.getPpi().setVisible(false);
+			vParejaInicio.getPhcp().getBvolver().addActionListener(this);
+			vParejaInicio.getPhcp().setVisible(true);
+			vParejaInicio.getLayeredPane().remove(vParejaInicio.getPpi());
+			vParejaInicio.getLayeredPane().add(vParejaInicio.getPhcp(), Integer.valueOf(1));
+			try {
+				for (Compra compra : listadecompra.getListadeCompras()) {
+		            Object[] fila = {
+		            		compra.getNombre(),
+		            		compra.getPrecio(),
+		            		compra.getHora(),
+		            		compra.getFecha(),
+		            		compra.getSededondesecompra().getNombre()
+		            };
+		            vParejaInicio.getPhcp().getModel().addRow(fila);
+		        }
+	        }catch (NullPointerException nulo) {
+				
+			}
+		}
+		
+		if(comando.equals("bVOLVERVERHISTORIALCOMPRASpareja")) {
+			try {
+				vParejaInicio.getPhcp().setVisible(false);
+				vParejaInicio.getPpi().setVisible(true);
+				vParejaInicio.getLayeredPane().remove(vParejaInicio.getPhcp());
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPpi(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vParejaInicio.getPhcp().setVisible(false);
+				vParejaInicio.getPpi().setVisible(true);
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPpi(), Integer.valueOf(1));
+			}
+		}
+		
+		if(comando.equals("bABONARMENUpareja")){
+			if(pareja.getDeuda() == 0) {
+				Estandar.MensajeError("No es posible abonar, no cuenta con una deuda");
+			}else {
+				vParejaInicio.setTitle("Abono de credito");
+				vParejaInicio.getPap().geteDineropendiente().setText("$ " + String.valueOf(pareja.getDeuda() + " pesos"));
+				vParejaInicio.getPap().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
+				vParejaInicio.getPap().getEingrese().setForeground(new Color(92,92,102));
+				vParejaInicio.getPpi().setVisible(false);
+				vParejaInicio.getPap().getBabonar().addActionListener(this);
+				vParejaInicio.getPap().getBcerrar().addActionListener(this);
+				vParejaInicio.getPap().setVisible(true);
+				vParejaInicio.getPap().getTmonto().setText(null);
+				vParejaInicio.getLayeredPane().remove(vParejaInicio.getPpi());
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPap(), Integer.valueOf(1));
+			}
+		}
+		
+		if(comando.equals("bABONARpareja")) {
+			long monto = 0;
+			try {
+			monto = Integer.parseInt(vParejaInicio.getPap().getTmonto().getText());
+			}catch(NumberFormatException n) {
+				
+			}
+			if(vParejaInicio.getPap().getTmonto().getText().equals("") ||  monto <= 0 || monto > pareja.getDeuda()) {
+				vParejaInicio.getPap().getEingrese().setText("Ingrese la cantidad de dinero a abonar:");
+				vParejaInicio.getPap().getEingrese().setForeground(Color.RED);
+				vParejaInicio.getPap().getTmonto().setText("");
+			}else {
+				Estandar.MensajeInformacion("Ha abonado $" + vParejaInicio.getPap().getTmonto().getText() + " pesos", "Abono exitoso");
+				pareja.setDeuda(pareja.getDeuda()-Integer.parseInt(vParejaInicio.getPap().getTmonto().getText()));
+				vParejaInicio.getPpi().geteDineropendiente().setText("$ " + pareja.getDeuda() + " pesos");
+				pareja.setCredito(pareja.getCredito()+Integer.parseInt(vParejaInicio.getPap().getTmonto().getText()));
+				vParejaInicio.getPpi().geteDinerodisponible().setText("$ " + pareja.getCredito() + " pesos");
+				vParejaInicio.getPap().setVisible(false);
+				vParejaInicio.getPpi().setVisible(true);
+				vParejaInicio.getLayeredPane().remove(vParejaInicio.getPap());
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPpi(), Integer.valueOf(1));
+				vParejaInicio.getPap().geteDineropendiente().setText("$ " + String.valueOf(pareja.getDeuda() + " pesos"));
+				vParejaInicio.getPap().getTmonto().setText("");
+			}
+		}
+		if(comando.equals("bCANCELARABONOpareja")) {
+			try {
+				vParejaInicio.getPap().setVisible(false);
+				vParejaInicio.getPpi().setVisible(true);
+				vParejaInicio.getLayeredPane().remove(vParejaInicio.getPap());
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPpi(), Integer.valueOf(1));
+			}catch (IllegalArgumentException hp) {
+				vParejaInicio.getPap().setVisible(false);
+				vParejaInicio.getPpi().setVisible(true);
+				vParejaInicio.getLayeredPane().add(vParejaInicio.getPpi(), Integer.valueOf(1));
+			}
+		}
+		
+		if(comando.equals("bCOMPRARMENUpareja")){
+			vParejaInicio.setVisible(false);
+			vComprapareja = new VentanaComprapareja();
+			Estandar.adaptarPanelCentro(vComprapareja, vComprapareja.getPtp());
+			vComprapareja.getPtp().getEsedes().setForeground(new Color(92,92,102));
+			vComprapareja.getPtp().getLista_sedes().addItem(" ");
+			vComprapareja.getPtp().getLista_sedes().setSelectedItem(" ");
+
+			for (Sede sede : listaSedes.getListadeSedes()) {
+				vComprapareja.getPtp().getLista_sedes().addItem(sede.getNombre());
+			}
+			oyentesVcomprapareja();
+		}
+		
+		if(comando.equals("LISTASEDESpareja")) {
+			vComprapareja.getPtp().getLista_sedes().removeItem(" ");
+			vComprapareja.getPtp().getEsedes().setForeground(new Color(92,92,102));
+			
+		}
+		
+		for (Producto producto : listaProductos.getListadeProductos()) {
+			if(comando.equals("bp"+producto.getNombre())) {
+				int totalCompra = 0;
+				int cantidad = (int) vComprapareja.getPtp().buscarSpinner("spp"+producto.getNombre()).getValue();
+				boolean vSede = false, vCantidad = false;
+				if(!vComprapareja.getPtp().getLista_sedes().getSelectedItem().equals(" ")) {
+					vSede = true;
+				}else {
+					vComprapareja.getPtp().getEsedes().setForeground(Color.RED);
+					vSede = false;
+				}
+				if( cantidad > 0){
+					totalCompra =(int) (cantidad*producto.getPrecio());
+					vCantidad = true;
+				}else {
+					vCantidad = false;
+				}
+				if(vSede && vCantidad) {
+					Object[] opciones = {"Sí", "No"}; 
+					int confirmar = JOptionPane.showOptionDialog(null, "Desea comprar "+cantidad+" "+producto.getNombre(), "Confirmar compra", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones, opciones[1]);
+					if (confirmar == JOptionPane.YES_OPTION) {
+						if(totalCompra < pareja.getCredito()) {
+							JOptionPane.showMessageDialog(null, "Usted ha comprado " + cantidad + " " +producto.getNombre() 
+							+ "\nTotal: " + totalCompra + " pesos");
+							pareja.setCredito(pareja.getCredito() - totalCompra);
+							pareja.setDeuda(pareja.getDeuda() + totalCompra);
+							vParejaInicio.getPpi().geteDineropendiente().setText("$ " + pareja.getDeuda() + " pesos");
+							vComprapareja.getPtp().buscarSpinner("spp"+producto.getNombre()).setValue(0);
+							Sede sedecompra = null;
+							for (Sede sede : listaSedes.getListadeSedes()) {
+								if(vComprapareja.getPtp().getLista_sedes().getSelectedItem().equals(sede.getNombre())) {
+									sedecompra = sede;	
+								}
+								
+							}
+							Compra x = new Compra(producto.getNombre(), producto.getImg(), producto.getPrecio(), pareja, sedecompra);
+							for (int i = 0; i < cantidad; i++) {
+								listadecompra.agregarCompra(x);
+							}
+							
+						}else {
+							Estandar.MensajeError("Usted no cuenta con el credito suficiente para hacer la compra");
+						}
+					}
+				}
+			}
+		}
+		
+		if(comando.equals("bREGRESARVentanaPareja")){
+			vParejaInicio.getPpi().geteDinerodisponible().setText("$ " + pareja.getCredito() + " pesos");
+			vParejaInicio.setVisible(true);
+			vComprapareja.setVisible(false);
+		}
+		
 	}
 	
+
+	
 	private void volver() {
-		vInicial.getPl().getEsubusuario().setText("Ingrese su nombre de usuario (alias):");
+		vInicial.getPl().getEsubusuario().setText("Ingrese su nombre de  (alias):");
 		vInicial.getPl().getEsubusuario().setForeground(new Color(92,92,102));
 		vInicial.getPl().getEsubclave().setText("Ingrese su clave:");
 		vInicial.getPl().getEsubclave().setForeground(new Color(92,92,102));
