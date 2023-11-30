@@ -401,7 +401,7 @@ public class Controller implements ActionListener{
 			if(vnombre && vdireccion){
 				String nombresede = vAgregarSede.getTnombre().getText();
 				String direccionsede = vAgregarSede.getTdireccion().getText();
-				Sede sede = new Sede(nombresede, direccionsede);
+				Sede sede = new Sede(direccionsede, nombresede);
 				boolean respuesta = listaSedes.agregarSede(sede);
 				if (respuesta) {
 					Estandar.MensajeInformacion("Se ha creado la sede exitosamente!", "Sede creada");
