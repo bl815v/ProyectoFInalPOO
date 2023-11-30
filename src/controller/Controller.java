@@ -176,23 +176,23 @@ public class Controller implements ActionListener{
 				
 			}
 			try {
-			usuario = lista.buscarUsuario(eusuario);
-			if(eusuario.equals("") || !eusuario.equals(usuario.getUser())) {
-				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
-				vInicial.getPl().getEsubusuario().setForeground(Color.RED);
-			}else if (clave.length == 0 || !stringclave.equals(usuario.getClave().toString())) {
-				vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
-				vInicial.getPl().getEsubclave().setForeground(Color.RED);
-			}else {
-				vInicial.setVisible(false);
-				vCliente = new VentanaCliente();
-				vCliente.setVisible(true);
-				Estandar.adaptarPanelCentro(vCliente, vCliente.getPc());	
-				vCliente.getPc().getEnombre().setText("Bienvenido, " + usuario.getNombre());
-				vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
-				vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
-
-				oyentesVcliente();
+				usuario = lista.buscarUsuario(eusuario);
+				if(eusuario.equals("") || !eusuario.equals(usuario.getUser())) {
+					vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
+					vInicial.getPl().getEsubusuario().setForeground(Color.RED);
+				}else if (clave.length == 0 || !stringclave.equals(usuario.getClave().toString())) {
+					vInicial.getPl().getEsubclave().setText("La clave ingresada es incorrecta");
+					vInicial.getPl().getEsubclave().setForeground(Color.RED);
+				}else {
+					vInicial.setVisible(false);
+					vCliente = new VentanaCliente();
+					vCliente.setVisible(true);
+					Estandar.adaptarPanelCentro(vCliente, vCliente.getPc());	
+					vCliente.getPc().getEnombre().setText("Bienvenido, " + usuario.getNombre());
+					vCliente.getPc().geteDinerodisponible().setText("$ " + usuario.getCredito() + " pesos");
+					vCliente.getPc().geteDineropendiente().setText("$ " + usuario.getDeuda() + " pesos");
+	
+					oyentesVcliente();
 			}
 			}catch(NullPointerException n) {
 				vInicial.getPl().getEsubusuario().setText("El usuario ingresado es inexistente");
@@ -226,7 +226,7 @@ public class Controller implements ActionListener{
 			        }
 				
 			}catch(IndexOutOfBoundsException x) {
-				Estandar.MensajeError("No se puede generar Informe,no hay historial de compras");
+				Estandar.MensajeError("No se puede generar Informe, no hay historial de compras");
 			
 		        
 		}
@@ -983,17 +983,32 @@ public class Controller implements ActionListener{
 			vCliente.setLocationRelativeTo(null);
 
 	        try {
-		        for (Pareja pareja : listapareja.getListadeParejas()) {
-		            Object[] fila = {
-		            		pareja.getNombre(),
-		            		pareja.getUser(),
-		            		pareja.getCorreo(),
-		            		pareja.getGenero(),
-		            		pareja.getCredito(),
-		            		pareja.getDeuda()
-		            };
-		            vCliente.getPvp().getModel().addRow(fila);
-		        }
+	        	for (Pareja pareja : listapareja.getListadeParejas()) {
+	        	    DefaultTableModel modelo = vCliente.getPvp().getModel();
+	        	    boolean existePareja = false;
+
+	        	    // Verificar si la pareja ya está en la tabla
+	        	    for (int i = 0; i < modelo.getRowCount(); i++) {
+	        	        String nombreEnTabla = modelo.getValueAt(i, 0).toString(); 
+	        	        if (nombreEnTabla.equals(pareja.getNombre())) {
+	        	            existePareja = true;
+	        	            break;
+	        	        }
+	        	    }
+
+	        	    // Si la pareja no está en la tabla, agregarla
+	        	    if (!existePareja) {
+	        	        Object[] fila = {
+	        	            pareja.getNombre(),
+	        	            pareja.getUser(),
+	        	            pareja.getCorreo(),
+	        	            pareja.getGenero(),
+	        	            pareja.getCredito(),
+	        	            pareja.getDeuda()
+	        	        };
+	        	        modelo.addRow(fila);
+	        	    }
+	        	}
 	        }catch (NullPointerException nulo) {
 				
 			}
@@ -1024,17 +1039,34 @@ public class Controller implements ActionListener{
 			vCliente.getLayeredPane().remove(vCliente.getPc());
 			vCliente.getLayeredPane().add(vCliente.getPhc(), Integer.valueOf(1));
 			try {
+				Set<String> horasEnTabla = new HashSet<>();
+
 				for (Compra compra : listadecompra.getListadeCompras()) {
-		            Object[] fila = {
-		            		compra.getNombre(),
-		            		compra.getPrecio(),
-		            		compra.getHora(),
-		            		compra.getFecha(),
-		            		compra.getSededondesecompra().getNombre()
-		            };
-		            vCliente.getPhc().getModel().addRow(fila);
-		        }
-	        }catch (NullPointerException nulo) {
+				    String horaCompra = compra.getHora();
+				    boolean existeHora = false;
+				    int rowCount = vCliente.getPhc().getModel().getRowCount();
+
+				    for (int i = 0; i < rowCount; i++) {
+				        String horaEnTabla = vCliente.getPhc().getModel().getValueAt(i, 2).toString(); // Considerando que la hora está en la tercera columna (índice 2)
+				        if (horaEnTabla.equals(horaCompra)) {
+				            existeHora = true;
+				            break;
+				        }
+				    }
+
+				    if (!existeHora) {
+			            Object[] fila = {
+			                compra.getNombre(),
+			                compra.getPrecio(),
+			                compra.getHora(),
+			                compra.getFecha(),
+			                compra.getSededondesecompra().getNombre()
+			            };
+			            vCliente.getPhc().getModel().addRow(fila);
+			            horasEnTabla.add(horaCompra); // Agregar la hora al conjunto para evitar duplicados			       
+				    }
+				}
+	        }catch (NullPointerException nuli) {
 				
 			}
 		}
@@ -1197,16 +1229,35 @@ public class Controller implements ActionListener{
 			vParejaInicio.getLayeredPane().remove(vParejaInicio.getPpi());
 			vParejaInicio.getLayeredPane().add(vParejaInicio.getPhcp(), Integer.valueOf(1));
 			try {
+				Set<String> horasEnTabla = new HashSet<>();
+
+				DefaultTableModel modelo = vParejaInicio.getPhcp().getModel();
+
 				for (Compra compra : listadecompra.getListadeCompras()) {
-		            Object[] fila = {
-		            		compra.getNombre(),
-		            		compra.getPrecio(),
-		            		compra.getHora(),
-		            		compra.getFecha(),
-		            		compra.getSededondesecompra().getNombre()
-		            };
-		            vParejaInicio.getPhcp().getModel().addRow(fila);
-		        }
+				    String horaCompra = compra.getHora();
+				    boolean existeHora = false;
+				    int rowCount = modelo.getRowCount();
+
+				    for (int i = 0; i < rowCount; i++) {
+				        String horaEnTabla = modelo.getValueAt(i, 2).toString(); // Considerando que la hora está en la tercera columna (índice 2)
+				        if (horaEnTabla.equals(horaCompra)) {
+				            existeHora = true;
+				            break;
+				        }
+				    }
+
+				    if (!existeHora) {
+				        Object[] fila = {
+				            compra.getNombre(),
+				            compra.getPrecio(),
+				            compra.getHora(),
+				            compra.getFecha(),
+				            compra.getSededondesecompra().getNombre()
+				        };
+				        modelo.addRow(fila);
+				        horasEnTabla.add(horaCompra); // Agregar la hora al conjunto para evitar duplicados					   
+				    }
+				}
 	        }catch (NullPointerException nulo) {
 				
 			}

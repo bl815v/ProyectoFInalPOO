@@ -2,9 +2,11 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
@@ -22,7 +24,8 @@ public class VentanaInicial extends JFrame{
 		setMinimumSize(new Dimension(280, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaInicial.class.getResource("/image/icono.png")));
+        
 		inicializarComponentes();
 		
 		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");

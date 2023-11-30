@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -30,7 +31,8 @@ public class VentanaAgregarSede extends JFrame{
 		setMinimumSize(new Dimension(700, 300));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaAgregarSede.class.getResource("/image/icono.png")));
+
 		inicializarComponentes();
 		
 		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");

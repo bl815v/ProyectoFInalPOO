@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -21,7 +22,8 @@ public class VentanaAdmin extends JFrame{
 		setMinimumSize(new Dimension(675, 580));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaAdmin.class.getResource("/image/icono.png")));
+
 		inicializarComponentes();
 		
 		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");

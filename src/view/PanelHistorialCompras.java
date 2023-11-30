@@ -46,7 +46,7 @@ public class PanelHistorialCompras extends JPanel {
         JPanel norte = new JPanel();
         norte.setLayout(new BoxLayout(norte, BoxLayout.Y_AXIS));
 
-        etitulo = Estandar.labelNegro("Tus compras");  // Etiqueta del título
+        etitulo = Estandar.labelNegro("Tus compras"); 
         norte.add(etitulo);
 
         add(norte, BorderLayout.NORTH);
@@ -62,7 +62,7 @@ public class PanelHistorialCompras extends JPanel {
         model = new DefaultTableModel(null, columnas) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;  // Hace que las celdas no sean editables
+                return false; 
             }
         };
 
