@@ -9,14 +9,14 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-public class VentanaPareja extends JFrame{
-	
+public class VentanaPareja extends JFrame {
+
 	private JLayeredPane layeredPane;
-	
+
 	private PanelParejasInicio ppi;
 	private PanelAbonopareja pap;
 	private PanelHistorialComprasPareja phcp;
-	
+
 	public VentanaPareja() {
 		JFrame Ventana = this;
 		setTitle("Menu principal - HIDE&SEEK");
@@ -25,34 +25,34 @@ public class VentanaPareja extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPareja.class.getResource("/image/icono.png")));
-		
+
 		inicializarComponentes();
-		
-		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");
+
+		Estandar.SeleccionarFondo(Ventana, "/image/fondoInterfaz2.png");
 		setResizable(true);
 		setLocationRelativeTo(null);
 		setVisible(true);
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-            	Estandar.adaptarPanelCentro(Ventana, ppi);
-            	Estandar.adaptarPanelCentro(Ventana, pap);
-            	Estandar.adaptarPanelCentro(Ventana, phcp);
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Estandar.adaptarPanelCentro(Ventana, ppi);
+				Estandar.adaptarPanelCentro(Ventana, pap);
+				Estandar.adaptarPanelCentro(Ventana, phcp);
 
-            }
-        });
-       
+			}
+		});
+
 	}
-	
+
 	public void inicializarComponentes() {
 		layeredPane = new JLayeredPane();
 		getContentPane().add(layeredPane, BorderLayout.CENTER);
 		ppi = new PanelParejasInicio();
 		pap = new PanelAbonopareja();
 		phcp = new PanelHistorialComprasPareja();
-		
-		layeredPane.add(ppi, Integer.valueOf(1));	
-	
+
+		layeredPane.add(ppi, Integer.valueOf(1));
+
 		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, ppi);

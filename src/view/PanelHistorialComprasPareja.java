@@ -17,89 +17,157 @@ import model.ListadeParejas;
 import model.ListadeProductos;
 import model.Pareja;
 
-public class PanelHistorialComprasPareja extends JPanel{
-	
-	private JLabel etitulo;
-	private JButton bvolver;
-	private JTable tablacompras;
-	
-	private DefaultTableModel model; 
-	public PanelHistorialComprasPareja() {
-		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(680, 520));
+/**
+ * La clase PanelHistorialComprasPareja representa la interfaz gráfica
+ * para mostrar el historial de compras de una pareja en particular.
+ * Contiene etiquetas, botones y una tabla para mostrar la información.
+ * Esta clase es utilizada en la interfaz gráfica del sistema.
+ * 
+ * @author Bedoya Lautero
+ * @version 1.0
+ */
+public class PanelHistorialComprasPareja extends JPanel {
 
-		inicializarComponentes();
-		setVisible(true);
-		
-	}
+    /**
+     * La etiqueta que muestra el título del panel.
+     */
+    private JLabel etitulo;
 
-	public void inicializarComponentes() {
-		// North
-		JPanel norte = new JPanel();
-		norte.setLayout(new BoxLayout(norte, BoxLayout.Y_AXIS));
-		
-		etitulo = Estandar.labelNegro("Tus compras");
-		norte.add(etitulo);
-		
-		add(norte, BorderLayout.NORTH);
-		
-		// Center
-		JPanel centro = new JPanel();
-		centro.setLayout(new BorderLayout());
-        String[] columnas = {"Nombre", "Precio", "Hora", "Fecha", "Sede"};
+    /**
+     * El botón para regresar a la pantalla anterior.
+     */
+    private JButton bvolver;
+
+    /**
+     * La tabla que muestra el historial de compras.
+     */
+    private JTable tablacompras;
+
+    /**
+     * El modelo de la tabla que almacena los datos.
+     */
+    private DefaultTableModel model;
+
+    /**
+     * Constructor para la clase PanelHistorialComprasPareja.
+     */
+    public PanelHistorialComprasPareja() {
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(680, 520));
+
+        inicializarComponentes();
+        setVisible(true);
+    }
+
+    /**
+     * Inicializa los componentes del panel.
+     */
+    public void inicializarComponentes() {
+        // North
+        JPanel norte = new JPanel();
+        norte.setLayout(new BoxLayout(norte, BoxLayout.Y_AXIS));
+
+        etitulo = Estandar.labelNegro("Tus compras");
+        norte.add(etitulo);
+
+        add(norte, BorderLayout.NORTH);
+
+        // Center
+        JPanel centro = new JPanel();
+        centro.setLayout(new BorderLayout());
+        String[] columnas = { "Nombre", "Precio", "Hora", "Fecha", "Sede" };
         model = new DefaultTableModel(null, columnas) {
-        	@Override
-        	public boolean isCellEditable(int row, int column) {
-            	return false;
-        	}
-    	};
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tablacompras = new JTable(model);
 
         JScrollPane scrollPane = new JScrollPane(tablacompras);
         centro.add(scrollPane, BorderLayout.CENTER);
-		
-		add(centro, BorderLayout.CENTER);
-		
-		// South
-		JPanel sur = new JPanel();
-		sur.setLayout(new BorderLayout());
-		bvolver = Estandar.botonSinFondo("<- Regresar");
-		bvolver.setActionCommand("bVOLVERVERHISTORIALCOMPRASpareja");
-		sur.add(Estandar.Espacio(), BorderLayout.NORTH);
-		sur.add(bvolver, BorderLayout.WEST);
-		add(sur, BorderLayout.SOUTH);
-	}
 
-	public JLabel getEtitulo() {
-		return etitulo;
-	}
+        add(centro, BorderLayout.CENTER);
 
-	public void setEtitulo(JLabel etitulo) {
-		this.etitulo = etitulo;
-	}
+        // South
+        JPanel sur = new JPanel();
+        sur.setLayout(new BorderLayout());
+        bvolver = Estandar.botonSinFondo("<- Regresar");
+        bvolver.setActionCommand("bVOLVERVERHISTORIALCOMPRASpareja");
+        sur.add(Estandar.Espacio(), BorderLayout.NORTH);
+        sur.add(bvolver, BorderLayout.WEST);
+        add(sur, BorderLayout.SOUTH);
+    }
 
-	public JButton getBvolver() {
-		return bvolver;
-	}
+    /**
+     * Obtiene la etiqueta que muestra el título del panel.
+     * 
+     * @return La etiqueta del título.
+     */
+    public JLabel getEtitulo() {
+        return etitulo;
+    }
 
-	public void setBvolver(JButton bvolver) {
-		this.bvolver = bvolver;
-	}
+    /**
+     * Establece la etiqueta que muestra el título del panel.
+     * 
+     * @param etitulo La nueva etiqueta del título.
+     */
+    public void setEtitulo(JLabel etitulo) {
+        this.etitulo = etitulo;
+    }
 
-	public JTable getTablacompras() {
-		return tablacompras;
-	}
+    /**
+     * Obtiene el botón para regresar a la pantalla anterior.
+     * 
+     * @return El botón de regresar.
+     */
+    public JButton getBvolver() {
+        return bvolver;
+    }
 
-	public void setTablacompras(JTable tablacompras) {
-		this.tablacompras = tablacompras;
-	}
+    /**
+     * Establece el botón para regresar a la pantalla anterior.
+     * 
+     * @param bvolver El nuevo botón de regresar.
+     */
+    public void setBvolver(JButton bvolver) {
+        this.bvolver = bvolver;
+    }
 
-	public DefaultTableModel getModel() {
-		return model;
-	}
+    /**
+     * Obtiene la tabla que muestra el historial de compras.
+     * 
+     * @return La tabla de historial de compras.
+     */
+    public JTable getTablacompras() {
+        return tablacompras;
+    }
 
-	public void setModel(DefaultTableModel model) {
-		this.model = model;
-	}
-	
+    /**
+     * Establece la tabla que muestra el historial de compras.
+     * 
+     * @param tablacompras La nueva tabla de historial de compras.
+     */
+    public void setTablacompras(JTable tablacompras) {
+        this.tablacompras = tablacompras;
+    }
+
+    /**
+     * Obtiene el modelo de la tabla que almacena los datos.
+     * 
+     * @return El modelo de la tabla.
+     */
+    public DefaultTableModel getModel() {
+        return model;
+    }
+
+    /**
+     * Establece el modelo de la tabla que almacena los datos.
+     * 
+     * @param model El nuevo modelo de la tabla.
+     */
+    public void setModel(DefaultTableModel model) {
+        this.model = model;
+    }
 }

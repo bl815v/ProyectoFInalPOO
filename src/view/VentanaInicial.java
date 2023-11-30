@@ -10,13 +10,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-public class VentanaInicial extends JFrame{
+public class VentanaInicial extends JFrame {
 
 	private PanelLogin pl;
 	private PanelRegister pr;
 	private JLayeredPane layeredPane;
 
-	
 	public VentanaInicial() {
 		JFrame Ventana = this;
 		setTitle("Incie sesion");
@@ -25,36 +24,35 @@ public class VentanaInicial extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Estandar.alertaCerrarVentana(Ventana);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaInicial.class.getResource("/image/icono.png")));
-        
+
 		inicializarComponentes();
-		
-		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");
+
+		Estandar.SeleccionarFondo(Ventana, "/image/fondoInterfaz2.png");
 		setResizable(true);
 		setLocationRelativeTo(null);
 		setVisible(true);
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-            	Estandar.adaptarPanelCentro(Ventana, pl);
-            	Estandar.adaptarPanelCentro(Ventana, pr);
-            }
-        });
-       
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Estandar.adaptarPanelCentro(Ventana, pl);
+				Estandar.adaptarPanelCentro(Ventana, pr);
+			}
+		});
+
 	}
-	
+
 	public void inicializarComponentes() {
 		layeredPane = new JLayeredPane();
 		getContentPane().add(layeredPane, BorderLayout.CENTER);
 		pl = new PanelLogin();
 		pr = new PanelRegister();
-		layeredPane.add(pl, Integer.valueOf(1));	
-	
+		layeredPane.add(pl, Integer.valueOf(1));
+
 		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, pl);
 	}
-	
-        
+
 	public PanelRegister getPr() {
 		return pr;
 	}
@@ -71,7 +69,6 @@ public class VentanaInicial extends JFrame{
 		this.pl = pl;
 	}
 
-
 	public JLayeredPane getLayeredPane() {
 		return layeredPane;
 	}
@@ -79,7 +76,5 @@ public class VentanaInicial extends JFrame{
 	public void setLayeredPane(JLayeredPane layeredPane) {
 		this.layeredPane = layeredPane;
 	}
-    
-    
-	
+
 }

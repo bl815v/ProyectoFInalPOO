@@ -1,4 +1,4 @@
- package view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,15 +15,15 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class VentanaAgregarSede extends JFrame{
-	
+public class VentanaAgregarSede extends JFrame {
+
 	private JLayeredPane layeredPane;
 	private JPanel panelAgregar;
-	
+
 	private JLabel etitulo, enombre, edireccion;
 	private JButton bagregar, bcancelar;
 	private JTextField tnombre, tdireccion;
-	
+
 	public VentanaAgregarSede() {
 		JFrame Ventana = this;
 		setTitle("Agregar sede");
@@ -34,63 +34,62 @@ public class VentanaAgregarSede extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaAgregarSede.class.getResource("/image/icono.png")));
 
 		inicializarComponentes();
-		
-		Estandar.SeleccionarFondo(Ventana ,"/image/fondoInterfaz2.png");
+
+		Estandar.SeleccionarFondo(Ventana, "/image/fondoInterfaz2.png");
 		setResizable(true);
 		setLocationRelativeTo(null);
 		setVisible(true);
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-            	Estandar.adaptarPanelCentro(Ventana, panelAgregar);
-            }
-        });
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Estandar.adaptarPanelCentro(Ventana, panelAgregar);
+			}
+		});
 
 	}
-	
+
 	public void inicializarComponentes() {
 		layeredPane = new JLayeredPane();
 		getContentPane().add(layeredPane, BorderLayout.CENTER);
-		
+
 		panelAgregar = new JPanel(new BorderLayout());
-		
+
 		etitulo = Estandar.labelNegro("Agregar sede");
 		panelAgregar.add(etitulo, BorderLayout.NORTH);
-		
-		JPanel auxCentro = new JPanel(new GridLayout(2,2,20,20));
+
+		JPanel auxCentro = new JPanel(new GridLayout(2, 2, 20, 20));
 		enombre = Estandar.labelNegro("Nombre:");
 		auxCentro.add(enombre);
-		
+
 		tnombre = Estandar.campoTexto();
 		tnombre.setBackground(new Color(216, 239, 242));
 		auxCentro.add(tnombre);
-		
+
 		edireccion = Estandar.labelNegro("Direccion:");
 		auxCentro.add(edireccion);
-		
+
 		tdireccion = Estandar.campoTexto();
 		tdireccion.setBackground(new Color(216, 239, 242));
 		auxCentro.add(tdireccion);
-		
+
 		panelAgregar.add(auxCentro, BorderLayout.CENTER);
-		
-		JPanel auxSur = new JPanel(new GridLayout(1,3,20,20));
-		
+
+		JPanel auxSur = new JPanel(new GridLayout(1, 3, 20, 20));
+
 		bcancelar = Estandar.boton("Cancelar");
 		bcancelar.setActionCommand("bCancelarSEDE");
 		auxSur.add(bcancelar);
-		
+
 		auxSur.add(Estandar.Espacio());
-		
+
 		bagregar = Estandar.boton("Agregar");
 		bagregar.setActionCommand("bAGREGARSEDE");
-		auxSur.add(bagregar );
-		
+		auxSur.add(bagregar);
+
 		panelAgregar.add(auxSur, BorderLayout.SOUTH);
-		
-		
-		layeredPane.add(panelAgregar, Integer.valueOf(1));	
-	
+
+		layeredPane.add(panelAgregar, Integer.valueOf(1));
+
 		Estandar.getFondoImagen().setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(Estandar.getFondoImagen(), Integer.valueOf(0));
 		Estandar.adaptarPanelCentro(this, panelAgregar);
@@ -167,5 +166,5 @@ public class VentanaAgregarSede extends JFrame{
 	public void setTdireccion(JTextField tdireccion) {
 		this.tdireccion = tdireccion;
 	}
-	
+
 }

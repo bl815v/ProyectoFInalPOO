@@ -9,32 +9,32 @@ import org.jfree.chart.JFreeChart;
 
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
 /**
- * GeneradorImagen tiene metodos usados para crear y guardar una un grafico PNG
- * con los datos guardados en una dataset 
- *  
- *  @Esteban Arevalo
+ * La clase GeneradorImagen contiene métodos para crear y guardar un gráfico PNG
+ * con los datos almacenados en un conjunto de datos (dataset).
+ * 
+ * @author Anderson Esteban Arévalo Rodriguez
+ * @version 1.0
  */
 public class GeneradorImagen {
-		
-	/**
-	 * Crea un grafico a base del dataset y establece las categorias 
-	 * y sus componentes
-	 * @param dataset usada para cargar los datos neecesarios para graficar
-	 */
-    public void generarGrafica(DefaultCategoryDataset dataset) {
-        JFreeChart chart = ChartFactory.createBarChart(
-            "Productos vendidos",
-            "Productos",
-            "Cantidad",
-            dataset
-        );
-        try {
-            ChartUtils.saveChartAsPNG(new File("chart.png"), chart, 800, 600);
-        }catch(IOException e) {
-        }
-        	
-        }
 
+    /**
+     * Genera un gráfico utilizando el conjunto de datos y establece las categorías
+     * y sus componentes.
+     * 
+     * @param dataset Conjunto de datos utilizado para cargar la información necesaria
+     *                para graficar.
+     */
+    public void generarGrafica(DefaultCategoryDataset dataset) {
+        // Crea un gráfico de barras con el dataset proporcionado
+        JFreeChart chart = ChartFactory.createBarChart("Productos vendidos", "Productos", "Cantidad", dataset);
+
+        try {
+            // Guarda el gráfico como una imagen PNG en el archivo "chart.png"
+            ChartUtils.saveChartAsPNG(new File("chart.png"), chart, 800, 600);
+        } catch (IOException e) {
+            // Maneja las excepciones de IO, en este caso, imprime el seguimiento de la pila
+            e.printStackTrace();
+        }
+    }
 }
